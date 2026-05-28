@@ -45,3 +45,82 @@ export function getLabLinks(id: string): NotebookLinks {
     html:   map.get(`${upper}_HTML`)  ?? getLocalPublicFile(`notebooks/labs/${folder}/notebook.html`),
   };
 }
+
+// ── Tutorial notebooks ────────────────────────────────────────────────────────
+// tutorial-notebooks.txt keys follow the pattern:
+//   OD01 / SSL01 / TR01          → Kaggle link
+//   OD01_IPYNB / SSL01_IPYNB … → Google Drive .ipynb download
+//   OD01_HTML  / SSL01_HTML  … → Google Drive HTML preview
+//
+// tutorialId values come from data/tutorials.ts (e.g. "od-01", "ssl-02", "tr-03")
+
+let _tutorialMap: Map<string, string> | null = null;
+function tutorialMap() { return (_tutorialMap ??= readLinkFile("tutorial-notebooks.txt")); }
+
+function tutorialIdToKey(tutorialId: string): string {
+  // "od-01" → "OD01",  "ssl-02" → "SSL02",  "tr-03" → "TR03"
+  return tutorialId.replace("-", "").toUpperCase();
+}
+
+export function getTutorialLinks(tutorialId: string): NotebookLinks {
+  const key = tutorialIdToKey(tutorialId);
+  const map = tutorialMap();
+  const folder = tutorialId; // e.g. "od-01" used as public folder name if needed
+
+  return {
+    kaggle: map.get(key),
+    ipynb:  map.get(`${key}_IPYNB`) ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.ipynb`),
+    html:   map.get(`${key}_HTML`)  ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.html`),
+  };
+}
+
+// ── Lecture slides & infographics ─────────────────────────────────────────────
+// lecture-slides.txt keys: L01 / L01_PDF
+// infographics: public/infographics/lectures/L01.{png,jpg,jpeg,webp,svg}
+
+export interface LectureLinks {
+  slides?: string;
+  pdf?: string;
+}
+
+let _lectureMap: Map<string, string> | null = null;
+function lectureMap() { return (_lectureMap ??= readLinkFile("lecture-slides.txt")); }
+
+export function getLectureLinks(lectureId: string): LectureLinks {
+  const key = lectureId.toUpperCase();
+  const map = lectureMap();
+  return {
+    slides: map.get(key),
+    pdf:    map.get(`${key}_PDF`),
+  };
+}
+
+export function getLectureInfographic(lectureId: string): string | undefined {
+  for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
+    const result = getLocalPublicFile(`infographics/lectures/${lectureId}.${ext}`);
+    if (result) return result;
+  }
+  return undefined;
+}
+
+// ── Lab infographics ──────────────────────────────────────────────────────────
+// Drop public/infographics/labs/LAB01.{png,jpg,jpeg,webp,svg}
+
+export function getLabInfographic(labId: string): string | undefined {
+  for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
+    const result = getLocalPublicFile(`infographics/labs/${labId}.${ext}`);
+    if (result) return result;
+  }
+  return undefined;
+}
+
+// ── Tutorial infographics ─────────────────────────────────────────────────────
+// Drop public/infographics/tutorials/od-01.{png,jpg,jpeg,webp,svg}
+
+export function getTutorialInfographic(tutorialId: string): string | undefined {
+  for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
+    const result = getLocalPublicFile(`infographics/tutorials/${tutorialId}.${ext}`);
+    if (result) return result;
+  }
+  return undefined;
+}

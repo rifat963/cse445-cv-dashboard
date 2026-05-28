@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/", label: "Dashboard" },
   { href: "/lectures", label: "Lectures" },
   { href: "/lab-manual", label: "Lab Manual" },
+  { href: "/tutorials", label: "Tutorials" },
   { href: "/assessment", label: "Assessment" },
   { href: "/resources", label: "Resources" },
 ];

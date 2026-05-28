@@ -1,76 +1,98 @@
-# Lab notebook links
+# Lecture slide links
 # Format:  ID <space> URL
 #
-# Kaggle notebook (run in Kaggle):   LAB01       https://www.kaggle.com/...
-# Google Drive .ipynb download:      LAB01_IPYNB https://drive.google.com/uc?export=download&id=FILE_ID
-# Google Drive HTML preview:         LAB01_HTML  https://drive.google.com/file/d/FILE_ID/preview
+# Google Drive view (embed/open):  L01     https://drive.google.com/file/d/FILE_ID/preview
+# Google Drive PDF download:       L01_PDF https://drive.google.com/uc?export=download&id=FILE_ID
 #
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 01 – Image Representation and Basic Operations
+# Module 1 – Introduction to Computer Vision
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB01       https://www.kaggle.com/
-# LAB01_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB01_HTML  https://drive.google.com/file/d//preview
+# L01     https://drive.google.com/file/d//preview
+# L01_PDF https://drive.google.com/uc?export=download&id=
+
+# L02     https://drive.google.com/file/d//preview
+# L02_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 02 – Feature Detection: Harris and FAST
+# Module 2 – Local Features and Descriptors
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB02       https://www.kaggle.com/
-# LAB02_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB02_HTML  https://drive.google.com/file/d//preview
+# L03     https://drive.google.com/file/d//preview
+# L03_PDF https://drive.google.com/uc?export=download&id=
+
+# L04     https://drive.google.com/file/d//preview
+# L04_PDF https://drive.google.com/uc?export=download&id=
+
+# L05     https://drive.google.com/file/d//preview
+# L05_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 03 – SIFT and ORB Feature Extraction and Matching
+# Module 3 – Camera Models and Geometry
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB03       https://www.kaggle.com/
-# LAB03_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB03_HTML  https://drive.google.com/file/d//preview
+# L06     https://drive.google.com/file/d//preview
+# L06_PDF https://drive.google.com/uc?export=download&id=
+
+# L07     https://drive.google.com/file/d//preview
+# L07_PDF https://drive.google.com/uc?export=download&id=
+
+# L08     https://drive.google.com/file/d//preview
+# L08_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 04 – Camera Calibration with Zhang's Method
+# Module 4 – Feature Matching and Image Alignment
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB04       https://www.kaggle.com/
-# LAB04_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB04_HTML  https://drive.google.com/file/d//preview
+# L09     https://drive.google.com/file/d//preview
+# L09_PDF https://drive.google.com/uc?export=download&id=
+
+# L10     https://drive.google.com/file/d//preview
+# L10_PDF https://drive.google.com/uc?export=download&id=
+
+# L11     https://drive.google.com/file/d//preview
+# L11_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 05 – Homography and Panorama Stitching
+# Module 5 – Stereo Vision and 3D Reconstruction
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB05       https://www.kaggle.com/
-# LAB05_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB05_HTML  https://drive.google.com/file/d//preview
+# L12     https://drive.google.com/file/d//preview
+# L12_PDF https://drive.google.com/uc?export=download&id=
+
+# L14     https://drive.google.com/file/d//preview
+# L14_PDF https://drive.google.com/uc?export=download&id=
+
+# L15     https://drive.google.com/file/d//preview
+# L15_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 06 – Stereo Vision and Depth Estimation
+# Module 6 – Motion Analysis
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB06       https://www.kaggle.com/
-# LAB06_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB06_HTML  https://drive.google.com/file/d//preview
+# L16     https://drive.google.com/file/d//preview
+# L16_PDF https://drive.google.com/uc?export=download&id=
+
+# L17     https://drive.google.com/file/d//preview
+# L17_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 07 – Optical Flow Estimation
+# Module 7 – Object Detection and Tracking
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB07       https://www.kaggle.com/
-# LAB07_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB07_HTML  https://drive.google.com/file/d//preview
+# L18     https://drive.google.com/file/d//preview
+# L18_PDF https://drive.google.com/uc?export=download&id=
+
+# L19     https://drive.google.com/file/d//preview
+# L19_PDF https://drive.google.com/uc?export=download&id=
+
+# L20     https://drive.google.com/file/d//preview
+# L20_PDF https://drive.google.com/uc?export=download&id=
+
+# L21     https://drive.google.com/file/d//preview
+# L21_PDF https://drive.google.com/uc?export=download&id=
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Lab 08 – Object Detection with HOG+SVM
+# Module 8 – Applications and Frontiers
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB08       https://www.kaggle.com/
-# LAB08_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB08_HTML  https://drive.google.com/file/d//preview
+# L22     https://drive.google.com/file/d//preview
+# L22_PDF https://drive.google.com/uc?export=download&id=
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Lab 09 – Object Recognition with YOLOv8
-# ─────────────────────────────────────────────────────────────────────────────
-# LAB09       https://www.kaggle.com/
-# LAB09_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB09_HTML  https://drive.google.com/file/d//preview
+# L23     https://drive.google.com/file/d//preview
+# L23_PDF https://drive.google.com/uc?export=download&id=
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Lab 10 – Multi-Object Tracking with SORT/DeepSORT
-# ─────────────────────────────────────────────────────────────────────────────
-# LAB10       https://www.kaggle.com/
-# LAB10_IPYNB https://drive.google.com/uc?export=download&id=
-# LAB10_HTML  https://drive.google.com/file/d//preview
+# L24     https://drive.google.com/file/d//preview
+# L24_PDF https://drive.google.com/uc?export=download&id=

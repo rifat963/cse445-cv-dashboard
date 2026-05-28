@@ -1,0 +1,158 @@
+# Tutorial notebook links
+# Format:  ID <space> URL
+#
+# Kaggle notebook (run in Kaggle):   OD01       https://www.kaggle.com/...
+# Google Drive .ipynb download:      OD01_IPYNB https://drive.google.com/uc?export=download&id=FILE_ID
+# Google Drive HTML preview:         OD01_HTML  https://drive.google.com/file/d/FILE_ID/preview
+#
+# Series prefixes
+#   OD  = Object Detection   (od-01 … od-09)
+#   SSL = Self-Supervised Learning (ssl-01 … ssl-10)
+#   TR  = Tracking           (tr-01 … tr-08)
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# Object Detection
+# ─────────────────────────────────────────────────────────────────────────────
+
+# OD01 – Image Classification, Localization & Object Detection
+# OD01        https://www.kaggle.com/
+# OD01_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD01_HTML   https://drive.google.com/file/d//preview
+
+# OD02 – Bounding Boxes, IoU, NMS & mAP
+# OD02        https://www.kaggle.com/
+# OD02_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD02_HTML   https://drive.google.com/file/d//preview
+
+# OD03 – Sliding Window, Selective Search & R-CNN
+# OD03        https://www.kaggle.com/
+# OD03_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD03_HTML   https://drive.google.com/file/d//preview
+
+# OD04 – Faster R-CNN: Region Proposal Network
+# OD04        https://www.kaggle.com/
+# OD04_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD04_HTML   https://drive.google.com/file/d//preview
+
+# OD05 – SSD, RetinaNet & Focal Loss
+# OD05        https://www.kaggle.com/
+# OD05_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD05_HTML   https://drive.google.com/file/d//preview
+
+# OD06 – YOLO Architecture: Backbone, Neck & Head
+# OD06        https://www.kaggle.com/
+# OD06_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD06_HTML   https://drive.google.com/file/d//preview
+
+# OD07 – YOLO Training on a Custom Dataset
+# OD07        https://www.kaggle.com/
+# OD07_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD07_HTML   https://drive.google.com/file/d//preview
+
+# OD08 – DETR & Transformer-Based Detection
+# OD08        https://www.kaggle.com/
+# OD08_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD08_HTML   https://drive.google.com/file/d//preview
+
+# OD09 – Evaluation, Error Analysis & Deployment
+# OD09        https://www.kaggle.com/
+# OD09_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD09_HTML   https://drive.google.com/file/d//preview
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Self-Supervised Learning  (ssl-01 … ssl-10)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# SSL01 – SSL-Based Object Detection Pipeline
+# SSL01       https://www.kaggle.com/
+# SSL01_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL01_HTML  https://drive.google.com/file/d//preview
+
+# SSL02 – DINOv3 for Dense Visual Representation
+# SSL02       https://www.kaggle.com/
+# SSL02_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL02_HTML  https://drive.google.com/file/d//preview
+
+# SSL03 – I-JEPA for Context-Based Self-Supervised Learning
+# SSL03       https://www.kaggle.com/
+# SSL03_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL03_HTML  https://drive.google.com/file/d//preview
+
+# SSL04 – YOLO Generations as Detection Heads for SSL Transfer
+# SSL04       https://www.kaggle.com/
+# SSL04_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL04_HTML  https://drive.google.com/file/d//preview
+
+# SSL05 – SSL Feature Distillation into YOLO
+# SSL05       https://www.kaggle.com/
+# SSL05_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL05_HTML  https://drive.google.com/file/d//preview
+
+# SSL06 – RF-DETR with SSL Representation Learning
+# SSL06       https://www.kaggle.com/
+# SSL06_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL06_HTML  https://drive.google.com/file/d//preview
+
+# SSL07 – Label-Efficiency Experiment
+# SSL07       https://www.kaggle.com/
+# SSL07_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL07_HTML  https://drive.google.com/file/d//preview
+
+# SSL08 – DINOv3 Feature-Based Error Analysis
+# SSL08       https://www.kaggle.com/
+# SSL08_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL08_HTML  https://drive.google.com/file/d//preview
+
+# SSL09 – I-JEPA-Based Semantic Feature Analysis
+# SSL09       https://www.kaggle.com/
+# SSL09_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL09_HTML  https://drive.google.com/file/d//preview
+
+# SSL10 – Final Comparative Study
+# SSL10       https://www.kaggle.com/
+# SSL10_IPYNB https://drive.google.com/uc?export=download&id=
+# SSL10_HTML  https://drive.google.com/file/d//preview
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tracking
+# ─────────────────────────────────────────────────────────────────────────────
+
+# TR01 – Tracking Fundamentals & Challenges
+# TR01        https://www.kaggle.com/
+# TR01_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR01_HTML   https://drive.google.com/file/d//preview
+
+# TR02 – Optical Flow as a Motion Prior
+# TR02        https://www.kaggle.com/
+# TR02_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR02_HTML   https://drive.google.com/file/d//preview
+
+# TR03 – Kalman Filter for Bounding Box Tracking
+# TR03        https://www.kaggle.com/
+# TR03_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR03_HTML   https://drive.google.com/file/d//preview
+
+# TR04 – SORT: Simple Online and Realtime Tracking
+# TR04        https://www.kaggle.com/
+# TR04_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR04_HTML   https://drive.google.com/file/d//preview
+
+# TR05 – DeepSORT: Appearance-Guided Association
+# TR05        https://www.kaggle.com/
+# TR05_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR05_HTML   https://drive.google.com/file/d//preview
+
+# TR06 – ByteTrack: Low-Confidence Detections
+# TR06        https://www.kaggle.com/
+# TR06_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR06_HTML   https://drive.google.com/file/d//preview
+
+# TR07 – Transformer Tracking: MOTR & TrackFormer
+# TR07        https://www.kaggle.com/
+# TR07_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR07_HTML   https://drive.google.com/file/d//preview
+
+# TR08 – Evaluating Multi-Object Trackers
+# TR08        https://www.kaggle.com/
+# TR08_IPYNB  https://drive.google.com/uc?export=download&id=
+# TR08_HTML   https://drive.google.com/file/d//preview

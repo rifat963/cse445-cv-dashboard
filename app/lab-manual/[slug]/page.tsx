@@ -2,9 +2,9 @@ import { labs, labModules } from "@/data/labs";
 import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor } from "lucide-react";
-import NotebookWidget from "@/components/ui/NotebookWidget";
-import { getLabLinks } from "@/lib/notebookLinks";
+import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon } from "lucide-react";
+import Image from "next/image";
+import { getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
 
 export async function generateStaticParams() {
@@ -30,6 +30,7 @@ export default async function LabDetailPage({ params }: PageProps) {
     .filter(Boolean);
 
   const { kaggle: kaggleUrl, ipynb: ipynbUrl, html: htmlUrl } = getLabLinks(lab.id);
+  const infographicUrl = getLabInfographic(lab.id);
 
   const modIdx = labModules.findIndex((m) => m.id === lab.labModuleId);
   const moduleColorBadge = [
@@ -142,8 +143,98 @@ export default async function LabDetailPage({ params }: PageProps) {
           </div>
         </div>
 
+        {/* Infographic */}
+        {infographicUrl ? (
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <ImageIcon size={16} className="text-co1" />
+              <h2 className="font-semibold text-[var(--ink)] text-sm">Lab Infographic</h2>
+            </div>
+            <div className="relative w-full rounded-lg overflow-hidden border border-[var(--border)]">
+              <Image
+                src={infographicUrl}
+                alt={`${lab.title} infographic`}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-contain"
+                priority={false}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">
+            <ImageIcon size={18} className="shrink-0 mt-0.5 opacity-40" />
+            <p className="text-sm">
+              Infographic coming soon. Drop{" "}
+              <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
+                {lab.id}.png
+              </code>{" "}
+              (or .jpg / .webp / .svg) into{" "}
+              <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
+                public/infographics/labs/
+              </code>{" "}
+              and it will appear here automatically.
+            </p>
+          </div>
+        )}
+
         {/* Notebook widget */}
-        <NotebookWidget title={lab.title} kaggleUrl={kaggleUrl} ipynbUrl={ipynbUrl} htmlUrl={htmlUrl} />
+        {(kaggleUrl || ipynbUrl || htmlUrl) ? (
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <FileCode size={16} className="text-co4" />
+              <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
+            </div>
+            <p className="text-xs text-[var(--muted)] mb-4 leading-relaxed">
+              Open the companion notebook in Kaggle, download the .ipynb for local use, or preview the rendered HTML version.
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {kaggleUrl && (
+                <a
+                  href={kaggleUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co4/10 text-co4 border-co4/20 hover:opacity-80 transition-opacity"
+                >
+                  <ExternalLink size={13} /> Open in Kaggle
+                </a>
+              )}
+              {ipynbUrl && (
+                <a
+                  href={ipynbUrl}
+                  download
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co2/10 text-co2 border-co2/20 hover:opacity-80 transition-opacity"
+                >
+                  <Download size={13} /> Download .ipynb
+                </a>
+              )}
+              {htmlUrl && (
+                <a
+                  href={htmlUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)] transition-colors"
+                >
+                  <ExternalLink size={13} /> View HTML
+                </a>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
+            <div className="flex items-center gap-2 mb-1">
+              <FileCode size={16} className="text-[var(--muted)]" />
+              <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
+            </div>
+            <p className="text-xs text-[var(--muted)]">
+              Notebook coming soon. Add links to{" "}
+              <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
+                data/lab-notebooks.txt
+              </code>{" "}
+              to enable Kaggle, .ipynb, and HTML download buttons here.
+            </p>
+          </div>
+        )}
 
         {/* Expected Outputs */}
         <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
