@@ -44,7 +44,7 @@ export default function TutorialsPage() {
   const totalTutorials = tutorialSeries.reduce((s, ser) => s + ser.tutorials.length, 0);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       {/* Page header */}
       <div>
         <h1 className="text-2xl font-bold text-[var(--ink)]">Tutorial Series</h1>

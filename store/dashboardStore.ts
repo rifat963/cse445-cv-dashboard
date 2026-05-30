@@ -17,7 +17,7 @@ export const useDashboard = create<DashboardState>()(
     (set) => ({
       studiedLectures: [],
       completedLabs: [],
-      darkMode: true,
+      darkMode: false,
       toggleStudiedLecture: (slug) =>
         set((s) => ({
           studiedLectures: s.studiedLectures.includes(slug)
@@ -32,6 +32,13 @@ export const useDashboard = create<DashboardState>()(
         })),
       toggleDarkMode: () => set((s) => ({ darkMode: !s.darkMode })),
     }),
-    { name: "cse445-dashboard" }
+    {
+      name: "cse445-dashboard",
+      version: 1,
+      migrate: (persistedState) => ({
+        ...(persistedState as DashboardState),
+        darkMode: false,
+      }),
+    }
   )
 );

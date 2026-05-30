@@ -5,7 +5,6 @@ import { useDashboard } from "@/store/dashboardStore";
 import { modules } from "@/data/modules";
 import { lectures } from "@/data/lectures";
 import ModuleCard from "@/components/cards/ModuleCard";
-import ProgressBar from "@/components/course/ProgressBar";
 
 interface LectureBrowserProps {
   preview?: boolean;
@@ -18,30 +17,15 @@ export default function LectureBrowser({ preview = false }: LectureBrowserProps)
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-xl font-bold text-[var(--ink)]">Course Modules</h2>
-          {!preview && (
-            <p className="text-sm text-[var(--muted)] mt-0.5">
-              9 modules · 24 lectures · grouped by topic
-            </p>
-          )}
-        </div>
-        {preview && (
-          <Link href="/lectures" className="text-sm text-co2 hover:underline shrink-0">
-            View all modules →
+      {preview && (
+        <div className="mb-4 flex items-end justify-between gap-4 border-b border-[var(--border)] pb-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--accent)]">Theory sequence</p>
+            <h2 className="text-xl font-bold text-[var(--ink)]">Course Modules</h2>
+          </div>
+          <Link href="/lectures" className="text-sm font-semibold text-[var(--academic)] hover:underline shrink-0">
+            View all modules
           </Link>
-        )}
-      </div>
-
-      {!preview && (
-        <div className="mb-6">
-          <ProgressBar
-            value={studiedLectures.length}
-            max={lectures.length}
-            label="Overall Study Progress"
-            color="co2"
-          />
         </div>
       )}
 

@@ -81,7 +81,7 @@ export default async function SeriesPage({ params }: PageProps) {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-1.5 text-sm text-[var(--muted)] mb-4">
         <Link href="/tutorials" className="hover:text-[var(--ink)] transition-colors">Tutorials</Link>

@@ -10,7 +10,7 @@ export default function AssessmentPage() {
   const data = assessment.map((a) => ({ name: a.area, value: a.marks }));
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Award size={22} className="text-co3" />

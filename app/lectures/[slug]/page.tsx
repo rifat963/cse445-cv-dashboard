@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps) {
     const infographicUrl = getLectureInfographic(lecture.id);
 
     return (
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-[var(--muted)] mb-6">
           <Link href="/lectures" className="hover:text-[var(--ink)] transition-colors">Modules</Link>
@@ -308,7 +308,7 @@ export default async function Page({ params }: PageProps) {
   );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <Link href="/lectures"
         className="inline-flex items-center gap-1 text-sm text-[var(--muted)] hover:text-[var(--ink)] mb-6 transition-colors">
         <ChevronLeft size={16} /> Back to Modules

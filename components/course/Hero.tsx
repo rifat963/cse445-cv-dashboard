@@ -1,70 +1,79 @@
 import Link from "next/link";
 import { COURSE } from "@/lib/course";
-import { BookOpen, FlaskConical, Eye, Award } from "lucide-react";
+import { Award, BookOpen, CalendarDays, FlaskConical, Library, Mail } from "lucide-react";
+
+const courseFacts = [
+  { label: "Term", value: COURSE.semester },
+  { label: "Credits", value: `${COURSE.credits} (${COURSE.theoryCredits}T + ${COURSE.labCredits}L)` },
+  { label: "Contact", value: COURSE.contactHours },
+  { label: "Prerequisite", value: COURSE.prerequisite },
+];
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface)]">
-      {/* Decorative SVG background — camera grid + feature points motif */}
-      <svg
-        className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-            <rect width="32" height="32" fill="none" stroke="currentColor" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-        {/* Optical flow arrows motif */}
-        {[0, 1, 2, 3, 4].map((i) => (
-          <line
-            key={i}
-            x1={`${55 + i * 8}%`} y1="40%"
-            x2={`${58 + i * 8}%`} y2="30%"
-            stroke="currentColor" strokeWidth="1.5"
-          />
-        ))}
-        {/* Feature point circles */}
-        {[60, 65, 70, 75, 68, 72].map((cx, i) => (
-          <circle key={i} cx={`${cx}%`} cy={`${35 + (i % 3) * 8}%`} r="3" fill="currentColor" opacity="0.6" />
-        ))}
-        {/* Epipolar line */}
-        <path d="M 55% 60% Q 70% 50% 85% 65%" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      </svg>
+    <section className="border-b border-[var(--border)] bg-[var(--surface)]">
+      <div className="max-w-7xl mx-auto px-4 py-10 md:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 items-start">
+          <div>
+            <div className="max-w-3xl">
+              <div className="text-sm font-semibold text-[var(--academic)]">{COURSE.code}</div>
+              <h1 className="mt-2 text-3xl md:text-5xl font-bold text-[var(--ink)] leading-tight">
+                {COURSE.title}
+              </h1>
+              <p className="mt-4 text-base md:text-lg text-[var(--muted)] leading-relaxed">
+                A structured course dashboard for lectures, laboratory experiments, assessment guidance,
+                and curated resources in modern computer vision.
+              </p>
+            </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 py-12 md:py-16">
-        <div className="flex flex-col gap-2 mb-4">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-co2/10 text-co2 w-fit">
-            {COURSE.code} &middot; {COURSE.semester}
-          </span>
-        </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-[var(--ink)] max-w-2xl leading-tight">
-          {COURSE.title}
-        </h1>
-        <p className="mt-3 text-[var(--muted)] max-w-xl">
-          {COURSE.credits} Credits ({COURSE.theoryCredits}T + {COURSE.labCredits}L) &middot; {COURSE.contactHours}
-        </p>
-        <div className="mt-2 text-sm text-[var(--muted)]">
-          <span className="font-medium text-[var(--ink)]">{COURSE.instructor}</span>
-          {" "}&middot; {COURSE.designation}
-        </div>
-        <div className="text-xs text-[var(--muted)] mt-1">{COURSE.department}, {COURSE.university}</div>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div className="border-l-2 border-[var(--academic)] pl-3">
+                <div className="text-xs uppercase tracking-wide text-[var(--muted)]">Instructor</div>
+                <div className="font-semibold text-[var(--ink)]">{COURSE.instructor}</div>
+                <div className="text-[var(--muted)]">{COURSE.department}</div>
+                <div className="text-[var(--muted)]">{COURSE.university}</div>
+                <div className="text-[var(--muted)]">{COURSE.office}</div>
+              </div>
+              <div className="border-l-2 border-[var(--accent)] pl-3">
+                <div className="text-xs uppercase tracking-wide text-[var(--muted)]">Academic Scope</div>
+                <div className="font-semibold text-[var(--ink)]">Theory, lab work, and mini project</div>
+                <div className="text-[var(--muted)]">Mapped to course outcomes and assessment areas</div>
+              </div>
+            </div>
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/lectures" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-co2 text-white text-sm font-medium hover:opacity-90 transition-opacity">
-            <BookOpen size={15} /> Browse Lectures
-          </Link>
-          <Link href="/lab-manual" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-co4/10 text-co4 text-sm font-medium hover:opacity-80 transition-opacity border border-co4/20">
-            <FlaskConical size={15} /> Lab Manual
-          </Link>
-          <Link href="/assessment" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-co3/10 text-co3 text-sm font-medium hover:opacity-80 transition-opacity border border-co3/20">
-            <Award size={15} /> Assessment
-          </Link>
-          <Link href="/resources" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--surface-2)] text-[var(--muted)] text-sm font-medium hover:text-[var(--ink)] transition-colors border border-[var(--border)]">
-            <Eye size={15} /> Resources
-          </Link>
+            <div className="mt-7 flex flex-wrap gap-2">
+              <Link href="/lectures" className="inline-flex items-center gap-2 rounded-md bg-[var(--academic)] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90">
+                <BookOpen size={15} /> Lectures
+              </Link>
+              <Link href="/lab-manual" className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--surface-2)]">
+                <FlaskConical size={15} /> Lab Manual
+              </Link>
+              <Link href="/assessment" className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--surface-2)]">
+                <Award size={15} /> Assessment
+              </Link>
+              <Link href="/resources" className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--surface-2)]">
+                <Library size={15} /> Resources
+              </Link>
+            </div>
+          </div>
+
+          <aside className="rounded-lg border border-[var(--border)] bg-[var(--canvas)] p-5">
+            <div className="flex items-center gap-2 border-b border-[var(--border)] pb-3">
+              <CalendarDays size={17} className="text-[var(--academic)]" />
+              <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--ink)]">Course Information</h2>
+            </div>
+            <dl className="divide-y divide-[var(--border)]">
+              {courseFacts.map((fact) => (
+                <div key={fact.label} className="grid grid-cols-[92px_1fr] gap-3 py-3 text-sm">
+                  <dt className="text-[var(--muted)]">{fact.label}</dt>
+                  <dd className="font-medium text-[var(--ink)]">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <a href={`mailto:${COURSE.email}`} className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-[var(--academic)] hover:underline">
+              <Mail size={15} /> {COURSE.email}
+            </a>
+          </aside>
         </div>
       </div>
     </section>
