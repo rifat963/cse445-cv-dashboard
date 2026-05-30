@@ -111,7 +111,7 @@ export default async function LabDetailPage({ params }: PageProps) {
       <div className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
           {/* Learning Objectives */}
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <BookOpen size={16} className="text-co1" /> Learning Objectives
             </h2>
@@ -126,14 +126,14 @@ export default async function LabDetailPage({ params }: PageProps) {
           </div>
 
           {/* Lab Tasks */}
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <Monitor size={16} className="text-co2" /> Lab Tasks
             </h2>
             <ol className="space-y-2">
               {lab.tasks.map((task, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-[var(--muted)]">
-                  <span className="shrink-0 w-6 h-6 rounded-full bg-co2/10 text-co2 flex items-center justify-center text-xs font-bold">
+                  <span className="shrink-0 w-6 h-6 rounded bg-co2/10 text-co2 flex items-center justify-center text-xs font-bold">
                     {i + 1}
                   </span>
                   {task}
@@ -145,7 +145,7 @@ export default async function LabDetailPage({ params }: PageProps) {
 
         {/* Infographic */}
         {infographicUrl ? (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-3">
               <ImageIcon size={16} className="text-co1" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Lab Infographic</h2>
@@ -162,7 +162,7 @@ export default async function LabDetailPage({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">
             <ImageIcon size={18} className="shrink-0 mt-0.5 opacity-40" />
             <p className="text-sm">
               Infographic coming soon. Drop{" "}
@@ -180,7 +180,7 @@ export default async function LabDetailPage({ params }: PageProps) {
 
         {/* Notebook widget */}
         {(kaggleUrl || ipynbUrl || htmlUrl) ? (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-2">
               <FileCode size={16} className="text-co4" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
@@ -221,7 +221,7 @@ export default async function LabDetailPage({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-1">
               <FileCode size={16} className="text-[var(--muted)]" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
@@ -237,12 +237,12 @@ export default async function LabDetailPage({ params }: PageProps) {
         )}
 
         {/* Expected Outputs */}
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
           <h2 className="font-semibold text-[var(--ink)] mb-3">Expected Outputs</h2>
           <ul className="space-y-2">
             {lab.expectedOutputs.map((out, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-[var(--muted)]">
-                <span className="mt-1 w-2 h-2 rounded-full bg-co4 shrink-0" />
+                <span className="mt-1 w-2 h-2 rounded bg-co4 shrink-0" />
                 {out}
               </li>
             ))}
@@ -250,7 +250,7 @@ export default async function LabDetailPage({ params }: PageProps) {
         </div>
 
         {/* Viva Questions */}
-        <div className="rounded-xl border border-co3/20 bg-co3/5 p-5">
+        <div className="rounded-lg border border-co3/20 bg-co3/5 p-5">
           <h2 className="font-semibold text-[var(--ink)] mb-4 flex items-center gap-2">
             <HelpCircle size={16} className="text-co3" /> Viva Questions &amp; Answers
           </h2>

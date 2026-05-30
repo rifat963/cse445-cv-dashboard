@@ -11,7 +11,7 @@ export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl }: 
   if (!kaggleUrl && !ipynbUrl && !htmlUrl) return null;
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
       <div className="flex items-center gap-2 mb-2">
         <FileCode size={16} className="text-co4" />
         <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>

@@ -147,7 +147,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
           <span className={cn("inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-mono font-bold border", colors.pill)}>
             <Icon size={11} /> {tutorial.id.toUpperCase()}
           </span>
-          <span className={cn("text-xs font-semibold px-2.5 py-0.5 rounded-full", diff)}>
+          <span className={cn("text-xs font-semibold px-2.5 py-0.5 rounded", diff)}>
             {tutorial.difficulty}
           </span>
           <span className="flex items-center gap-1 text-xs text-[var(--muted)]">
@@ -163,7 +163,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
           {tutorial.tools.map((tool) => (
             <span
               key={tool}
-              className={cn("px-2.5 py-0.5 rounded-full text-xs font-mono border", colors.pill)}
+              className={cn("px-2.5 py-0.5 rounded text-xs font-mono border", colors.pill)}
             >
               {tool}
             </span>
@@ -175,7 +175,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
       <div className="space-y-6">
 
         {/* Topics covered */}
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
           <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
             <BookOpen size={16} className={colors.accent} /> Topics Covered
           </h2>
@@ -196,7 +196,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
 
         {/* Learning objectives + Key takeaways */}
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <CheckCircle size={16} className="text-co1" /> Learning Objectives
             </h2>
@@ -210,14 +210,14 @@ export default async function TutorialDetailPage({ params }: PageProps) {
             </ul>
           </div>
 
-          <div className={cn("rounded-xl border p-5", colors.border, colors.headerBg)}>
+          <div className={cn("rounded-lg border p-5", colors.border, colors.headerBg)}>
             <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <Lightbulb size={16} className={colors.accent} /> Key Takeaways
             </h2>
             <ul className="space-y-2">
               {tutorial.keyTakeaways.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-[var(--muted)]">
-                  <span className={cn("mt-1.5 w-1.5 h-1.5 rounded-full shrink-0", colors.dot)} />
+                  <span className={cn("mt-1.5 w-1.5 h-1.5 rounded shrink-0", colors.dot)} />
                   {item}
                 </li>
               ))}
@@ -227,7 +227,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
 
         {/* Infographic */}
         {infographicUrl ? (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-3">
               <ImageIcon size={16} className={colors.accent} />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Tutorial Infographic</h2>
@@ -244,7 +244,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">
             <ImageIcon size={18} className="shrink-0 mt-0.5 opacity-40" />
             <p className="text-sm">
               Infographic coming soon. Drop{" "}
@@ -262,7 +262,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
 
         {/* Notebook widget */}
         {(kaggleUrl || ipynbUrl || htmlUrl) && (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-2">
               <FileCode size={16} className="text-co4" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
@@ -315,7 +315,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
 
         {/* No notebook yet placeholder */}
         {!kaggleUrl && !ipynbUrl && !htmlUrl && (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-1">
               <FileCode size={16} className="text-[var(--muted)]" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
@@ -331,14 +331,14 @@ export default async function TutorialDetailPage({ params }: PageProps) {
         )}
 
         {/* Exercises */}
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
           <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
             <FlaskConical size={16} className="text-co3" /> Hands-On Exercises
           </h2>
           <ol className="space-y-2">
             {tutorial.exercises.map((exercise, i) => (
               <li key={i} className="flex items-start gap-3 text-sm text-[var(--muted)]">
-                <span className="shrink-0 w-6 h-6 rounded-full bg-co3/10 text-co3 flex items-center justify-center text-xs font-bold">
+                <span className="shrink-0 w-6 h-6 rounded bg-co3/10 text-co3 flex items-center justify-center text-xs font-bold">
                   {i + 1}
                 </span>
                 {exercise}
@@ -348,7 +348,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
         </div>
 
         {/* Tools reference */}
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
           <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
             <Wrench size={16} className="text-co2" /> Tools &amp; Libraries
           </h2>
@@ -356,7 +356,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
             {tutorial.tools.map((tool) => (
               <span
                 key={tool}
-                className={cn("px-3 py-1.5 rounded-full text-sm font-mono border", colors.pill)}
+                className={cn("px-3 py-1.5 rounded text-sm font-mono border", colors.pill)}
               >
                 {tool}
               </span>

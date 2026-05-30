@@ -91,12 +91,12 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         {/* Header */}
-        <div className={cn("rounded-2xl border border-[var(--border)] p-6 mb-8", scheme.bg)}>
+        <div className={cn("rounded-lg border border-[var(--border)] p-6 mb-8", scheme.bg)}>
           <h1 className="text-2xl font-bold text-[var(--ink)] mb-2">{lecture.title}</h1>
           <p className="text-[var(--muted)] text-sm leading-relaxed mb-5">{lecture.tagline}</p>
 
           <div className="flex flex-wrap items-center gap-2 mb-5">
-            <span className={cn("inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-bold border", scheme.badge)}>
+            <span className={cn("inline-flex items-center px-3 py-1 rounded text-xs font-mono font-bold border", scheme.badge)}>
               L{String(lecture.lectureNo).padStart(2, "0")}
             </span>
             {lecture.co.map((co) => (
@@ -115,7 +115,7 @@ export default async function Page({ params }: PageProps) {
               <p className="font-semibold text-[var(--ink)] mb-2 flex items-center gap-1"><Hash size={12} /> Key Terms</p>
               <div className="flex flex-wrap gap-1.5">
                 {lecture.keyTerms.map((t) => (
-                  <span key={t} className="px-2 py-0.5 rounded-full bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">{t}</span>
+                  <span key={t} className="px-2 py-0.5 rounded bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">{t}</span>
                 ))}
               </div>
             </div>
@@ -147,7 +147,7 @@ export default async function Page({ params }: PageProps) {
             <ol className="space-y-2">
               {lecture.subtopics.map((topic, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-[var(--muted)] rounded-lg px-3 py-2 bg-[var(--surface)] border border-[var(--border)]">
-                  <span className={cn("shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold", scheme.badge)}>{i + 1}</span>
+                  <span className={cn("shrink-0 w-5 h-5 rounded flex items-center justify-center text-xs font-bold", scheme.badge)}>{i + 1}</span>
                   {topic}
                 </li>
               ))}
@@ -170,7 +170,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Infographic */}
         {infographicUrl ? (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
             <div className="flex items-center gap-2 mb-3">
               <ImageIcon size={16} className={scheme.accent} />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Lecture Infographic</h2>
@@ -187,7 +187,7 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)] mb-8">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)] mb-8">
             <ImageIcon size={18} className="shrink-0 mt-0.5 opacity-40" />
             <p className="text-sm">
               Infographic coming soon. Drop{" "}
@@ -205,7 +205,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Lecture slides */}
         {(slidesUrl || pdfUrl) ? (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
             <div className="flex items-center gap-2 mb-2">
               <FileText size={16} className={scheme.accent} />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Lecture Slides</h2>
@@ -239,7 +239,7 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-center gap-3 text-[var(--muted)] mb-8">
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-center gap-3 text-[var(--muted)] mb-8">
             <FileText size={18} className="shrink-0 opacity-40" />
             <p className="text-sm">
               Slides coming soon. Add links to{" "}
@@ -253,7 +253,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Related Labs */}
         {relatedLabs.length > 0 && (
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
             <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
               <FlaskConical size={16} className="text-co4" /> Related Lab Experiments
             </h2>
@@ -315,9 +315,9 @@ export default async function Page({ params }: PageProps) {
       </Link>
 
       {/* Module header */}
-      <div className={cn("rounded-2xl border border-[var(--border)] p-6 mb-8", scheme.bg)}>
+      <div className={cn("rounded-lg border border-[var(--border)] p-6 mb-8", scheme.bg)}>
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className={cn("inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-bold border", scheme.badge)}>
+          <span className={cn("inline-flex items-center px-3 py-1 rounded text-xs font-mono font-bold border", scheme.badge)}>
             {mod.id}
           </span>
           {mod.co.map((co) => (
@@ -354,7 +354,7 @@ export default async function Page({ params }: PageProps) {
       <div className="space-y-3 mb-10">
         {moduleLectures.map((lecture) => (
           <Link key={lecture.id} href={`/lectures/${lecture.slug}`}
-            className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-4 hover:bg-[var(--surface-2)] transition-colors">
+            className="group flex items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 py-4 hover:bg-[var(--surface-2)] transition-colors">
             <span className={cn("shrink-0 px-2 py-0.5 rounded text-xs font-mono font-semibold border", scheme.badge)}>
               L{String(lecture.lectureNo).padStart(2, "0")}
             </span>
@@ -374,7 +374,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* Related Labs */}
       {relatedLabs.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
           <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
             <FlaskConical size={16} className="text-co4" /> Related Lab Experiments
           </h2>

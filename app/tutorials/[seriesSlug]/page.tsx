@@ -90,16 +90,16 @@ export default async function SeriesPage({ params }: PageProps) {
       </div>
 
       {/* Series header card */}
-      <div className={cn("rounded-2xl border p-6 mb-8", colors.border, colors.headerBg)}>
+      <div className={cn("rounded-lg border p-6 mb-8", colors.border, colors.headerBg)}>
         <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center shrink-0 text-2xl", colors.badge)}>
+          <div className={cn("w-14 h-14 rounded-lg flex items-center justify-center shrink-0 text-2xl", colors.badge)}>
             <Icon size={26} />
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h1 className={cn("text-2xl font-bold", colors.accent)}>{series.title}</h1>
-              <span className={cn("text-xs font-semibold px-2.5 py-0.5 rounded-full border", colors.pill)}>
+              <span className={cn("text-xs font-semibold px-2.5 py-0.5 rounded border", colors.pill)}>
                 {series.tutorials.length} tutorials
               </span>
             </div>
@@ -114,7 +114,7 @@ export default async function SeriesPage({ params }: PageProps) {
               </span>
               {Object.entries(byDifficulty).map(([level, count]) =>
                 count > 0 ? (
-                  <span key={level} className={cn("px-2 py-0.5 rounded-full font-medium", difficultyConfig[level as keyof typeof difficultyConfig])}>
+                  <span key={level} className={cn("px-2 py-0.5 rounded font-medium", difficultyConfig[level as keyof typeof difficultyConfig])}>
                     {count} {level}
                   </span>
                 ) : null
@@ -142,7 +142,7 @@ export default async function SeriesPage({ params }: PageProps) {
               key={tutorial.id}
               href={`/tutorials/${series.slug}/${tutorial.slug}`}
               className={cn(
-                "group flex items-start gap-4 rounded-xl border p-4",
+                "group flex items-start gap-4 rounded-lg border p-4",
                 "bg-[var(--surface)] border-[var(--border)]",
                 "hover:bg-[var(--surface-2)] hover:shadow-sm transition-all"
               )}
@@ -164,7 +164,7 @@ export default async function SeriesPage({ params }: PageProps) {
                   )}>
                     {tutorial.id.toUpperCase()}
                   </span>
-                  <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full", diff)}>
+                  <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded", diff)}>
                     {tutorial.difficulty}
                   </span>
                   <span className="text-xs text-[var(--muted)] flex items-center gap-1 ml-auto sm:ml-0">
@@ -186,7 +186,7 @@ export default async function SeriesPage({ params }: PageProps) {
                   {tutorial.tools.map((tool) => (
                     <span
                       key={tool}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-mono border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
+                      className="px-2 py-0.5 rounded text-[10px] font-mono border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)]"
                     >
                       {tool}
                     </span>
