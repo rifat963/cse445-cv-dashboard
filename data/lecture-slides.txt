@@ -7,17 +7,17 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Module 1 – Introduction to Computer Vision
 # ─────────────────────────────────────────────────────────────────────────────
-# L01     https://drive.google.com/file/d//preview
-# L01_PDF https://drive.google.com/uc?export=download&id=
+L01     https://drive.google.com/file/d/1_Wi6Znl-roBYXvI8ZQXFzyM6hmgj69r2/view?usp=sharing
+L01_PDF https://drive.google.com/file/d/1_Wi6Znl-roBYXvI8ZQXFzyM6hmgj69r2/view?usp=sharing
 
-# L02     https://drive.google.com/file/d//preview
-# L02_PDF https://drive.google.com/uc?export=download&id=
+L02     https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?usp=sharing
+L02_PDF https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?usp=sharing
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Module 2 – Local Features and Descriptors
 # ─────────────────────────────────────────────────────────────────────────────
-# L03     https://drive.google.com/file/d//preview
-# L03_PDF https://drive.google.com/uc?export=download&id=
+L03     https://drive.google.com/file/d/1AFVD1PFlh5tpOCkKPqHuyVFSnr3tRXt-/view?usp=sharing
+L03_PDF https://drive.google.com/file/d/1AFVD1PFlh5tpOCkKPqHuyVFSnr3tRXt-/view?usp=sharing
 
 # L04     https://drive.google.com/file/d//preview
 # L04_PDF https://drive.google.com/uc?export=download&id=

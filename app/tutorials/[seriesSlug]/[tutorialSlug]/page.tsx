@@ -7,8 +7,8 @@ import {
   BookOpen, CheckCircle, Lightbulb, FlaskConical, Wrench, FileCode,
   ExternalLink, Download, ImageIcon,
 } from "lucide-react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import InfographicViewer from "@/components/ui/InfographicViewer";
 
 export function generateStaticParams() {
   return tutorialSeries.flatMap((series) =>
@@ -232,16 +232,10 @@ export default async function TutorialDetailPage({ params }: PageProps) {
               <ImageIcon size={16} className={colors.accent} />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Tutorial Infographic</h2>
             </div>
-            <div className="relative w-full rounded-lg overflow-hidden border border-[var(--border)]">
-              <Image
-                src={infographicUrl}
-                alt={`${tutorial.title} infographic`}
-                width={1200}
-                height={800}
-                className="w-full h-auto object-contain"
-                priority={false}
-              />
-            </div>
+            <InfographicViewer
+              src={infographicUrl}
+              alt={`${tutorial.title} infographic`}
+            />
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">

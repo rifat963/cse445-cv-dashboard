@@ -3,9 +3,9 @@ import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon } from "lucide-react";
-import Image from "next/image";
 import { getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
+import InfographicViewer from "@/components/ui/InfographicViewer";
 
 export async function generateStaticParams() {
   return labs.map((l) => ({ slug: l.slug }));
@@ -150,16 +150,10 @@ export default async function LabDetailPage({ params }: PageProps) {
               <ImageIcon size={16} className="text-co1" />
               <h2 className="font-semibold text-[var(--ink)] text-sm">Lab Infographic</h2>
             </div>
-            <div className="relative w-full rounded-lg overflow-hidden border border-[var(--border)]">
-              <Image
-                src={infographicUrl}
-                alt={`${lab.title} infographic`}
-                width={1200}
-                height={800}
-                className="w-full h-auto object-contain"
-                priority={false}
-              />
-            </div>
+            <InfographicViewer
+              src={infographicUrl}
+              alt={`${lab.title} infographic`}
+            />
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-start gap-3 text-[var(--muted)]">

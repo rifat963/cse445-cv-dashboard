@@ -11,13 +11,13 @@ import {
   FlaskConical,
   Hash,
   FileText,
-  ExternalLink,
-  Download,
   ImageIcon,
 } from "lucide-react";
-import Image from "next/image";
-import { getLectureLinks, getLectureInfographic } from "@/lib/notebookLinks";
+import { getLectureLinks } from "@/lib/notebookLinks";
+import { getLectureInfographics } from "@/lib/infographicImages";
 import { cn } from "@/lib/utils";
+import InfographicViewer from "@/components/ui/InfographicViewer";
+import PdfViewer from "@/components/ui/PdfViewer";
 
 export async function generateStaticParams() {
   const moduleSlugs = modules.map((m) => ({ slug: m.slug }));
@@ -53,7 +53,7 @@ export default async function Page({ params }: PageProps) {
     );
 
     const { slides: slidesUrl, pdf: pdfUrl } = getLectureLinks(lecture.id);
-    const infographicUrl = getLectureInfographic(lecture.id);
+    const infographicImages = getLectureInfographics(lecture.id, lecture.title);
 
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -169,21 +169,27 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         {/* Infographic */}
-        {infographicUrl ? (
+        {infographicImages.length > 0 ? (
           <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
-            <div className="flex items-center gap-2 mb-3">
-              <ImageIcon size={16} className={scheme.accent} />
-              <h2 className="font-semibold text-[var(--ink)] text-sm">Lecture Infographic</h2>
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <ImageIcon size={16} className={scheme.accent} />
+                <h2 className="font-semibold text-[var(--ink)] text-sm">Lecture Infographics</h2>
+              </div>
+              <span className="text-xs text-[var(--muted)]">
+                {infographicImages.length} image file{infographicImages.length === 1 ? "" : "s"}
+              </span>
             </div>
-            <div className="relative w-full rounded-lg overflow-hidden border border-[var(--border)]">
-              <Image
-                src={infographicUrl}
-                alt={`${lecture.title} infographic`}
-                width={1200}
-                height={800}
-                className="w-full h-auto object-contain"
-                priority={false}
-              />
+            <div className={cn("grid gap-4", infographicImages.length === 1 ? "grid-cols-1" : "md:grid-cols-2")}>
+              {infographicImages.map((image, index) => (
+                <InfographicViewer
+                  key={image.src}
+                  src={image.src}
+                  alt={image.alt}
+                  images={infographicImages}
+                  initialIndex={index}
+                />
+              ))}
             </div>
           </div>
         ) : (
@@ -192,9 +198,9 @@ export default async function Page({ params }: PageProps) {
             <p className="text-sm">
               Infographic coming soon. Drop{" "}
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
-                {lecture.id}.png
+                {lecture.id}/
               </code>{" "}
-              (or .jpg / .webp / .svg) into{" "}
+              folder with .webp, .png, .jpg, or .svg files into{" "}
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
                 public/infographics/lectures/
               </code>{" "}
@@ -205,38 +211,11 @@ export default async function Page({ params }: PageProps) {
 
         {/* Lecture slides */}
         {(slidesUrl || pdfUrl) ? (
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
-            <div className="flex items-center gap-2 mb-2">
-              <FileText size={16} className={scheme.accent} />
-              <h2 className="font-semibold text-[var(--ink)] text-sm">Lecture Slides</h2>
-            </div>
-            <p className="text-xs text-[var(--muted)] mb-4 leading-relaxed">
-              Open the slide deck in Google Drive or download a local PDF copy.
-            </p>
-            <div className="flex gap-2 flex-wrap">
-              {slidesUrl && (
-                <a
-                  href={slidesUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity hover:opacity-80",
-                    scheme.badge
-                  )}
-                >
-                  <ExternalLink size={13} /> View Slides
-                </a>
-              )}
-              {pdfUrl && (
-                <a
-                  href={pdfUrl}
-                  download
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)] transition-colors"
-                >
-                  <Download size={13} /> Download PDF
-                </a>
-              )}
-            </div>
+          <div className="mb-8">
+            <PdfViewer
+              title={lecture.title}
+              sourceUrl={slidesUrl ?? pdfUrl!}
+            />
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-center gap-3 text-[var(--muted)] mb-8">
@@ -246,7 +225,7 @@ export default async function Page({ params }: PageProps) {
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
                 data/lecture-slides.txt
               </code>{" "}
-              to enable View Slides and Download PDF buttons here.
+              to display the embedded lecture PDF viewer here.
             </p>
           </div>
         )}

@@ -74,33 +74,48 @@ export function getTutorialLinks(tutorialId: string): NotebookLinks {
   };
 }
 
-// ── Lecture slides & infographics ─────────────────────────────────────────────
+// ── Lecture slides ────────────────────────────────────────────────────────────
 // lecture-slides.txt keys: L01 / L01_PDF
-// infographics: public/infographics/lectures/L01.{png,jpg,jpeg,webp,svg}
 
 export interface LectureLinks {
   slides?: string;
   pdf?: string;
 }
 
-let _lectureMap: Map<string, string> | null = null;
-function lectureMap() { return (_lectureMap ??= readLinkFile("lecture-slides.txt")); }
+function lectureMap() { return readLinkFile("lecture-slides.txt"); }
+
+function getGoogleDriveFileId(url?: string): string | undefined {
+  if (!url) return undefined;
+
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1]
+      ?? parsed.searchParams.get("id")
+      ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function getGoogleDrivePreviewUrl(url?: string): string | undefined {
+  const fileId = getGoogleDriveFileId(url);
+  return fileId ? `https://drive.google.com/file/d/${fileId}/preview` : url;
+}
+
+function getGoogleDriveDownloadUrl(url?: string): string | undefined {
+  const fileId = getGoogleDriveFileId(url);
+  return fileId
+    ? `https://drive.google.com/uc?export=download&id=${fileId}`
+    : url;
+}
 
 export function getLectureLinks(lectureId: string): LectureLinks {
   const key = lectureId.toUpperCase();
   const map = lectureMap();
   return {
-    slides: map.get(key),
-    pdf:    map.get(`${key}_PDF`),
+    slides: getGoogleDrivePreviewUrl(map.get(key)),
+    pdf:    getGoogleDriveDownloadUrl(map.get(`${key}_PDF`)),
   };
-}
-
-export function getLectureInfographic(lectureId: string): string | undefined {
-  for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
-    const result = getLocalPublicFile(`infographics/lectures/${lectureId}.${ext}`);
-    if (result) return result;
-  }
-  return undefined;
 }
 
 // ── Lab infographics ──────────────────────────────────────────────────────────
