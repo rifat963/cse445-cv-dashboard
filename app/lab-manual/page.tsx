@@ -61,7 +61,6 @@ export default function LabManualPage() {
                       <span className={cn("text-xs font-mono font-bold px-2 py-0.5 rounded border", colors.badge)}>
                         Module {mod.moduleNo}
                       </span>
-                      <span className="text-xs uppercase tracking-wide text-[var(--muted)]">{mod.weeks}</span>
                     </div>
                     <h3 className="text-base font-bold text-[var(--ink)] leading-snug">{mod.title}</h3>
                     <p className="text-xs text-[var(--muted)] mt-1 leading-relaxed line-clamp-3">{mod.description}</p>

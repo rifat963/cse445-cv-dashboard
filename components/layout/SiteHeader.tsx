@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/tutorials", label: "Tutorials" },
   { href: "/assessment", label: "Assessment" },
   { href: "/resources", label: "Resources" },
+  { href: "/about", label: "About" },
 ];
 
 export default function SiteHeader() {
@@ -33,7 +34,7 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 flex-1 border-l border-[var(--border)] pl-4">
+        <nav className="hidden lg:flex items-center gap-1 flex-1 border-l border-[var(--border)] pl-4">
           {navLinks.map((link) => {
             const active =
               link.href === "/"
@@ -59,7 +60,7 @@ export default function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <button
-            className="md:hidden p-2 rounded-md text-[var(--muted)] hover:text-[var(--ink)]"
+            className="lg:hidden p-2 rounded-md text-[var(--muted)] hover:text-[var(--ink)]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -69,7 +70,7 @@ export default function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-[var(--border)] bg-[var(--surface)] px-4 py-3 flex flex-col gap-1">
+        <div className="lg:hidden border-t border-[var(--border)] bg-[var(--surface)] px-4 py-3 flex flex-col gap-1">
           {navLinks.map((link) => {
             const active =
               link.href === "/"

@@ -107,7 +107,6 @@ export default async function Page({ params }: PageProps) {
               {mod.id} · {mod.shortTitle}
             </Link>
             <span className={cn("px-2 py-0.5 rounded text-xs font-medium border", scheme.badge)}>{lecture.assessmentArea}</span>
-            <span className="text-xs text-[var(--muted)] font-mono sm:ml-auto">{mod.weekRange}</span>
           </div>
 
           <div className="grid gap-3 md:grid-cols-3 text-xs">
@@ -302,7 +301,6 @@ export default async function Page({ params }: PageProps) {
           {mod.co.map((co) => (
             <span key={co} className="px-2 py-0.5 rounded text-xs bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">{co}</span>
           ))}
-          <span className="text-xs text-[var(--muted)] font-mono ml-auto">{mod.weekRange}</span>
         </div>
         <h1 className="text-2xl font-bold text-[var(--ink)] mb-2">{mod.title}</h1>
         <p className="text-[var(--muted)] text-sm leading-relaxed">{mod.description}</p>

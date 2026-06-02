@@ -1,0 +1,28 @@
+export const profile = {
+  name: "Mohammad Rifat Ahmmad Rashid",
+  title: "Associate Professor",
+  department: "Department of Computer Science and Engineering",
+  university: "East West University",
+  location: "Dhaka 1212, Bangladesh",
+  email: "rifat.rashid@ewubd.edu",
+  github: "https://github.com/rifat963",
+  scholar: "https://scholar.google.com/citations?user=fXu1UdgAAAAJ&hl=en",
+  linkedin: "https://www.linkedin.com/in/mohammad-rifat-rashid-73982a5b/",
+  website: "https://rifat963.github.io",
+  office: "Room #646, Department of CSE, EWU",
+  interests: [
+    "Applied AI & Machine Learning",
+    "Computer Vision",
+    "Knowledge Graphs & Semantic Web",
+    "Brain-Computer Interfaces",
+    "Graph Neural Networks",
+    "IoT & Smart Systems",
+    "Precision Agriculture AI",
+  ],
+  stats: {
+    journals: 42,
+    conferences: 24,
+    bookChapters: 6,
+    fundedProjects: 4,
+  },
+};

@@ -24,7 +24,6 @@ export interface LabModule {
   level: "Core" | "Intermediate" | "Advanced";
   co: string[];
   labIds: string[];
-  weeks: string;
 }
 
 export const labModules: LabModule[] = [
@@ -38,7 +37,6 @@ export const labModules: LabModule[] = [
     level: "Core",
     co: ["CO1", "CO2", "CO4"],
     labIds: ["LAB01", "LAB02", "LAB03"],
-    weeks: "Weeks 1–3",
   },
   {
     id: "LABM02",
@@ -50,7 +48,6 @@ export const labModules: LabModule[] = [
     level: "Intermediate",
     co: ["CO2", "CO4"],
     labIds: ["LAB04", "LAB05", "LAB06"],
-    weeks: "Weeks 4–7",
   },
   {
     id: "LABM03",
@@ -62,7 +59,6 @@ export const labModules: LabModule[] = [
     level: "Advanced",
     co: ["CO3", "CO4"],
     labIds: ["LAB07", "LAB08", "LAB09", "LAB10"],
-    weeks: "Weeks 8–13",
   },
 ];
 

@@ -34,7 +34,6 @@ export default function ModuleCard({ module: mod, lectureCount, completedCount }
             <span className={cn("rounded border px-2 py-0.5 font-mono text-xs font-bold", colors.badge)}>
               {mod.id}
             </span>
-            <span className="text-xs uppercase tracking-wide text-[var(--muted)]">{mod.weekRange}</span>
           </div>
           <h3 className="text-sm font-bold leading-snug text-[var(--ink)] group-hover:text-[var(--academic)]">
             {mod.title}

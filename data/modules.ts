@@ -8,7 +8,6 @@ export interface CourseModule {
   color: "co1" | "co2" | "co3" | "co4" | "advanced";
   description: string;
   lectureNos: number[];
-  weekRange: string;
   outcomes: string[];
   pythonTools: string[];
 }
@@ -25,7 +24,6 @@ export const modules: CourseModule[] = [
     description:
       "Introduces the scope and motivation of computer vision, the distinction between image processing and vision, major vision tasks (classification, detection, segmentation, tracking, 3D), and the end-to-end vision system pipeline.",
     lectureNos: [1, 2],
-    weekRange: "Week 1",
     outcomes: [
       "Define computer vision and distinguish it from image processing",
       "Enumerate major vision tasks and map them to real-world applications",
@@ -44,7 +42,6 @@ export const modules: CourseModule[] = [
     description:
       "Covers the full spectrum of local feature detection and description: Harris corner detector, FAST, SIFT, SURF, and ORB. Explores what makes a good interest point and how descriptors achieve invariance to rotation, scale, and illumination.",
     lectureNos: [3, 4, 5],
-    weekRange: "Weeks 2–3",
     outcomes: [
       "Derive the Harris corner response function from the structure tensor",
       "Explain SIFT scale-space detection and 128-D descriptor construction",
@@ -64,7 +61,6 @@ export const modules: CourseModule[] = [
     description:
       "Builds the geometric foundation of computer vision: the pinhole camera model, intrinsic and extrinsic parameters, coordinate system transformations, homogeneous coordinates, and 2D/3D rigid-body transformations.",
     lectureNos: [6, 7, 8],
-    weekRange: "Weeks 3–4",
     outcomes: [
       "Derive the perspective projection equations and camera intrinsic matrix K",
       "Assemble the full projection matrix P = K[R|t]",
@@ -84,7 +80,6 @@ export const modules: CourseModule[] = [
     description:
       "Covers descriptor matching strategies, distance metrics, Lowe's ratio test, robust outlier rejection with RANSAC, homography estimation, image alignment, panorama stitching, and the fundamentals of camera calibration.",
     lectureNos: [9, 10, 11],
-    weekRange: "Weeks 5–6",
     outcomes: [
       "Match SIFT and ORB descriptors using L2/Hamming distance and ratio test",
       "Explain RANSAC and apply it for robust homography estimation",
@@ -104,7 +99,6 @@ export const modules: CourseModule[] = [
     description:
       "Develops the two-view geometry framework: epipolar constraints, fundamental and essential matrices, stereo rectification, disparity computation, and depth estimation from stereo and monocular cues.",
     lectureNos: [12, 14, 15],
-    weekRange: "Weeks 6–7",
     outcomes: [
       "Derive the epipolar constraint and interpret fundamental matrix F",
       "Decompose essential matrix E into rotation and translation",
@@ -124,7 +118,6 @@ export const modules: CourseModule[] = [
     description:
       "Analyzes pixel-level motion through the optical flow framework. Covers the brightness constancy assumption, the Lucas-Kanade sparse flow estimator, Horn-Schunck dense flow, Farneback method, and background subtraction techniques for moving object detection.",
     lectureNos: [16, 17],
-    weekRange: "Weeks 8–9",
     outcomes: [
       "Derive the optical flow constraint equation from brightness constancy",
       "Apply Lucas-Kanade pyramidal sparse optical flow to track feature points",
@@ -144,7 +137,6 @@ export const modules: CourseModule[] = [
     description:
       "Covers the classical HOG+SVM pipeline through to modern deep learning detectors. Explains sliding window search, HOG descriptors, SVM classifiers, region proposal networks (Faster R-CNN), and single-stage architectures (YOLO, SSD).",
     lectureNos: [18, 19],
-    weekRange: "Weeks 9–10",
     outcomes: [
       "Compute HOG descriptors and train a linear SVM for pedestrian detection",
       "Explain the Faster R-CNN two-stage detection pipeline with RPNs",
@@ -164,7 +156,6 @@ export const modules: CourseModule[] = [
     description:
       "Covers multi-object tracking in the tracking-by-detection framework. Introduces state space modeling, Kalman filtering for prediction, IoU-based association, and modern trackers including SORT, DeepSORT, and ByteTrack.",
     lectureNos: [20, 21],
-    weekRange: "Weeks 10–11",
     outcomes: [
       "Formulate object tracking as a state estimation problem using Kalman filter",
       "Implement IoU-based association and the Hungarian algorithm in SORT",
@@ -184,7 +175,6 @@ export const modules: CourseModule[] = [
     description:
       "Surveys real-world CV application domains: autonomous driving (AV perception stack, sensor fusion), robotics (visual SLAM, grasping), surveillance analytics (re-ID, anomaly detection), and emerging frontiers (Vision Transformers, NeRF, Gaussian Splatting, SAM, CLIP).",
     lectureNos: [22, 23, 24],
-    weekRange: "Weeks 11–12",
     outcomes: [
       "Identify vision tasks in autonomous driving and discuss sensor fusion strategies",
       "Outline visual SLAM concepts used in robot navigation",
