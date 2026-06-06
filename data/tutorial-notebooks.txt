@@ -15,37 +15,37 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 # OD01 – Image Classification, Localization & Object Detection
-# OD01        https://www.kaggle.com/
+OD01        https://www.kaggle.com/code/mrifatrashid/od-01-classification-localization-detection
 # OD01_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD01_HTML   https://drive.google.com/file/d//preview
 
 # OD02 – Bounding Boxes, IoU, NMS & mAP
-# OD02        https://www.kaggle.com/
+OD02        https://www.kaggle.com/code/mrifatrashid/od-02-bounding-boxes-iou-nms-map
 # OD02_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD02_HTML   https://drive.google.com/file/d//preview
 
 # OD03 – Sliding Window, Selective Search & R-CNN
-# OD03        https://www.kaggle.com/
+OD03        https://www.kaggle.com/code/mrifatrashid/od-03-sliding-window-selective-search-r-cnn
 # OD03_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD03_HTML   https://drive.google.com/file/d//preview
 
 # OD04 – Faster R-CNN: Region Proposal Network
-# OD04        https://www.kaggle.com/
+OD04        https://www.kaggle.com/code/mrifatrashid/od-04-faster-r-cnn-region-proposal-network
 # OD04_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD04_HTML   https://drive.google.com/file/d//preview
 
 # OD05 – SSD, RetinaNet & Focal Loss
-# OD05        https://www.kaggle.com/
+OD05        https://www.kaggle.com/code/mrifatrashid/od-05-ssd-retinanet-focal-loss
 # OD05_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD05_HTML   https://drive.google.com/file/d//preview
 
 # OD06 – YOLO Architecture: Backbone, Neck & Head
-# OD06        https://www.kaggle.com/
+OD06        https://www.kaggle.com/code/mrifatrashid/od-06-yolo-architecture-backbone-neck-head
 # OD06_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD06_HTML   https://drive.google.com/file/d//preview
 
 # OD07 – YOLO Training on a Custom Dataset
-# OD07        https://www.kaggle.com/
+OD07        https://www.kaggle.com/code/mrifatrashid/od-07-yolo-training-on-a-custom-dataset
 # OD07_IPYNB  https://drive.google.com/uc?export=download&id=
 # OD07_HTML   https://drive.google.com/file/d//preview
 

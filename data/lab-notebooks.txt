@@ -8,21 +8,21 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Lab 01 – Image Representation and Basic Operations
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB01       https://www.kaggle.com/
+LAB01       https://www.kaggle.com/code/mrifatrashid/cse445-lab-1-image-fundamentals-basic-operatio
 # LAB01_IPYNB https://drive.google.com/uc?export=download&id=
 # LAB01_HTML  https://drive.google.com/file/d//preview
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Lab 02 – Feature Detection: Harris and FAST
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB02       https://www.kaggle.com/
+LAB02       https://www.kaggle.com/code/mrifatrashid/cse-445-lab-2-corner-detection-harris-fast
 # LAB02_IPYNB https://drive.google.com/uc?export=download&id=
 # LAB02_HTML  https://drive.google.com/file/d//preview
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Lab 03 – SIFT and ORB Feature Extraction and Matching
 # ─────────────────────────────────────────────────────────────────────────────
-# LAB03       https://www.kaggle.com/
+LAB03       https://www.kaggle.com/code/mrifatrashid/cse-445-lab-3-feature-extraction-and-matching
 # LAB03_IPYNB https://drive.google.com/uc?export=download&id=
 # LAB03_HTML  https://drive.google.com/file/d//preview
 

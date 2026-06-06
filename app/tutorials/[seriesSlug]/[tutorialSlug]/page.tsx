@@ -169,6 +169,16 @@ export default async function TutorialDetailPage({ params }: PageProps) {
             </span>
           ))}
         </div>
+
+        <div className="mt-5 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
+          <h2 className="mb-1 flex items-center gap-2 text-sm font-semibold text-[var(--ink)]">
+            <Lightbulb size={15} className="text-amber-600 dark:text-amber-400" />
+            Code Structure Note
+          </h2>
+          <p className="text-sm leading-relaxed text-[var(--muted)]">
+            These notes are provided only to help students understand the code structure. Students should review, optimize, and adapt the code before using it in assignments, projects, or experiments.
+          </p>
+        </div>
       </div>
 
       {/* Main content grid */}

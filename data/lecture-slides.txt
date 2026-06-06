@@ -1,98 +1,76 @@
 # Lecture slide links
-# Format:  ID <space> URL
+# Format: ID <space> URL
 #
-# Google Drive view (embed/open):  L01     https://drive.google.com/file/d/FILE_ID/preview
-# Google Drive PDF download:       L01_PDF https://drive.google.com/uc?export=download&id=FILE_ID
+# Google Drive view/open: L01     https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+# Google Drive PDF:       L01_PDF https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 #
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 1 – Introduction to Computer Vision
-# ─────────────────────────────────────────────────────────────────────────────
+# Midterm and final examination sessions are not represented as lecture pages.
+
+# Module 1 - Introduction to Computer Vision and Vision Pipeline
 L01     https://drive.google.com/file/d/1_Wi6Znl-roBYXvI8ZQXFzyM6hmgj69r2/view?usp=sharing
 L01_PDF https://drive.google.com/file/d/1_Wi6Znl-roBYXvI8ZQXFzyM6hmgj69r2/view?usp=sharing
 
 L02     https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?usp=sharing
 L02_PDF https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 2 – Local Features and Descriptors
-# ─────────────────────────────────────────────────────────────────────────────
-L03     https://drive.google.com/file/d/1AFVD1PFlh5tpOCkKPqHuyVFSnr3tRXt-/view?usp=sharing
-L03_PDF https://drive.google.com/file/d/1AFVD1PFlh5tpOCkKPqHuyVFSnr3tRXt-/view?usp=sharing
+# Module 2 - Local Feature Descriptors and Feature Matching
+L03     https://drive.google.com/file/d/1J2KGv15jNNayQuQ15QYefM8qpVMcSsZi/view?usp=sharing
+L03_PDF https://drive.google.com/file/d/1J2KGv15jNNayQuQ15QYefM8qpVMcSsZi/view?usp=sharing
 
-# L04     https://drive.google.com/file/d//preview
-# L04_PDF https://drive.google.com/uc?export=download&id=
+# L04     https://drive.google.com/file/d//view?usp=sharing
+# L04_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L05     https://drive.google.com/file/d//preview
-# L05_PDF https://drive.google.com/uc?export=download&id=
+# Module 3 - Geometry Foundations and Camera Calibration
+# L05     https://drive.google.com/file/d//view?usp=sharing
+# L05_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 3 – Camera Models and Geometry
-# ─────────────────────────────────────────────────────────────────────────────
-# L06     https://drive.google.com/file/d//preview
-# L06_PDF https://drive.google.com/uc?export=download&id=
+# L06     https://drive.google.com/file/d//view?usp=sharing
+# L06_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L07     https://drive.google.com/file/d//preview
-# L07_PDF https://drive.google.com/uc?export=download&id=
+# L07     https://drive.google.com/file/d//view?usp=sharing
+# L07_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L08     https://drive.google.com/file/d//preview
-# L08_PDF https://drive.google.com/uc?export=download&id=
+# L08     https://drive.google.com/file/d//view?usp=sharing
+# L08_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 4 – Feature Matching and Image Alignment
-# ─────────────────────────────────────────────────────────────────────────────
-# L09     https://drive.google.com/file/d//preview
-# L09_PDF https://drive.google.com/uc?export=download&id=
+# Module 4 - Geometric Verification, Depth and Motion Analysis
+# L09     https://drive.google.com/file/d//view?usp=sharing
+# L09_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L10     https://drive.google.com/file/d//preview
-# L10_PDF https://drive.google.com/uc?export=download&id=
+# L10     https://drive.google.com/file/d//view?usp=sharing
+# L10_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L11     https://drive.google.com/file/d//preview
-# L11_PDF https://drive.google.com/uc?export=download&id=
+# L11     https://drive.google.com/file/d//view?usp=sharing
+# L11_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 5 – Stereo Vision and 3D Reconstruction
-# ─────────────────────────────────────────────────────────────────────────────
-# L12     https://drive.google.com/file/d//preview
-# L12_PDF https://drive.google.com/uc?export=download&id=
+# L12     https://drive.google.com/file/d//view?usp=sharing
+# L12_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L14     https://drive.google.com/file/d//preview
-# L14_PDF https://drive.google.com/uc?export=download&id=
+# L13     https://drive.google.com/file/d//view?usp=sharing
+# L13_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L15     https://drive.google.com/file/d//preview
-# L15_PDF https://drive.google.com/uc?export=download&id=
+# L14     https://drive.google.com/file/d//view?usp=sharing
+# L14_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 6 – Motion Analysis
-# ─────────────────────────────────────────────────────────────────────────────
-# L16     https://drive.google.com/file/d//preview
-# L16_PDF https://drive.google.com/uc?export=download&id=
+# Module 5 - Object Recognition, Detection and Tracking
+# L15     https://drive.google.com/file/d//view?usp=sharing
+# L15_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L17     https://drive.google.com/file/d//preview
-# L17_PDF https://drive.google.com/uc?export=download&id=
+# L16     https://drive.google.com/file/d//view?usp=sharing
+# L16_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 7 – Object Detection and Tracking
-# ─────────────────────────────────────────────────────────────────────────────
-# L18     https://drive.google.com/file/d//preview
-# L18_PDF https://drive.google.com/uc?export=download&id=
+# L17     https://drive.google.com/file/d//view?usp=sharing
+# L17_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L19     https://drive.google.com/file/d//preview
-# L19_PDF https://drive.google.com/uc?export=download&id=
+# L18     https://drive.google.com/file/d//view?usp=sharing
+# L18_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L20     https://drive.google.com/file/d//preview
-# L20_PDF https://drive.google.com/uc?export=download&id=
+# Module 6 - Application-Oriented Computer Vision Systems
+# L19     https://drive.google.com/file/d//view?usp=sharing
+# L19_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# L21     https://drive.google.com/file/d//preview
-# L21_PDF https://drive.google.com/uc?export=download&id=
+# L20     https://drive.google.com/file/d//view?usp=sharing
+# L20_PDF https://drive.google.com/file/d//view?usp=sharing
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Module 8 – Applications and Frontiers
-# ─────────────────────────────────────────────────────────────────────────────
-# L22     https://drive.google.com/file/d//preview
-# L22_PDF https://drive.google.com/uc?export=download&id=
-
-# L23     https://drive.google.com/file/d//preview
-# L23_PDF https://drive.google.com/uc?export=download&id=
-
-# L24     https://drive.google.com/file/d//preview
-# L24_PDF https://drive.google.com/uc?export=download&id=
+# L21     https://drive.google.com/file/d//view?usp=sharing
+# L21_PDF https://drive.google.com/file/d//view?usp=sharing

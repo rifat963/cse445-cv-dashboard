@@ -2,7 +2,7 @@ import LectureBrowser from "./LectureBrowser";
 
 export const metadata = {
   title: "Modules - CSE445",
-  description: "9 course modules covering 24 lectures for CSE445 Computer Vision",
+  description: "6 revised course modules covering 21 content sessions for CSE445 Computer Vision",
 };
 
 export default function LecturesPage() {
@@ -12,7 +12,7 @@ export default function LecturesPage() {
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--accent)]">Theory sequence</p>
         <h1 className="mt-1 text-2xl font-bold text-[var(--ink)]">Course Modules</h1>
         <p className="text-[var(--muted)] mt-2 max-w-3xl">
-          24 lectures organized into 9 thematic modules - from vision foundations through tracking and advanced topics.
+          21 content sessions organized into 6 revised modules, numbered continuously from Lecture 1 through Lecture 21.
         </p>
       </div>
       <LectureBrowser />

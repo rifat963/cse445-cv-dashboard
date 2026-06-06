@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { GraduationCap, Menu, X } from "lucide-react";
+import { ChevronDown, GraduationCap, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import { tutorialSeries } from "@/data/tutorials";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -16,6 +17,12 @@ const navLinks = [
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },
 ];
+
+const tutorialNavItems = tutorialSeries.map((series) => ({
+  href: `/tutorials/${series.slug}`,
+  label: series.title,
+  description: series.subtitle,
+}));
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -40,6 +47,49 @@ export default function SiteHeader() {
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
+
+            if (link.href === "/tutorials") {
+              return (
+                <div key={link.href} className="relative group">
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "flex items-center gap-1 px-3 py-2 text-sm transition-colors border-b-2",
+                      active
+                        ? "border-[var(--accent)] text-[var(--ink)] font-semibold"
+                        : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"
+                    )}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      size={14}
+                      className="transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                  <div className="invisible absolute left-0 top-full w-72 translate-y-2 rounded-md border border-[var(--border)] bg-[var(--surface)] p-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                    {tutorialNavItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={cn(
+                          "block rounded px-3 py-2 text-sm transition-colors",
+                          pathname.startsWith(item.href)
+                            ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold"
+                            : "text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"
+                        )}
+                      >
+                        <span className="block">{item.label}</span>
+                        <span className="mt-1 block text-xs font-normal leading-snug text-[var(--muted)]">
+                          {item.description}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.href}
@@ -76,6 +126,44 @@ export default function SiteHeader() {
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
+
+            if (link.href === "/tutorials") {
+              return (
+                <div key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors",
+                      active
+                        ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold"
+                        : "text-[var(--muted)] hover:text-[var(--ink)]"
+                    )}
+                  >
+                    {link.label}
+                    <ChevronDown size={14} aria-hidden="true" />
+                  </Link>
+                  <div className="mt-1 ml-3 flex flex-col gap-1 border-l border-[var(--border)] pl-3">
+                    {tutorialNavItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={cn(
+                          "rounded px-3 py-2 text-sm transition-colors",
+                          pathname.startsWith(item.href)
+                            ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold"
+                            : "text-[var(--muted)] hover:text-[var(--ink)]"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.href}

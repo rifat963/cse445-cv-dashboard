@@ -24,6 +24,7 @@ export default async function LabDetailPage({ params }: PageProps) {
   const prev = idx > 0 ? labs[idx - 1] : null;
   const next = idx < labs.length - 1 ? labs[idx + 1] : null;
   const parentModule = labModules.find((m) => m.id === lab.labModuleId);
+  const showLabResources = lab.id !== "LAB09";
 
   const linkedLectureObjects = lab.linkedLectures
     .map((n) => lectures.find((l) => l.lectureNo === n))
@@ -105,6 +106,29 @@ export default async function LabDetailPage({ params }: PageProps) {
             </div>
           )}
         </div>
+
+        {lab.relatedTutorial && (
+          <div className="mt-5 rounded-lg border border-co2/20 bg-co2/5 p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="flex items-center gap-2 text-sm font-semibold text-[var(--ink)]">
+                  <BookOpen size={15} className="text-co2" />
+                  Related Tutorial
+                </h2>
+                <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
+                  {lab.relatedTutorial.description}
+                </p>
+              </div>
+              <Link
+                href={lab.relatedTutorial.href}
+                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-co2/20 bg-co2/10 px-3 py-2 text-xs font-semibold text-co2 transition-opacity hover:opacity-80"
+              >
+                {lab.relatedTutorial.title}
+                <ExternalLink size={13} />
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main content */}
@@ -144,7 +168,7 @@ export default async function LabDetailPage({ params }: PageProps) {
         </div>
 
         {/* Infographic */}
-        {infographicUrl ? (
+        {showLabResources && (infographicUrl ? (
           <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-3">
               <ImageIcon size={16} className="text-co1" />
@@ -170,10 +194,10 @@ export default async function LabDetailPage({ params }: PageProps) {
               and it will appear here automatically.
             </p>
           </div>
-        )}
+        ))}
 
         {/* Notebook widget */}
-        {(kaggleUrl || ipynbUrl || htmlUrl) ? (
+        {showLabResources && ((kaggleUrl || ipynbUrl || htmlUrl) ? (
           <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-2">
               <FileCode size={16} className="text-co4" />
@@ -228,20 +252,22 @@ export default async function LabDetailPage({ params }: PageProps) {
               to enable Kaggle, .ipynb, and HTML download buttons here.
             </p>
           </div>
-        )}
+        ))}
 
         {/* Expected Outputs */}
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-          <h2 className="font-semibold text-[var(--ink)] mb-3">Expected Outputs</h2>
-          <ul className="space-y-2">
-            {lab.expectedOutputs.map((out, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-[var(--muted)]">
-                <span className="mt-1 w-2 h-2 rounded bg-co4 shrink-0" />
-                {out}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {showLabResources && (
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
+            <h2 className="font-semibold text-[var(--ink)] mb-3">Expected Outputs</h2>
+            <ul className="space-y-2">
+              {lab.expectedOutputs.map((out, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-[var(--muted)]">
+                  <span className="mt-1 w-2 h-2 rounded bg-co4 shrink-0" />
+                  {out}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Viva Questions */}
         <div className="rounded-lg border border-co3/20 bg-co3/5 p-5">

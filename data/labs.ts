@@ -13,6 +13,11 @@ export interface LabExperiment {
   expectedOutputs: string[];
   vivaQuestions: Array<{ q: string; a: string }>;
   labModuleId: string;
+  relatedTutorial?: {
+    title: string;
+    href: string;
+    description: string;
+  };
 }
 
 export interface LabModule {
@@ -171,7 +176,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Extract SIFT and ORB features from image pairs and perform descriptor matching with quality filtering.",
     co: ["CO2", "CO4"],
-    linkedLectures: [4, 5],
+    linkedLectures: [4],
     software: ["Python", "NumPy", "OpenCV", "Matplotlib"],
     learningObjectives: [
       "Extract SIFT keypoints and 128-D descriptors from image pairs",
@@ -219,7 +224,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Calibrate a camera using checkerboard images to recover intrinsic parameters and distortion coefficients.",
     co: ["CO2", "CO4"],
-    linkedLectures: [6, 7, 11],
+    linkedLectures: [8],
     software: ["Python", "NumPy", "OpenCV", "Matplotlib"],
     learningObjectives: [
       "Detect checkerboard corners and refine to sub-pixel accuracy",
@@ -267,7 +272,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Estimate homography using RANSAC and build a panoramic image by warping and blending two or more views.",
     co: ["CO2", "CO4"],
-    linkedLectures: [9, 10, 11],
+    linkedLectures: [5, 6, 9, 10],
     software: ["Python", "NumPy", "OpenCV", "Matplotlib"],
     learningObjectives: [
       "Extract and match ORB features between overlapping image pairs",
@@ -315,7 +320,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Compute dense disparity maps from stereo image pairs and convert to metric depth using calibration parameters.",
     co: ["CO2", "CO4"],
-    linkedLectures: [14, 15],
+    linkedLectures: [11, 12, 13],
     software: ["Python", "NumPy", "OpenCV", "Matplotlib", "Open3D"],
     learningObjectives: [
       "Load rectified stereo pairs and understand stereo geometry",
@@ -363,7 +368,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Implement sparse optical flow with Lucas-Kanade and dense optical flow with Farneback, and analyze motion in video.",
     co: ["CO3", "CO4"],
-    linkedLectures: [16, 17],
+    linkedLectures: [14],
     software: ["Python", "NumPy", "OpenCV", "Matplotlib"],
     learningObjectives: [
       "Apply Lucas-Kanade sparse flow to track Shi-Tomasi corners across frames",
@@ -411,8 +416,13 @@ export const labs: LabExperiment[] = [
     title: "Object Detection with HOG+SVM",
     objective:
       "Build a pedestrian detector using Histogram of Oriented Gradients features and a Support Vector Machine classifier.",
+    relatedTutorial: {
+      title: "Object Detection Tutorial",
+      href: "/tutorials/object-detection",
+      description: "Review the object detection tutorial series for detection concepts, metrics, model families, and evaluation workflow.",
+    },
     co: ["CO3", "CO4"],
-    linkedLectures: [18],
+    linkedLectures: [4, 15],
     software: ["Python", "NumPy", "OpenCV", "scikit-learn", "Matplotlib"],
     learningObjectives: [
       "Compute HOG descriptors for pedestrian and background patches",
@@ -457,11 +467,16 @@ export const labs: LabExperiment[] = [
     week: 11,
     labModuleId: "LABM03",
     slug: "object-recognition-yolov8",
-    title: "Object Recognition with YOLOv8",
+    title: "YOLO Approaches",
     objective:
       "Deploy a pre-trained YOLOv8 model for real-time object detection and analyze performance across diverse scenes.",
+    relatedTutorial: {
+      title: "YOLO Architecture Tutorial",
+      href: "/tutorials/object-detection/yolo-backbone-neck-head",
+      description: "Use the YOLO tutorial to understand backbone, neck, head, prediction flow, and the speed-accuracy trade-off.",
+    },
     co: ["CO3", "CO4"],
-    linkedLectures: [19],
+    linkedLectures: [17],
     software: ["Python", "NumPy", "OpenCV", "Ultralytics", "PyTorch", "Matplotlib"],
     learningObjectives: [
       "Install and use the Ultralytics YOLOv8 API for inference",
@@ -509,7 +524,7 @@ export const labs: LabExperiment[] = [
     objective:
       "Implement multi-object tracking by integrating a YOLO detector with SORT and visualize tracking results.",
     co: ["CO3", "CO4"],
-    linkedLectures: [20, 21],
+    linkedLectures: [18],
     software: ["Python", "NumPy", "OpenCV", "Ultralytics", "PyTorch", "py-motmetrics"],
     learningObjectives: [
       "Integrate a YOLO detector with the SORT tracker in a frame-by-frame pipeline",
