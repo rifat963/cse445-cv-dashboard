@@ -1,53 +1,92 @@
-import { ExternalLink, Download, FileCode } from "lucide-react";
+import { ExternalLink, Download, FileCode, BookOpen } from "lucide-react";
+import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath } from "@/lib/notebookLinks";
 
 interface NotebookWidgetProps {
   title: string;
   kaggleUrl?: string;
   ipynbUrl?: string;
   htmlUrl?: string;
+  htmlFallbackUrl?: string;
 }
 
-export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl }: NotebookWidgetProps) {
+export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, htmlFallbackUrl }: NotebookWidgetProps) {
   if (!kaggleUrl && !ipynbUrl && !htmlUrl) return null;
 
+  const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
+  const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
+  const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
+  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
+
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
-      <div className="flex items-center gap-2 mb-2">
-        <FileCode size={16} className="text-co4" />
-        <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
+    <section className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
+        <div className="min-w-0">
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-[var(--ink)]">
+            <FileCode size={13} className="text-co4" />
+            Jupyter Notebook
+          </p>
+          <h2 className="mt-0.5 truncate text-sm font-semibold text-[var(--ink)]">{title}</h2>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {kaggleUrl && (
+            <a
+              href={kaggleUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co4/20 bg-co4/10 px-3 py-1.5 text-xs font-medium text-co4 transition-opacity hover:opacity-80"
+            >
+              Open in Kaggle
+              <ExternalLink size={12} />
+            </a>
+          )}
+          {colabUrl && (
+            <a
+              href={colabUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co3/20 bg-co3/10 px-3 py-1.5 text-xs font-medium text-co3 transition-opacity hover:opacity-80"
+            >
+              Open in Colab
+              <ExternalLink size={12} />
+            </a>
+          )}
+          {ipynbDownloadUrl && (
+            <a
+              href={ipynbDownloadUrl}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co2/20 bg-co2/10 px-3 py-1.5 text-xs font-medium text-co2 transition-opacity hover:opacity-80"
+            >
+              Download .ipynb
+              <Download size={12} />
+            </a>
+          )}
+          {htmlPreviewUrl && (
+            <a
+              href={htmlPreviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs font-medium text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+            >
+              View HTML
+              <BookOpen size={12} />
+            </a>
+          )}
+        </div>
       </div>
-      <p className="text-xs text-[var(--muted)] mb-3 leading-relaxed">{title}</p>
-      <div className="flex gap-2 flex-wrap">
-        {kaggleUrl && (
-          <a
-            href={kaggleUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-co4/10 text-co4 border border-co4/20 hover:opacity-80 transition-opacity"
-          >
-            <ExternalLink size={12} /> Open in Kaggle
-          </a>
-        )}
-        {ipynbUrl && (
-          <a
-            href={ipynbUrl}
-            download
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-co2/10 text-co2 border border-co2/20 hover:opacity-80 transition-opacity"
-          >
-            <Download size={12} /> Download .ipynb
-          </a>
-        )}
-        {htmlUrl && (
-          <a
-            href={htmlUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--surface-2)] text-[var(--muted)] border border-[var(--border)] hover:text-[var(--ink)] transition-colors"
-          >
-            <ExternalLink size={12} /> View HTML
-          </a>
-        )}
-      </div>
-    </div>
+
+      {htmlPreviewUrl ? (
+        <div className="bg-[var(--surface-2)]">
+          <iframe
+            title={`${title} - notebook preview`}
+            src={htmlPreviewUrl}
+            loading="lazy"
+            className="block h-[70vh] min-h-[480px] w-full border-0"
+          />
+        </div>
+      ) : (
+        <div className="px-4 py-4 text-xs text-[var(--muted)]">
+          Use the buttons above to open or download this notebook.
+        </div>
+      )}
+    </section>
   );
 }

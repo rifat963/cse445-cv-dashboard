@@ -1,5 +1,5 @@
 import { tutorialSeries } from "@/data/tutorials";
-import { getTutorialLinks, getTutorialInfographic } from "@/lib/notebookLinks";
+import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getTutorialLinks, getTutorialInfographic } from "@/lib/notebookLinks";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -95,7 +95,16 @@ export default async function TutorialDetailPage({ params }: PageProps) {
   const Icon   = seriesIcons[series.icon] ?? BookOpen;
   const diff   = difficultyConfig[tutorial.difficulty];
 
-  const { kaggle: kaggleUrl, ipynb: ipynbUrl, html: htmlUrl } = getTutorialLinks(tutorial.id);
+  const {
+    kaggle: kaggleUrl,
+    ipynb: ipynbUrl,
+    html: htmlUrl,
+    htmlFallback: htmlFallbackUrl,
+  } = getTutorialLinks(tutorial.id);
+  const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
+  const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
+  const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
+  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
   const infographicUrl = getTutorialInfographic(tutorial.id);
 
   return (
@@ -288,10 +297,22 @@ export default async function TutorialDetailPage({ params }: PageProps) {
                   <ExternalLink size={13} /> Open in Kaggle
                 </a>
               )}
-              {ipynbUrl && (
+              {colabUrl && (
                 <a
-                  href={ipynbUrl}
-                  download
+                  href={colabUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity",
+                    colors.ipynb
+                  )}
+                >
+                  <ExternalLink size={13} /> Open in Colab
+                </a>
+              )}
+              {ipynbDownloadUrl && (
+                <a
+                  href={ipynbDownloadUrl}
                   className={cn(
                     "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity",
                     colors.ipynb
@@ -300,9 +321,9 @@ export default async function TutorialDetailPage({ params }: PageProps) {
                   <Download size={13} /> Download .ipynb
                 </a>
               )}
-              {htmlUrl && (
+              {htmlPreviewUrl && (
                 <a
-                  href={htmlUrl}
+                  href={htmlPreviewUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
@@ -314,6 +335,16 @@ export default async function TutorialDetailPage({ params }: PageProps) {
                 </a>
               )}
             </div>
+            {htmlPreviewUrl && (
+              <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
+                <iframe
+                  title={`${tutorial.title} notebook preview`}
+                  src={htmlPreviewUrl}
+                  loading="lazy"
+                  className="block h-[70vh] min-h-[480px] w-full border-0"
+                />
+              </div>
+            )}
           </div>
         )}
 

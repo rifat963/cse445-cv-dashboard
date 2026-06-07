@@ -3,9 +3,11 @@ import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon } from "lucide-react";
-import { getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
+import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
+import HarrisFastAnimation from "@/components/ui/HarrisFastAnimation";
+import SiftOrbAnimation from "@/components/ui/SiftOrbAnimation";
 
 export async function generateStaticParams() {
   return labs.map((l) => ({ slug: l.slug }));
@@ -30,7 +32,16 @@ export default async function LabDetailPage({ params }: PageProps) {
     .map((n) => lectures.find((l) => l.lectureNo === n))
     .filter(Boolean);
 
-  const { kaggle: kaggleUrl, ipynb: ipynbUrl, html: htmlUrl } = getLabLinks(lab.id);
+  const {
+    kaggle: kaggleUrl,
+    ipynb: ipynbUrl,
+    html: htmlUrl,
+    htmlFallback: htmlFallbackUrl,
+  } = getLabLinks(lab.id);
+  const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
+  const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
+  const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
+  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
   const infographicUrl = getLabInfographic(lab.id);
 
   const modIdx = labModules.findIndex((m) => m.id === lab.labModuleId);
@@ -217,18 +228,27 @@ export default async function LabDetailPage({ params }: PageProps) {
                   <ExternalLink size={13} /> Open in Kaggle
                 </a>
               )}
-              {ipynbUrl && (
+              {colabUrl && (
                 <a
-                  href={ipynbUrl}
-                  download
+                  href={colabUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co3/10 text-co3 border-co3/20 hover:opacity-80 transition-opacity"
+                >
+                  <ExternalLink size={13} /> Open in Colab
+                </a>
+              )}
+              {ipynbDownloadUrl && (
+                <a
+                  href={ipynbDownloadUrl}
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co2/10 text-co2 border-co2/20 hover:opacity-80 transition-opacity"
                 >
                   <Download size={13} /> Download .ipynb
                 </a>
               )}
-              {htmlUrl && (
+              {htmlPreviewUrl && (
                 <a
-                  href={htmlUrl}
+                  href={htmlPreviewUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)] transition-colors"
@@ -237,6 +257,16 @@ export default async function LabDetailPage({ params }: PageProps) {
                 </a>
               )}
             </div>
+            {htmlPreviewUrl && (
+              <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
+                <iframe
+                  title={`${lab.title} notebook preview`}
+                  src={htmlPreviewUrl}
+                  loading="lazy"
+                  className="block h-[70vh] min-h-[480px] w-full border-0"
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
@@ -254,8 +284,16 @@ export default async function LabDetailPage({ params }: PageProps) {
           </div>
         ))}
 
-        {/* Expected Outputs */}
-        {showLabResources && (
+        {/* Harris & FAST interactive demo (LAB02 only) */}
+        {lab.slug === "feature-detection-harris-and-fast" && <HarrisFastAnimation />}
+
+        {/* SIFT & ORB interactive demo (LAB03 only) */}
+        {lab.slug === "sift-orb-feature-extraction-matching" && <SiftOrbAnimation />}
+
+        {/* Expected Outputs (suppressed for labs that have an animation instead) */}
+        {showLabResources &&
+          lab.slug !== "feature-detection-harris-and-fast" &&
+          lab.slug !== "sift-orb-feature-extraction-matching" && (
           <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
             <h2 className="font-semibold text-[var(--ink)] mb-3">Expected Outputs</h2>
             <ul className="space-y-2">

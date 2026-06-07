@@ -16,48 +16,60 @@
 
 # OD01 – Image Classification, Localization & Object Detection
 OD01        https://www.kaggle.com/code/mrifatrashid/od-01-classification-localization-detection
-# OD01_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD01_HTML   https://drive.google.com/file/d//preview
+OD01_IPYNB  https://drive.google.com/file/d/1h8128YjL8H3u_Mh_6EuW0U_KHx2N8p2j/view?usp=sharing
+OD01_HTML   https://drive.google.com/file/d/1HJbR0eYAwlOW39wpaxMkkaKpzemZkN10/view?usp=sharing
 
 # OD02 – Bounding Boxes, IoU, NMS & mAP
 OD02        https://www.kaggle.com/code/mrifatrashid/od-02-bounding-boxes-iou-nms-map
-# OD02_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD02_HTML   https://drive.google.com/file/d//preview
+OD02_IPYNB  https://drive.google.com/file/d/1tp6Hutk6YPAqdevIg4CztfZG9eGuDlxx/view?usp=sharing
+OD02_HTML   https://drive.google.com/file/d/10be81WIXKqHP3cr2VjjYly6NxkLBEu3f/view?usp=sharing
 
 # OD03 – Sliding Window, Selective Search & R-CNN
 OD03        https://www.kaggle.com/code/mrifatrashid/od-03-sliding-window-selective-search-r-cnn
-# OD03_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD03_HTML   https://drive.google.com/file/d//preview
+OD03_IPYNB  https://drive.google.com/file/d/13KNcAbi71YPWBjh54Uv2P-mEArZRXD5V/view?usp=sharing
+OD03_HTML   https://drive.google.com/file/d/1dp-gGZiCXwCS0ITMdvS3PV20Cn7N2set/view?usp=sharing
 
 # OD04 – Faster R-CNN: Region Proposal Network
 OD04        https://www.kaggle.com/code/mrifatrashid/od-04-faster-r-cnn-region-proposal-network
-# OD04_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD04_HTML   https://drive.google.com/file/d//preview
+OD04_IPYNB  https://drive.google.com/file/d/1iMeF9gcxOcKjpZrGNfCCC9r4VsX2kTJZ/view?usp=sharing
+OD04_HTML   https://drive.google.com/file/d/1Kvmpj76CoRbe8KSYSBu7lkVCY25Bmjwv/view?usp=sharing
 
 # OD05 – SSD, RetinaNet & Focal Loss
 OD05        https://www.kaggle.com/code/mrifatrashid/od-05-ssd-retinanet-focal-loss
-# OD05_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD05_HTML   https://drive.google.com/file/d//preview
+OD05_IPYNB  https://drive.google.com/file/d/1shqcUf6EpXl3EmSFkzVoFPWXul22Ughj/view?usp=sharing
+OD05_HTML   https://drive.google.com/file/d/1uUWhwid-nTx9AdshXnI4ePXadva2OZit/view?usp=sharing
 
 # OD06 – YOLO Architecture: Backbone, Neck & Head
 OD06        https://www.kaggle.com/code/mrifatrashid/od-06-yolo-architecture-backbone-neck-head
-# OD06_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD06_HTML   https://drive.google.com/file/d//preview
+OD06_IPYNB  https://drive.google.com/file/d/1AcAvRqRhb7K2TOLj8Lr6DJxO4Dy-a-qU/view?usp=sharing
+OD06_HTML   https://drive.google.com/file/d/1zZ1wyu7i78zMxoLf1VjxmlYxOFH_HCLA/view?usp=sharing
 
 # OD07 – YOLO Training on a Custom Dataset
 OD07        https://www.kaggle.com/code/mrifatrashid/od-07-yolo-training-on-a-custom-dataset
-# OD07_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD07_HTML   https://drive.google.com/file/d//preview
+OD07_IPYNB  https://drive.google.com/file/d/1i-3JA-9jGgGK30jfknYbEnHDwc9Mljl-/view?usp=sharing
+OD07_HTML   https://drive.google.com/file/d/1WK5uPnljYrgpD74OAAsKglmwoSS-YpeK/view?usp=sharing
 
 # OD08 – DETR & Transformer-Based Detection
-# OD08        https://www.kaggle.com/
-# OD08_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD08_HTML   https://drive.google.com/file/d//preview
+# OD08A - DETR Transformer Detection
+# OD08A        https://www.kaggle.com/
+# OD08A_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD08A_HTML   https://drive.google.com/file/d//preview
+
+# OD08B - RF-DETR Transformer Detection
+# OD08B        https://www.kaggle.com/
+# OD08B_IPYNB  https://drive.google.com/uc?export=download&id=
+# OD08B_HTML   https://drive.google.com/file/d//preview
 
 # OD09 – Evaluation, Error Analysis & Deployment
-# OD09        https://www.kaggle.com/
-# OD09_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD09_HTML   https://drive.google.com/file/d//preview
+# OD09A - Evaluation, Error Analysis & Deployment with YOLO
+# OD09A        https://www.kaggle.com/
+OD09A_IPYNB  https://drive.google.com/file/d/1JGGUCrLw0nOyjj7dzddkkGcVCbeUIc4o/view?usp=sharing
+OD09A_HTML   https://drive.google.com/file/d/14H2qxT4xWaN4DkDbqmVKFbHYGH12YqmL/view?usp=sharing
+
+# OD09B - Evaluation, Error Analysis & Deployment with RF-DETR
+OD09B        https://www.kaggle.com/code/mrifatrashid/lab-09b-rf-detr-evaluation-error-analysis-dep
+#OD09B_IPYNB  https://drive.google.com/uc?export=download&id=
+#OD09B_HTML   https://drive.google.com/file/d//preview
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Self-Supervised Learning  (ssl-01 … ssl-10)

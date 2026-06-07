@@ -5,6 +5,7 @@ export interface NotebookLinks {
   kaggle?: string;
   ipynb?: string;
   html?: string;
+  htmlFallback?: string;
 }
 
 function readLinkFile(filename: string): Map<string, string> {
@@ -14,10 +15,10 @@ function readLinkFile(filename: string): Map<string, string> {
     for (const line of raw.split("\n")) {
       const trimmed = line.trim();
       if (!trimmed || trimmed.startsWith("#")) continue;
-      const space = trimmed.indexOf(" ");
-      if (space === -1) continue;
-      const key = trimmed.slice(0, space).toUpperCase();
-      const url = trimmed.slice(space + 1).trim();
+      const match = trimmed.match(/^([^=\s]+)\s*(?:=|\s+)\s*(\S.*)$/);
+      if (!match) continue;
+      const key = match[1].toUpperCase();
+      const url = match[2].trim();
       if (key && url) map.set(key, url);
     }
   } catch {
@@ -30,6 +31,13 @@ function getLocalPublicFile(path: string): string | undefined {
   return existsSync(join(process.cwd(), "public", path)) ? `/${path}` : undefined;
 }
 
+function validLink(url: string | undefined): string | undefined {
+  if (!url || url.includes("/.../") || url.includes("FILE_ID") || url.endsWith("id=") || url.includes("/d//")) {
+    return undefined;
+  }
+  return url;
+}
+
 let _labMap: Map<string, string> | null = null;
 function labMap() { return (_labMap ??= readLinkFile("lab-notebooks.txt")); }
 
@@ -40,9 +48,10 @@ export function getLabLinks(id: string): NotebookLinks {
   const folder = match ? `lab${match[0]}` : "";
 
   return {
-    kaggle: map.get(upper),
-    ipynb:  map.get(`${upper}_IPYNB`) ?? getLocalPublicFile(`notebooks/labs/${folder}/notebook.ipynb`),
-    html:   map.get(`${upper}_HTML`)  ?? getLocalPublicFile(`notebooks/labs/${folder}/notebook.html`),
+    kaggle: validLink(map.get(upper)),
+    ipynb:  validLink(map.get(`${upper}_IPYNB`)) ?? getLocalPublicFile(`notebooks/labs/${folder}/notebook.ipynb`),
+    html:   validLink(map.get(`${upper}_HTML`))  ?? getLocalPublicFile(`notebooks/labs/${folder}/notebook.html`),
+    htmlFallback: getLocalPublicFile(`notebooks/labs/${folder}/notebook.html`),
   };
 }
 
@@ -68,9 +77,10 @@ export function getTutorialLinks(tutorialId: string): NotebookLinks {
   const folder = tutorialId; // e.g. "od-01" used as public folder name if needed
 
   return {
-    kaggle: map.get(key),
-    ipynb:  map.get(`${key}_IPYNB`) ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.ipynb`),
-    html:   map.get(`${key}_HTML`)  ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.html`),
+    kaggle: validLink(map.get(key)),
+    ipynb:  validLink(map.get(`${key}_IPYNB`)) ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.ipynb`),
+    html:   validLink(map.get(`${key}_HTML`))  ?? getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.html`),
+    htmlFallback: getLocalPublicFile(`notebooks/tutorials/${folder}/notebook.html`),
   };
 }
 
@@ -95,6 +105,21 @@ function getGoogleDriveFileId(url?: string): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+export function getDriveFileId(url: string): string | null {
+  return getGoogleDriveFileId(url) ?? null;
+}
+
+export function getDriveDownloadUrl(fileUrl: string): string {
+  return getGoogleDriveDownloadUrl(fileUrl) ?? fileUrl;
+}
+
+export function getDriveHtmlViewerPath(htmlUrl: string, htmlFallback?: string): string {
+  const fileId = getGoogleDriveFileId(htmlUrl);
+  if (!fileId) return htmlUrl;
+
+  return `https://drive.google.com/file/d/${fileId}/preview`;
 }
 
 function getGoogleDrivePreviewUrl(url?: string): string | undefined {
@@ -133,9 +158,15 @@ export function getLabInfographic(labId: string): string | undefined {
 // Drop public/infographics/tutorials/od-01.{png,jpg,jpeg,webp,svg}
 
 export function getTutorialInfographic(tutorialId: string): string | undefined {
-  for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
-    const result = getLocalPublicFile(`infographics/tutorials/${tutorialId}.${ext}`);
-    if (result) return result;
+  const candidates = [tutorialId];
+  const baseId = tutorialId.match(/^(.*\d{2})[a-z]$/i)?.[1];
+  if (baseId) candidates.push(baseId);
+
+  for (const id of candidates) {
+    for (const ext of ["png", "jpg", "jpeg", "webp", "svg"]) {
+      const result = getLocalPublicFile(`infographics/tutorials/${id}.${ext}`);
+      if (result) return result;
+    }
   }
   return undefined;
 }
