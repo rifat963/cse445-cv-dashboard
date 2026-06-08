@@ -51,14 +51,14 @@ OD07_HTML   https://drive.google.com/file/d/1WK5uPnljYrgpD74OAAsKglmwoSS-YpeK/vi
 
 # OD08 – DETR & Transformer-Based Detection
 # OD08A - DETR Transformer Detection
-# OD08A        https://www.kaggle.com/
-# OD08A_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD08A_HTML   https://drive.google.com/file/d//preview
+OD08A        https://www.kaggle.com/code/mrifatrashid/od-08a-detr-for-dhakaai-traffic-detection
+OD08A_IPYNB  https://drive.google.com/file/d/13R4p8VaFLYdaCUnmTZbxRbXcCPzN3axk/view?usp=sharing
+OD08A_HTML   https://drive.google.com/file/d/1I9CfVmx3oB-7Clk9QTqpfd-kvUM8HZFJ/view?usp=sharing
 
 # OD08B - RF-DETR Transformer Detection
-# OD08B        https://www.kaggle.com/
-# OD08B_IPYNB  https://drive.google.com/uc?export=download&id=
-# OD08B_HTML   https://drive.google.com/file/d//preview
+OD08B        https://www.kaggle.com/code/mrifatrashid/od-08b-rf-detr-for-dhakaai-traffic-detection
+OD08B_IPYNB  https://drive.google.com/file/d/1eLuQPbBSZWNc_oyXmWYMwtjsObu8yXzF/view?usp=sharing
+OD08B_HTML   https://drive.google.com/file/d/1YvsCGVF_LYwm2ryOWYM2XpnD7ia9DzF_/view?usp=sharing
 
 # OD09 – Evaluation, Error Analysis & Deployment
 # OD09A - Evaluation, Error Analysis & Deployment with YOLO
