@@ -119,7 +119,10 @@ export function getDriveHtmlViewerPath(htmlUrl: string, htmlFallback?: string): 
   const fileId = getGoogleDriveFileId(htmlUrl);
   if (!fileId) return htmlUrl;
 
-  return `https://drive.google.com/file/d/${fileId}/preview`;
+  const params = new URLSearchParams({ source: htmlUrl });
+  if (htmlFallback?.startsWith("/")) params.set("fallback", htmlFallback);
+
+  return `/api/drive-html/${fileId}?${params.toString()}`;
 }
 
 function getGoogleDrivePreviewUrl(url?: string): string | undefined {

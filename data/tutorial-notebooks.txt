@@ -62,14 +62,14 @@ OD07_HTML   https://drive.google.com/file/d/1WK5uPnljYrgpD74OAAsKglmwoSS-YpeK/vi
 
 # OD09 – Evaluation, Error Analysis & Deployment
 # OD09A - Evaluation, Error Analysis & Deployment with YOLO
-# OD09A        https://www.kaggle.com/
+OD09A        https://www.kaggle.com/code/mrifatrashid/lab-09a-yolov26-evaluation-error-analysis-dep
 OD09A_IPYNB  https://drive.google.com/file/d/1JGGUCrLw0nOyjj7dzddkkGcVCbeUIc4o/view?usp=sharing
 OD09A_HTML   https://drive.google.com/file/d/14H2qxT4xWaN4DkDbqmVKFbHYGH12YqmL/view?usp=sharing
 
 # OD09B - Evaluation, Error Analysis & Deployment with RF-DETR
 OD09B        https://www.kaggle.com/code/mrifatrashid/lab-09b-rf-detr-evaluation-error-analysis-dep
-#OD09B_IPYNB  https://drive.google.com/uc?export=download&id=
-#OD09B_HTML   https://drive.google.com/file/d//preview
+OD09B_IPYNB  https://drive.google.com/file/d/1SjK8KrobnOhCwYjbPHakwIeU2pIPyYXy/view?usp=sharing
+OD09B_HTML   https://drive.google.com/file/d/1KxbYOF0Th_iyCSj_lGiwsOMHZhC88WqQ/view?usp=sharing
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Self-Supervised Learning  (ssl-01 … ssl-10)

@@ -54,6 +54,25 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
+function decodeHtmlDocument(value: string): string {
+  return value
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&quot;", "\"")
+    .replaceAll("&#39;", "'")
+    .replaceAll("&#x27;", "'")
+    .replaceAll("&amp;", "&");
+}
+
+function normalizeHtmlDocument(body: string): string {
+  const trimmed = body.trimStart().slice(0, 1000).toLowerCase();
+  if (trimmed.startsWith("&lt;!doctype") || trimmed.startsWith("&lt;html")) {
+    return decodeHtmlDocument(body);
+  }
+
+  return body;
+}
+
 function safeDriveUrl(value: string | null): string | null {
   if (!value) return null;
   try {
@@ -196,6 +215,7 @@ async function fetchDriveHtml(fileId: string): Promise<string> {
   };
 
   let { body } = await fetchTextWithNode(`${DRIVE_DOWNLOAD_URL}${fileId}`, headers);
+  body = normalizeHtmlDocument(body);
   if (!isDriveIntermediary(body)) return body;
 
   const confirmUrl = getConfirmUrl(body);
@@ -203,7 +223,7 @@ async function fetchDriveHtml(fileId: string): Promise<string> {
 
   ({ body } = await fetchTextWithNode(confirmUrl, headers));
 
-  return body;
+  return normalizeHtmlDocument(body);
 }
 
 export async function GET(
