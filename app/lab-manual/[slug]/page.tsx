@@ -2,7 +2,7 @@ import { labs, labModules } from "@/data/labs";
 import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon, Layers } from "lucide-react";
 import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
@@ -10,7 +10,10 @@ import HarrisFastAnimation from "@/components/ui/HarrisFastAnimation";
 import SiftOrbAnimation from "@/components/ui/SiftOrbAnimation";
 
 export async function generateStaticParams() {
-  return labs.map((l) => ({ slug: l.slug }));
+  return [
+    ...labs.map((l) => ({ slug: l.slug })),
+    ...labModules.map((m) => ({ slug: m.slug })),
+  ];
 }
 
 interface PageProps {
@@ -20,7 +23,120 @@ interface PageProps {
 export default async function LabDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const idx = labs.findIndex((l) => l.slug === slug);
-  if (idx === -1) notFound();
+  const moduleIdx = labModules.findIndex((m) => m.slug === slug);
+  if (idx === -1 && moduleIdx === -1) notFound();
+
+  if (moduleIdx !== -1) {
+    const mod = labModules[moduleIdx];
+    const moduleLabs = labs.filter((lab) => mod.labIds.includes(lab.id));
+    const prevModule = moduleIdx > 0 ? labModules[moduleIdx - 1] : null;
+    const nextModule = moduleIdx < labModules.length - 1 ? labModules[moduleIdx + 1] : null;
+    const moduleColorBadge = [
+      "bg-co1/10 text-co1 border-co1/20",
+      "bg-co2/10 text-co2 border-co2/20",
+      "bg-co4/10 text-co4 border-co4/20",
+    ][moduleIdx % 3];
+    const moduleColorAccent = [
+      "border-t-co1",
+      "border-t-co2",
+      "border-t-co4",
+    ][moduleIdx % 3];
+
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-4 flex items-center gap-1.5 text-sm text-[var(--muted)]">
+          <Link href="/lab-manual" className="transition-colors hover:text-[var(--ink)]">Lab Manual</Link>
+          <span>/</span>
+          <span className="font-medium text-[var(--ink)]">Module {mod.moduleNo}</span>
+        </div>
+
+        <div className="mb-6 flex justify-between gap-4">
+          {prevModule ? (
+            <Link
+              href={`/lab-manual/${prevModule.slug}`}
+              className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm transition-colors hover:bg-[var(--surface-2)]"
+            >
+              <ChevronLeft size={16} />
+              <span className="hidden sm:block">Module {prevModule.moduleNo}</span>
+            </Link>
+          ) : <div />}
+          {nextModule ? (
+            <Link
+              href={`/lab-manual/${nextModule.slug}`}
+              className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm transition-colors hover:bg-[var(--surface-2)]"
+            >
+              <span className="hidden sm:block">Module {nextModule.moduleNo}</span>
+              <ChevronRight size={16} />
+            </Link>
+          ) : <div />}
+        </div>
+
+        <section className={cn("mb-8 rounded-lg border border-t-4 border-[var(--border)] bg-[var(--surface)] p-6", moduleColorAccent)}>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span className={cn("inline-flex items-center gap-1.5 rounded border px-2.5 py-0.5 text-xs font-mono font-bold", moduleColorBadge)}>
+                  <Layers size={12} /> LABM{String(mod.moduleNo).padStart(2, "0")}
+                </span>
+                <span className="rounded bg-[var(--surface-2)] px-2 py-0.5 text-xs text-[var(--muted)]">{mod.level}</span>
+                {mod.co.map((co) => (
+                  <span key={co} className="rounded bg-[var(--surface-2)] px-2 py-0.5 text-xs text-[var(--muted)]">{co}</span>
+                ))}
+              </div>
+              <h1 className="text-2xl font-bold leading-tight text-[var(--ink)]">{mod.title}</h1>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{mod.description}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:min-w-64">
+              <div className="rounded-lg border border-[var(--border)] bg-[var(--canvas)] p-4">
+                <p className="text-2xl font-bold text-[var(--academic)]">{moduleLabs.length}</p>
+                <p className="mt-0.5 text-xs text-[var(--muted)]">Lab sessions</p>
+              </div>
+              <div className="rounded-lg border border-[var(--border)] bg-[var(--canvas)] p-4">
+                <p className="text-2xl font-bold text-[var(--academic)]">
+                  {moduleLabs[0]?.week ?? "-"}-{moduleLabs[moduleLabs.length - 1]?.week ?? "-"}
+                </p>
+                <p className="mt-0.5 text-xs text-[var(--muted)]">Weeks</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="mb-4 border-b border-[var(--border)] pb-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--accent)]">Module experiments</p>
+            <h2 className="text-lg font-semibold text-[var(--ink)]">Labs in This Module</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {moduleLabs.map((lab) => (
+              <Link
+                key={lab.id}
+                href={`/lab-manual/${lab.slug}`}
+                className="group rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition-colors hover:border-[var(--academic)]"
+              >
+                <div className="flex items-start gap-3">
+                  <span className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-md border text-xs font-bold font-mono", moduleColorBadge)}>
+                    L{String(lab.labNo).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex flex-wrap items-center gap-1.5">
+                      <span className="text-[10px] uppercase tracking-wide text-[var(--muted)]">Week {lab.week}</span>
+                      {lab.co.map((co) => (
+                        <span key={co} className="rounded border border-[var(--border)] bg-[var(--canvas)] px-1 text-[10px] text-[var(--muted)]">{co}</span>
+                      ))}
+                    </div>
+                    <h3 className="text-sm font-semibold leading-snug text-[var(--ink)] transition-colors group-hover:text-[var(--academic)]">
+                      {lab.title}
+                    </h3>
+                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--muted)]">{lab.objective}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   const lab = labs[idx];
   const prev = idx > 0 ? labs[idx - 1] : null;

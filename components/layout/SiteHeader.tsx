@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown, GraduationCap, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import { labModules } from "@/data/labs";
+import { modules } from "@/data/modules";
 import { tutorialSeries } from "@/data/tutorials";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +25,20 @@ const tutorialNavItems = tutorialSeries.map((series) => ({
   label: series.title,
   description: series.subtitle,
 }));
+
+const dropdownNavItems: Record<string, Array<{ href: string; label: string; description: string }>> = {
+  "/lectures": modules.map((mod) => ({
+    href: `/lectures/${mod.slug}`,
+    label: `Module ${mod.moduleNo}: ${mod.shortTitle}`,
+    description: `${mod.lectureNos.length} lectures - ${mod.title}`,
+  })),
+  "/lab-manual": labModules.map((mod) => ({
+    href: `/lab-manual/${mod.slug}`,
+    label: `Module ${mod.moduleNo}: ${mod.title}`,
+    description: `${mod.labIds.length} labs - ${mod.level}`,
+  })),
+  "/tutorials": tutorialNavItems,
+};
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -47,8 +63,9 @@ export default function SiteHeader() {
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
+            const dropdownItems = dropdownNavItems[link.href];
 
-            if (link.href === "/tutorials") {
+            if (dropdownItems) {
               return (
                 <div key={link.href} className="relative group">
                   <Link
@@ -68,7 +85,7 @@ export default function SiteHeader() {
                     />
                   </Link>
                   <div className="invisible absolute left-0 top-full w-72 translate-y-2 rounded-md border border-[var(--border)] bg-[var(--surface)] p-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                    {tutorialNavItems.map((item) => (
+                    {dropdownItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
@@ -126,8 +143,9 @@ export default function SiteHeader() {
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
+            const dropdownItems = dropdownNavItems[link.href];
 
-            if (link.href === "/tutorials") {
+            if (dropdownItems) {
               return (
                 <div key={link.href}>
                   <Link
@@ -144,7 +162,7 @@ export default function SiteHeader() {
                     <ChevronDown size={14} aria-hidden="true" />
                   </Link>
                   <div className="mt-1 ml-3 flex flex-col gap-1 border-l border-[var(--border)] pl-3">
-                    {tutorialNavItems.map((item) => (
+                    {dropdownItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}

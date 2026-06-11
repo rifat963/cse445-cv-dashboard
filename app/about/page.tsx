@@ -42,13 +42,6 @@ const contactLinks = [
   { label: "Personal Website", value: "rifat963.github.io", href: profile.website, icon: Globe2 },
 ];
 
-const publicationStats = [
-  { label: "Journals", value: `${profile.stats.journals}+` },
-  { label: "Conferences", value: `${profile.stats.conferences}+` },
-  { label: "Book Chapters", value: profile.stats.bookChapters },
-  { label: "Funded Projects", value: profile.stats.fundedProjects },
-];
-
 export default function AboutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -167,18 +160,6 @@ export default function AboutPage() {
                   </a>
                 );
               })}
-            </div>
-          </section>
-
-          <section className="rounded-lg bg-[var(--academic)] p-5 text-white">
-            <h2 className="text-sm font-bold uppercase tracking-wide">Publication Stats</h2>
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              {publicationStats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="mt-1 text-[10px] uppercase tracking-wide text-white/70">{stat.label}</p>
-                </div>
-              ))}
             </div>
           </section>
 

@@ -62,7 +62,11 @@ export default function LabManualPage() {
                         Module {mod.moduleNo}
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-[var(--ink)] leading-snug">{mod.title}</h3>
+                    <Link href={`/lab-manual/${mod.slug}`} className="group/title">
+                      <h3 className="text-base font-bold text-[var(--ink)] leading-snug transition-colors group-hover/title:text-[var(--academic)]">
+                        {mod.title}
+                      </h3>
+                    </Link>
                     <p className="text-xs text-[var(--muted)] mt-1 leading-relaxed line-clamp-3">{mod.description}</p>
                   </div>
                   <div className="shrink-0 border-l border-[var(--border)] pl-3 text-lg font-bold text-[var(--muted)]">
