@@ -52,7 +52,8 @@ export default async function Page({ params }: PageProps) {
       lab.linkedLectures.includes(lecture.lectureNo)
     );
 
-    const { slides: slidesUrl, pdf: pdfUrl } = getLectureLinks(lecture.id);
+    const { slides: slidesUrl, pdfs: pdfUrls } = getLectureLinks(lecture.id);
+    const lecturePdfUrls = pdfUrls.length > 0 ? pdfUrls : slidesUrl ? [slidesUrl] : [];
     const infographicImages = getLectureInfographics(lecture.id, lecture.title);
 
     return (
@@ -209,12 +210,15 @@ export default async function Page({ params }: PageProps) {
         )}
 
         {/* Lecture slides */}
-        {(slidesUrl || pdfUrl) ? (
-          <div className="mb-8">
-            <PdfViewer
-              title={lecture.title}
-              sourceUrl={slidesUrl ?? pdfUrl!}
-            />
+        {lecturePdfUrls.length > 0 ? (
+          <div className="space-y-5 mb-8">
+            {lecturePdfUrls.map((pdfUrl, index) => (
+              <PdfViewer
+                key={`${pdfUrl}-${index}`}
+                title={lecturePdfUrls.length === 1 ? lecture.title : `${lecture.title} - PDF ${index + 1}`}
+                sourceUrl={pdfUrl}
+              />
+            ))}
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5 flex items-center gap-3 text-[var(--muted)] mb-8">

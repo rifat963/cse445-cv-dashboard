@@ -22,7 +22,27 @@ function readLinkFile(filename: string): Map<string, string> {
       if (key && url) map.set(key, url);
     }
   } catch {
-    // file missing during client-side bundling — safe to ignore
+    // file missing during client-side bundling - safe to ignore
+  }
+  return map;
+}
+
+function readMultiLinkFile(filename: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  try {
+    const raw = readFileSync(join(process.cwd(), `data/${filename}`), "utf-8");
+    for (const line of raw.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const match = trimmed.match(/^([^=\s]+)\s*(?:=|\s+)\s*(\S.*)$/);
+      if (!match) continue;
+      const key = match[1].toUpperCase();
+      const url = match[2].trim();
+      if (!key || !url) continue;
+      map.set(key, [...(map.get(key) ?? []), url]);
+    }
+  } catch {
+    // file missing during client-side bundling - safe to ignore
   }
   return map;
 }
@@ -90,9 +110,11 @@ export function getTutorialLinks(tutorialId: string): NotebookLinks {
 export interface LectureLinks {
   slides?: string;
   pdf?: string;
+  pdfs: string[];
 }
 
 function lectureMap() { return readLinkFile("lecture-slides.txt"); }
+function lectureMultiMap() { return readMultiLinkFile("lecture-slides.txt"); }
 
 function getGoogleDriveFileId(url?: string): string | undefined {
   if (!url) return undefined;
@@ -140,9 +162,15 @@ function getGoogleDriveDownloadUrl(url?: string): string | undefined {
 export function getLectureLinks(lectureId: string): LectureLinks {
   const key = lectureId.toUpperCase();
   const map = lectureMap();
+  const multiMap = lectureMultiMap();
+  const pdfs = (multiMap.get(`${key}_PDF`) ?? [])
+    .map((url) => getGoogleDriveDownloadUrl(url))
+    .filter((url): url is string => Boolean(validLink(url)));
+
   return {
     slides: getGoogleDrivePreviewUrl(map.get(key)),
-    pdf:    getGoogleDriveDownloadUrl(map.get(`${key}_PDF`)),
+    pdf:    pdfs[0],
+    pdfs,
   };
 }
 

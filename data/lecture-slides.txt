@@ -3,6 +3,7 @@
 #
 # Google Drive view/open: L01     https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 # Google Drive PDF:       L01_PDF https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+# Multiple PDFs:          repeat the same L01_PDF key on separate lines
 #
 # Midterm and final examination sessions are not represented as lecture pages.
 
@@ -14,11 +15,14 @@ L02     https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?u
 L02_PDF https://drive.google.com/file/d/1L5Yj2lBASSxsclorUsgHkdPipWNj0RaV/view?usp=sharing
 
 # Module 2 - Local Feature Descriptors and Feature Matching
-L03     https://drive.google.com/file/d/1J2KGv15jNNayQuQ15QYefM8qpVMcSsZi/view?usp=sharing
-L03_PDF https://drive.google.com/file/d/1J2KGv15jNNayQuQ15QYefM8qpVMcSsZi/view?usp=sharing
+L03     https://drive.google.com/file/d/1nHFnVv1OsmdA3MS44-Su_skW2zcCfGjl/view?usp=sharing
+L03_PDF https://drive.google.com/file/d/1nHFnVv1OsmdA3MS44-Su_skW2zcCfGjl/view?usp=sharing
 
-# L04     https://drive.google.com/file/d//view?usp=sharing
-# L04_PDF https://drive.google.com/file/d//view?usp=sharing
+L04     https://drive.google.com/file/d/1XtzIXheETzuJkQPly66xC9wB9ZGg_m40/view?usp=sharing
+L04_PDF https://drive.google.com/file/d/1XtzIXheETzuJkQPly66xC9wB9ZGg_m40/view?usp=sharing
+
+L04     https://drive.google.com/file/d/10OEUmfCGUjzEWLlAsbbYxq5xUdTrJQBp/view?usp=sharing
+L04_PDF  https://drive.google.com/file/d/10OEUmfCGUjzEWLlAsbbYxq5xUdTrJQBp/view?usp=sharing
 
 # Module 3 - Geometry Foundations and Camera Calibration
 # L05     https://drive.google.com/file/d//view?usp=sharing
