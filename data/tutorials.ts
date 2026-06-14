@@ -426,6 +426,43 @@ export const tutorialSeries: TutorialSeries[] = [
           "Write a deployment recommendation for one target scenario using evidence from the metrics and gallery",
         ],
       },
+      {
+        id: "od-10",
+        slug: "pseudo-annotation-using-sam-3",
+        title: "Pseudo Annotation Using SAM 3",
+        description:
+          "Use SAM 3 as an annotation assistant for object-detection datasets: generate high-quality masks from prompts, convert masks into bounding boxes, filter weak pseudo labels, and export reviewed annotations for YOLO or COCO training.",
+        duration: "120 min",
+        difficulty: "Advanced",
+        topics: [
+          "Pseudo annotation workflow: unlabeled images, prompt generation, SAM 3 masks, quality filtering, and human review",
+          "Prompt strategies for SAM 3: points, boxes, detector proposals, and grid-based automatic mask generation",
+          "Converting segmentation masks into object-detection boxes and COCO-style annotations",
+          "Quality gates: confidence, mask area, box aspect ratio, duplicate removal, and IoU agreement",
+          "Training with pseudo labels: accepted labels, reviewed labels, and final detector evaluation",
+        ],
+        tools: ["SAM 3", "PyTorch", "OpenCV", "pycocotools", "Ultralytics YOLOv8", "Roboflow"],
+        learningObjectives: [
+          "Explain when pseudo annotations reduce labeling cost and when they introduce harmful label noise",
+          "Run a SAM 3 assisted annotation pipeline on unlabeled object-detection images",
+          "Convert generated masks into bounding boxes and export them in YOLO and COCO formats",
+          "Design filtering rules that reject low-quality pseudo boxes before detector training",
+          "Compare detector performance using manual labels, pseudo labels, and human-reviewed pseudo labels",
+        ],
+        keyTakeaways: [
+          "SAM 3 can accelerate annotation, but pseudo labels still need validation before they become training data",
+          "A mask can be converted to a detection box by taking the tight bounding rectangle around foreground pixels",
+          "Filtering pseudo annotations is as important as generating them because noisy boxes can reduce mAP",
+          "The strongest workflow combines automatic SAM 3 proposals with quick human review and detector-based evaluation",
+        ],
+        exercises: [
+          "Run SAM 3 on 50 unlabeled images using box prompts from a pretrained detector and save predicted masks",
+          "Convert each accepted mask into a bounding box and export both YOLO txt labels and COCO JSON annotations",
+          "Implement duplicate removal using IoU between generated boxes and keep the highest-confidence candidate",
+          "Train YOLOv8 on pseudo labels only, then compare mAP@50 against a small manually labeled baseline",
+          "Create a review table showing accepted, rejected, and manually corrected pseudo annotations with reasons",
+        ],
+      },
     ],
   },
 
