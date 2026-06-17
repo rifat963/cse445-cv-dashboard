@@ -18,6 +18,8 @@ import { getLectureInfographics } from "@/lib/infographicImages";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
 import PdfViewer from "@/components/ui/PdfViewer";
+import TransformationsAnimation from "@/components/ui/TransformationsAnimation";
+import TransformObjectAnimation from "@/components/ui/TransformObjectAnimation";
 
 export async function generateStaticParams() {
   const moduleSlugs = modules.map((m) => ({ slug: m.slug }));
@@ -207,6 +209,16 @@ export default async function Page({ params }: PageProps) {
               and it will appear here automatically.
             </p>
           </div>
+        )}
+
+        {/* 2D/3D Transformations interactive demo */}
+        {lecture.slug === "two-dimensional-and-three-dimensional-transformations" && (
+          <TransformationsAnimation />
+        )}
+
+        {/* Object transformation walkthrough */}
+        {lecture.slug === "two-dimensional-and-three-dimensional-transformations" && (
+          <TransformObjectAnimation />
         )}
 
         {/* Lecture slides */}
