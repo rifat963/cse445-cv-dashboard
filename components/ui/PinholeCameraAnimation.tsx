@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 // ── Isometric helpers ────────────────────────────────────────────────────
 function isoProject(
@@ -57,8 +57,6 @@ const STAGES = [
     transform: null,
   },
 ] as const;
-
-type StageId = 0 | 1 | 2 | 3;
 
 // ── Stage SVG panels ─────────────────────────────────────────────────────
 
@@ -348,17 +346,55 @@ function PinholeDiagram({ t }: { t: number }) {
   );
 }
 
+function MatrixBlock({
+  title,
+  rows,
+  color,
+  note,
+}: {
+  title: string;
+  rows: string[][];
+  color: string;
+  note?: string;
+}) {
+  return (
+    <div>
+      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">{title}</p>
+      <div className="inline-flex max-w-full flex-col gap-0.5 overflow-x-auto font-mono text-xs">
+        {rows.map((row, i) => (
+          <div key={i} className="flex items-center gap-1">
+            <span className="select-none text-lg leading-none text-[var(--muted)]">
+              [
+            </span>
+            <div className="flex gap-1 rounded bg-[var(--surface-2)] px-1.5 py-0.5">
+              {row.map((cell, j) => (
+                <span
+                  key={j}
+                  className="min-w-[24px] text-center text-[10px]"
+                  style={{
+                    color: cell === "0" || cell === "1" ? "var(--muted)" : color,
+                    fontWeight: cell === "0" || cell === "1" ? 400 : 700,
+                  }}
+                >
+                  {cell}
+                </span>
+              ))}
+            </div>
+            <span className="select-none text-lg leading-none text-[var(--muted)]">]</span>
+          </div>
+        ))}
+      </div>
+      {note && <p className="mt-1.5 text-[10px] text-[var(--muted)]">{note}</p>}
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────────────────
 export default function PinholeCameraAnimation() {
-  const [activeStage, setActiveStage] = useState<StageId>(0);
   const [playing, setPlaying]         = useState(true);
   const [t, setT]                     = useState(0);
   const rafRef                        = useRef<number>(0);
   const lastRef                       = useRef<number | null>(null);
-
-  const step = useCallback(() => {
-    setActiveStage(s => ((s + 1) % 4) as StageId);
-  }, []);
 
   // Animate time
   useEffect(() => {
@@ -371,17 +407,6 @@ export default function PinholeCameraAnimation() {
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
   }, [playing]);
-
-  const stage = STAGES[activeStage];
-
-  const stageSVG = (() => {
-    switch (activeStage) {
-      case 0: return <WorldSVG t={t} />;
-      case 1: return <CameraSVG t={t} />;
-      case 2: return <ImagePlaneSVG t={t} />;
-      case 3: return <PixelSVG t={t} />;
-    }
-  })();
 
   const K_MATRIX = [
     ["f_x", "0",   "c_x"],
@@ -402,6 +427,16 @@ export default function PinholeCameraAnimation() {
     ["0",   "0",   "1",   "0"],
   ];
 
+  const renderStageSVG = useCallback((index: number) => {
+    switch (index) {
+      case 0: return <WorldSVG t={t} />;
+      case 1: return <CameraSVG t={t} />;
+      case 2: return <ImagePlaneSVG t={t} />;
+      case 3: return <PixelSVG t={t} />;
+      default: return null;
+    }
+  }, [t]);
+
   return (
     <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
 
@@ -412,7 +447,7 @@ export default function PinholeCameraAnimation() {
             Camera Projection Pipeline
           </h2>
           <p className="text-xs text-[var(--muted)]">
-            World → Camera → Image → Pixel frame — step through the full projection chain
+            World &gt; Camera &gt; Image &gt; Pixel frame - all four coordinate transformations at once
           </p>
         </div>
         <div className="flex gap-2">
@@ -422,172 +457,73 @@ export default function PinholeCameraAnimation() {
           >
             {playing ? "⏸ Pause" : "▶ Play"}
           </button>
-          <button
-            onClick={step}
-            className="text-xs px-3 py-1.5 rounded border border-[var(--border)] bg-[var(--surface-2)] text-[var(--muted)] hover:text-[var(--ink)] transition-colors font-medium"
-          >
-            Next Step →
-          </button>
         </div>
       </div>
 
-      {/* Pipeline stage selector */}
-      <div className="flex items-center gap-0 mb-5 overflow-x-auto pb-1">
-        {STAGES.map((s, i) => {
-          const active = activeStage === i;
-          return (
-            <div key={s.id} className="flex items-center shrink-0">
-              <button
-                onClick={() => setActiveStage(i as StageId)}
-                style={active ? { backgroundColor: s.color, borderColor: s.color } : {}}
-                className={`px-3 py-2 rounded-lg border text-xs font-semibold transition-all ${
-                  active
-                    ? "text-white shadow-sm"
-                    : "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)]"
-                }`}
-              >
-                <span className="block">{s.label}</span>
-                <span className={`block text-[10px] font-normal mt-0.5 ${active ? "text-white/80" : "text-[var(--muted)]"}`}>
-                  {s.subtitle}
+      {/* Four projection stages */}
+      <div className="mb-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {STAGES.map((stage, index) => (
+          <motion.div
+            key={stage.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, delay: index * 0.04 }}
+            className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--canvas)]"
+          >
+            <div className="border-b border-[var(--border)] p-3">
+              <div className="mb-1.5 flex items-center gap-2">
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-[10px] font-bold text-white"
+                  style={{ backgroundColor: stage.color }}
+                >
+                  {index + 1}
                 </span>
-              </button>
-              {i < STAGES.length - 1 && (
-                <div className="flex flex-col items-center px-1">
-                  <span className="text-[9px] text-[var(--muted)] whitespace-nowrap">
-                    {i === 0 ? "[R|t]" : i === 1 ? "÷ Z_c" : "K"}
-                  </span>
-                  <span className="text-[var(--muted)] text-sm">→</span>
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-semibold text-[var(--ink)]">{stage.fullLabel}</h3>
+                  <p className="truncate text-[10px] text-[var(--muted)]">{stage.subtitle}</p>
+                </div>
+              </div>
+              <p className="text-xs leading-relaxed text-[var(--muted)]">{stage.desc}</p>
+            </div>
+
+            <div className="border-b border-[var(--border)] bg-neutral-50 p-2 dark:bg-neutral-900 [&>svg]:h-auto [&>svg]:w-full">
+              {renderStageSVG(index)}
+            </div>
+
+            <div className="space-y-3 p-3">
+              <div>
+                <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">Formula</p>
+                <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-2 font-mono">
+                  {stage.formulaLines.map((line, lineIndex) => (
+                    <div
+                      key={lineIndex}
+                      className="text-[11px] leading-relaxed"
+                      style={{ color: lineIndex === 0 ? stage.color : "var(--muted)" }}
+                    >
+                      {line}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {index < STAGES.length - 1 && (
+                <div className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1.5 text-[10px] font-semibold text-[var(--muted)]">
+                  Next: {stage.transform}
                 </div>
               )}
+
+              {index === 1 && (
+                <MatrixBlock title="Extrinsic [R | t]" rows={EXTRINSIC} color={stage.color} />
+              )}
+              {index === 2 && (
+                <MatrixBlock title="Projection P = K [R | t]" rows={FULL_PIPELINE} color={stage.color} note="p~ = P * P~_w" />
+              )}
+              {index === 3 && (
+                <MatrixBlock title="Intrinsic K" rows={K_MATRIX} color={stage.color} />
+              )}
             </div>
-          );
-        })}
-      </div>
-
-      {/* Main panel: diagram + info */}
-      <div className="flex flex-col md:flex-row gap-4 mb-5">
-
-        {/* SVG canvas */}
-        <div className="rounded-md overflow-hidden border border-[var(--border)] bg-neutral-50 dark:bg-neutral-900 shrink-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeStage}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-            >
-              {stageSVG}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Info panel */}
-        <div className="flex-1 flex flex-col gap-4 min-w-0">
-
-          {/* Stage name */}
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: stage.color }} />
-              <h3 className="font-semibold text-[var(--ink)] text-sm">{stage.fullLabel}</h3>
-              <span className="text-xs text-[var(--muted)]">— step {activeStage + 1} of 4</span>
-            </div>
-            <p className="text-xs text-[var(--muted)] leading-relaxed">{stage.desc}</p>
-          </div>
-
-          {/* Formula */}
-          <div>
-            <p className="text-[10px] font-semibold text-[var(--muted)] uppercase tracking-widest mb-2">Formula</p>
-            <div className="rounded-md bg-[var(--surface-2)] border border-[var(--border)] p-3 font-mono">
-              {stage.formulaLines.map((line, i) => (
-                <div key={i} className={`text-xs leading-relaxed ${line ? "" : "h-2"}`}
-                  style={line ? { color: i === 0 ? stage.color : "var(--muted)" } : {}}>
-                  {line}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Matrix for relevant stage */}
-          {activeStage === 1 && (
-            <div>
-              <p className="text-[10px] font-semibold text-[var(--muted)] uppercase tracking-widest mb-2">Extrinsic Matrix [R | t]</p>
-              <div className="inline-flex flex-col gap-0.5 font-mono text-xs">
-                {EXTRINSIC.map((row, i) => (
-                  <div key={i} className="flex items-center gap-1">
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎡" : i === EXTRINSIC.length - 1 ? "⎣" : "⎢"}
-                    </span>
-                    <div className="flex gap-1.5 px-2 py-0.5 rounded bg-[var(--surface-2)]">
-                      {row.map((cell, j) => (
-                        <span key={j} className="min-w-[28px] text-center text-[10px]"
-                          style={{ color: cell === "0" || cell === "1" ? "var(--muted)" : stage.color, fontWeight: cell === "0" || cell === "1" ? 400 : 700 }}>
-                          {cell}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎤" : i === EXTRINSIC.length - 1 ? "⎦" : "⎥"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeStage === 3 && (
-            <div>
-              <p className="text-[10px] font-semibold text-[var(--muted)] uppercase tracking-widest mb-2">Intrinsic Matrix K</p>
-              <div className="inline-flex flex-col gap-0.5 font-mono text-xs">
-                {K_MATRIX.map((row, i) => (
-                  <div key={i} className="flex items-center gap-1">
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎡" : i === K_MATRIX.length - 1 ? "⎣" : "⎢"}
-                    </span>
-                    <div className="flex gap-1.5 px-2 py-0.5 rounded bg-[var(--surface-2)]">
-                      {row.map((cell, j) => (
-                        <span key={j} className="min-w-[32px] text-center text-[10px]"
-                          style={{ color: cell === "0" || cell === "1" ? "var(--muted)" : stage.color, fontWeight: cell === "0" || cell === "1" ? 400 : 700 }}>
-                          {cell}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎤" : i === K_MATRIX.length - 1 ? "⎦" : "⎥"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeStage === 2 && (
-            <div>
-              <p className="text-[10px] font-semibold text-[var(--muted)] uppercase tracking-widest mb-2">Full Projection Matrix P = K [R | t]</p>
-              <div className="inline-flex flex-col gap-0.5 font-mono text-xs">
-                {FULL_PIPELINE.map((row, i) => (
-                  <div key={i} className="flex items-center gap-1">
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎡" : i === FULL_PIPELINE.length - 1 ? "⎣" : "⎢"}
-                    </span>
-                    <div className="flex gap-1.5 px-2 py-0.5 rounded bg-[var(--surface-2)]">
-                      {row.map((cell, j) => (
-                        <span key={j} className="min-w-[30px] text-center text-[10px]"
-                          style={{ color: cell === "0" || cell === "1" ? "var(--muted)" : stage.color, fontWeight: cell === "0" || cell === "1" ? 400 : 700 }}>
-                          {cell}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-lg leading-none text-[var(--muted)] select-none">
-                      {i === 0 ? "⎤" : i === FULL_PIPELINE.length - 1 ? "⎦" : "⎥"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-[10px] text-[var(--muted)] mt-1.5">p̃ = P · P̃_w  (homogeneous)</p>
-            </div>
-          )}
-        </div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Pinhole camera model diagram */}
