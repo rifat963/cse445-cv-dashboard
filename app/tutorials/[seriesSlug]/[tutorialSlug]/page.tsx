@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
+import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
 
 export function generateStaticParams() {
   return tutorialSeries.flatMap((series) =>
@@ -336,13 +337,8 @@ export default async function TutorialDetailPage({ params }: PageProps) {
               )}
             </div>
             {htmlPreviewUrl && (
-              <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
-                <iframe
-                  title={`${tutorial.title} notebook preview`}
-                  src={htmlPreviewUrl}
-                  loading="lazy"
-                  className="block h-[70vh] min-h-[480px] w-full border-0"
-                />
+              <div className="mt-4">
+                <HtmlNotebookViewer title={tutorial.title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
               </div>
             )}
           </div>

@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookO
 import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
+import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
 import HarrisFastAnimation from "@/components/ui/HarrisFastAnimation";
 import SiftOrbAnimation from "@/components/ui/SiftOrbAnimation";
 
@@ -374,13 +375,8 @@ export default async function LabDetailPage({ params }: PageProps) {
               )}
             </div>
             {htmlPreviewUrl && (
-              <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-2)]">
-                <iframe
-                  title={`${lab.title} notebook preview`}
-                  src={htmlPreviewUrl}
-                  loading="lazy"
-                  className="block h-[70vh] min-h-[480px] w-full border-0"
-                />
+              <div className="mt-4">
+                <HtmlNotebookViewer title={lab.title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
               </div>
             )}
           </div>

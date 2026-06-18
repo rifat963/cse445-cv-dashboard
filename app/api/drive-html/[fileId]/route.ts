@@ -45,6 +45,25 @@ function isDriveIntermediary(body: string): boolean {
   );
 }
 
+function isDriveErrorPage(body: string): boolean {
+  const lower = body.slice(0, 24000).toLowerCase();
+  return (
+    lower.includes("google drive") &&
+    (lower.includes("you need access") ||
+      lower.includes("request access") ||
+      lower.includes("sign in") ||
+      lower.includes("couldn't preview file") ||
+      lower.includes("sorry, unable to open the file") ||
+      lower.includes("file is in owner's trash") ||
+      lower.includes("no longer available"))
+  );
+}
+
+function looksLikeHtmlDocument(body: string): boolean {
+  const trimmed = body.trimStart().slice(0, 2000).toLowerCase();
+  return trimmed.startsWith("<!doctype html") || trimmed.startsWith("<html") || trimmed.includes("<body");
+}
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -145,7 +164,7 @@ function fallbackResponse(request: NextRequest, fileId: string, message: string)
     </main>
   </body>
 </html>`, {
-    status: 502,
+    status: 200,
     headers: { "Content-Type": "text/html; charset=utf-8" },
   });
 }
@@ -241,6 +260,14 @@ export async function GET(
 
     if (isDriveIntermediary(body)) {
       return fallbackResponse(request, fileId, "Google Drive did not return the HTML file content.");
+    }
+
+    if (isDriveErrorPage(body)) {
+      return fallbackResponse(request, fileId, "Google Drive returned an access or preview error for this file.");
+    }
+
+    if (!looksLikeHtmlDocument(body)) {
+      return fallbackResponse(request, fileId, "The linked file did not look like a rendered notebook HTML document.");
     }
 
     return new NextResponse(body, {

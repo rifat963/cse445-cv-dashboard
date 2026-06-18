@@ -1,5 +1,6 @@
 import { ExternalLink, Download, FileCode, BookOpen } from "lucide-react";
 import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath } from "@/lib/notebookLinks";
+import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
 
 interface NotebookWidgetProps {
   title: string;
@@ -74,13 +75,8 @@ export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, ht
       </div>
 
       {htmlPreviewUrl ? (
-        <div className="bg-[var(--surface-2)]">
-          <iframe
-            title={`${title} - notebook preview`}
-            src={htmlPreviewUrl}
-            loading="lazy"
-            className="block h-[70vh] min-h-[480px] w-full border-0"
-          />
+        <div className="bg-[var(--surface-2)] p-4">
+          <HtmlNotebookViewer title={title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
         </div>
       ) : (
         <div className="px-4 py-4 text-xs text-[var(--muted)]">
