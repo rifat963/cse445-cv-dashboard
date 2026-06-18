@@ -20,6 +20,7 @@ import InfographicViewer from "@/components/ui/InfographicViewer";
 import PdfViewer from "@/components/ui/PdfViewer";
 import TransformationsAnimation from "@/components/ui/TransformationsAnimation";
 import TransformObjectAnimation from "@/components/ui/TransformObjectAnimation";
+import PinholeCameraAnimation from "@/components/ui/PinholeCameraAnimation";
 
 export async function generateStaticParams() {
   const moduleSlugs = modules.map((m) => ({ slug: m.slug }));
@@ -209,6 +210,11 @@ export default async function Page({ params }: PageProps) {
               and it will appear here automatically.
             </p>
           </div>
+        )}
+
+        {/* Pinhole camera projection pipeline animation */}
+        {lecture.slug === "pinhole-camera-model-and-projection-geometry" && (
+          <PinholeCameraAnimation />
         )}
 
         {/* 2D/3D Transformations interactive demo */}
