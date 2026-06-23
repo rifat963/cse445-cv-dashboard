@@ -21,6 +21,7 @@ import PdfViewer from "@/components/ui/PdfViewer";
 import TransformationsAnimation from "@/components/ui/TransformationsAnimation";
 import TransformObjectAnimation from "@/components/ui/TransformObjectAnimation";
 import PinholeCameraAnimation from "@/components/ui/PinholeCameraAnimation";
+import CompositeTriangleTransformAnimation from "@/components/ui/CompositeTriangleTransformAnimation";
 
 export const dynamicParams = false;
 
@@ -214,6 +215,11 @@ export default async function Page({ params }: PageProps) {
           </div>
         )}
 
+        {/* Composite triangle transformation around an arbitrary 3D pivot */}
+        {lecture.slug === "homogeneous-coordinates-and-coordinate-frames" && (
+          <CompositeTriangleTransformAnimation />
+        )}
+
         {/* Pinhole camera projection pipeline animation */}
         {lecture.slug === "pinhole-camera-model-and-projection-geometry" && (
           <PinholeCameraAnimation />
@@ -248,7 +254,7 @@ export default async function Page({ params }: PageProps) {
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
                 data/lecture-slides.txt
               </code>{" "}
-              to display the embedded lecture PDF viewer here.
+              to display the highlighted lecture Drive link here.
             </p>
           </div>
         )}
