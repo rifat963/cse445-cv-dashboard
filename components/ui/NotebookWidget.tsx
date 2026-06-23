@@ -1,6 +1,5 @@
-import { ExternalLink, Download, FileCode, BookOpen } from "lucide-react";
-import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath } from "@/lib/notebookLinks";
-import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
+import { ExternalLink, Download, FileCode } from "lucide-react";
+import { getDriveDownloadUrl, getDriveFileId } from "@/lib/notebookLinks";
 
 interface NotebookWidgetProps {
   title: string;
@@ -11,22 +10,27 @@ interface NotebookWidgetProps {
 }
 
 export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, htmlFallbackUrl }: NotebookWidgetProps) {
-  if (!kaggleUrl && !ipynbUrl && !htmlUrl) return null;
+  void htmlUrl;
+  void htmlFallbackUrl;
+
+  if (!kaggleUrl && !ipynbUrl) return null;
 
   const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
   const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
   const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
-  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
 
   return (
-    <section className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
+    <section className="overflow-hidden rounded-lg border-2 border-co4/30 border-l-4 bg-co4/5 shadow-sm">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-co4/20 bg-[var(--surface)]/80 px-4 py-4">
         <div className="min-w-0">
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-[var(--ink)]">
-            <FileCode size={13} className="text-co4" />
-            Jupyter Notebook
+          <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-co4">
+            <FileCode size={14} />
+            Notebook Resources
           </p>
-          <h2 className="mt-0.5 truncate text-sm font-semibold text-[var(--ink)]">{title}</h2>
+          <h2 className="mt-1 truncate text-base font-bold text-[var(--ink)]">{title}</h2>
+          <p className="mt-1 max-w-2xl text-xs leading-relaxed text-[var(--muted)]">
+            Start in Kaggle for the hosted workflow, use Colab for quick experiments, or download the .ipynb for local editing.
+          </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {kaggleUrl && (
@@ -34,7 +38,7 @@ export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, ht
               href={kaggleUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-co4/20 bg-co4/10 px-3 py-1.5 text-xs font-medium text-co4 transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co4/30 bg-co4 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
             >
               Open in Kaggle
               <ExternalLink size={12} />
@@ -45,7 +49,7 @@ export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, ht
               href={colabUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-co3/20 bg-co3/10 px-3 py-1.5 text-xs font-medium text-co3 transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co3/30 bg-co3 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
             >
               Open in Colab
               <ExternalLink size={12} />
@@ -54,35 +58,26 @@ export default function NotebookWidget({ title, kaggleUrl, ipynbUrl, htmlUrl, ht
           {ipynbDownloadUrl && (
             <a
               href={ipynbDownloadUrl}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-co2/20 bg-co2/10 px-3 py-1.5 text-xs font-medium text-co2 transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-co2/30 bg-co2 px-3.5 py-2 text-xs font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
             >
               Download .ipynb
               <Download size={12} />
             </a>
           )}
-          {htmlPreviewUrl && (
-            <a
-              href={htmlPreviewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs font-medium text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
-            >
-              View HTML
-              <BookOpen size={12} />
-            </a>
-          )}
         </div>
       </div>
 
-      {htmlPreviewUrl ? (
-        <div className="bg-[var(--surface-2)] p-4">
-          <HtmlNotebookViewer title={title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
+      <div className="grid gap-2 px-4 py-4 text-xs text-[var(--muted)] sm:grid-cols-3">
+        <div className="rounded-md border border-co4/20 bg-[var(--surface)] px-3 py-2">
+          <span className="font-semibold text-[var(--ink)]">Kaggle:</span> run the prepared notebook online.
         </div>
-      ) : (
-        <div className="px-4 py-4 text-xs text-[var(--muted)]">
-          Use the buttons above to open or download this notebook.
+        <div className="rounded-md border border-co3/20 bg-[var(--surface)] px-3 py-2">
+          <span className="font-semibold text-[var(--ink)]">Colab:</span> experiment in your own session.
         </div>
-      )}
+        <div className="rounded-md border border-co2/20 bg-[var(--surface)] px-3 py-2">
+          <span className="font-semibold text-[var(--ink)]">IPYNB:</span> download for submission or local work.
+        </div>
+      </div>
     </section>
   );
 }

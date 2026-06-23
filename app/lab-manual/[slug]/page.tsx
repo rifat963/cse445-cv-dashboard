@@ -3,12 +3,13 @@ import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, FlaskConical, CheckCircle, HelpCircle, BookOpen, Monitor, FileCode, ExternalLink, Download, ImageIcon, Layers } from "lucide-react";
-import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
+import { getDriveDownloadUrl, getDriveFileId, getLabLinks, getLabInfographic } from "@/lib/notebookLinks";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
-import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
 import HarrisFastAnimation from "@/components/ui/HarrisFastAnimation";
 import SiftOrbAnimation from "@/components/ui/SiftOrbAnimation";
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return [
@@ -152,13 +153,10 @@ export default async function LabDetailPage({ params }: PageProps) {
   const {
     kaggle: kaggleUrl,
     ipynb: ipynbUrl,
-    html: htmlUrl,
-    htmlFallback: htmlFallbackUrl,
   } = getLabLinks(lab.id);
   const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
   const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
   const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
-  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
   const infographicUrl = getLabInfographic(lab.id);
 
   const modIdx = labModules.findIndex((m) => m.id === lab.labModuleId);
@@ -325,22 +323,30 @@ export default async function LabDetailPage({ params }: PageProps) {
         ))}
 
         {/* Notebook widget */}
-        {showLabResources && ((kaggleUrl || ipynbUrl || htmlUrl) ? (
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <FileCode size={16} className="text-co4" />
-              <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
+        {showLabResources && ((kaggleUrl || ipynbUrl) ? (
+          <div className="rounded-lg border-2 border-co4/30 border-l-4 bg-co4/5 p-5 shadow-sm">
+            <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-co4">
+                  <FileCode size={14} />
+                  Notebook Resources
+                </p>
+                <h2 className="mt-1 text-base font-bold text-[var(--ink)]">Jupyter Notebook</h2>
+              </div>
+              <span className="rounded-full border border-co4/20 bg-[var(--surface)] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-co4">
+                Student action area
+              </span>
             </div>
-            <p className="text-xs text-[var(--muted)] mb-4 leading-relaxed">
-              Open the companion notebook in Kaggle, download the .ipynb for local use, or preview the rendered HTML version.
+            <p className="mb-4 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              Use this section to start the lab workflow. Kaggle opens the prepared notebook, Colab lets you experiment in your own runtime, and the .ipynb download is best for local editing or submission.
             </p>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               {kaggleUrl && (
                 <a
                   href={kaggleUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co4/10 text-co4 border-co4/20 hover:opacity-80 transition-opacity"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-co4/30 bg-co4 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <ExternalLink size={13} /> Open in Kaggle
                 </a>
@@ -350,7 +356,7 @@ export default async function LabDetailPage({ params }: PageProps) {
                   href={colabUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co3/10 text-co3 border-co3/20 hover:opacity-80 transition-opacity"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-co3/30 bg-co3 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <ExternalLink size={13} /> Open in Colab
                 </a>
@@ -358,27 +364,23 @@ export default async function LabDetailPage({ params }: PageProps) {
               {ipynbDownloadUrl && (
                 <a
                   href={ipynbDownloadUrl}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-co2/10 text-co2 border-co2/20 hover:opacity-80 transition-opacity"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-co2/30 bg-co2 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <Download size={13} /> Download .ipynb
                 </a>
               )}
-              {htmlPreviewUrl && (
-                <a
-                  href={htmlPreviewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)] transition-colors"
-                >
-                  <ExternalLink size={13} /> View HTML
-                </a>
-              )}
             </div>
-            {htmlPreviewUrl && (
-              <div className="mt-4">
-                <HtmlNotebookViewer title={lab.title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
+            <div className="mt-4 grid gap-2 text-xs text-[var(--muted)] sm:grid-cols-3">
+              <div className="rounded-md border border-co4/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">Kaggle:</span> follow the official lab notebook.
               </div>
-            )}
+              <div className="rounded-md border border-co3/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">Colab:</span> modify and rerun quickly.
+              </div>
+              <div className="rounded-md border border-co2/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">IPYNB:</span> keep a local copy.
+              </div>
+            </div>
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
@@ -391,7 +393,7 @@ export default async function LabDetailPage({ params }: PageProps) {
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
                 data/lab-notebooks.txt
               </code>{" "}
-              to enable Kaggle, .ipynb, and HTML download buttons here.
+              to enable Kaggle and .ipynb buttons here.
             </p>
           </div>
         ))}

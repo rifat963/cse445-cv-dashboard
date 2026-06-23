@@ -22,6 +22,8 @@ import TransformationsAnimation from "@/components/ui/TransformationsAnimation";
 import TransformObjectAnimation from "@/components/ui/TransformObjectAnimation";
 import PinholeCameraAnimation from "@/components/ui/PinholeCameraAnimation";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const moduleSlugs = modules.map((m) => ({ slug: m.slug }));
   const lectureSlugs = lectures.map((l) => ({ slug: l.slug }));

@@ -156,15 +156,18 @@ export default function SiftOrbAnimation() {
   const replay = useCallback(() => setAnimKey((k) => k + 1), []);
 
   useEffect(() => {
-    setLog([]);
     idRef.current = 0;
     const steps = mode === "sift" ? SIFT_STEPS : mode === "orb" ? ORB_STEPS : CMP_STEPS;
+    const resetTimer = setTimeout(() => setLog([]), 0);
     const timers = steps.map(({ time, text, type }) =>
       setTimeout(() => {
         setLog((prev) => [...prev, { id: idRef.current++, text, type }]);
-      }, time)
+      }, time + 1)
     );
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      clearTimeout(resetTimer);
+      timers.forEach(clearTimeout);
+    };
   }, [animKey, mode]);
 
   useEffect(() => {
@@ -411,7 +414,7 @@ export default function SiftOrbAnimation() {
           <p className="text-xs text-[var(--muted)] leading-relaxed">
             <span className="font-semibold text-[var(--ink)]">SIFT</span> builds a DoG scale-space pyramid, localises keypoints, assigns orientations, then computes a{" "}
             <code className="font-mono text-[10px] px-1 py-0.5 rounded bg-[var(--border)]">128-D</code>{" "}
-            gradient histogram descriptor. <strong>Lowe's ratio test</strong> (d₁/d₂ &lt; 0.75) rejects the 2 door-corner matches because both door corners produce similar descriptors — only the 8 geometrically distinct window corners survive.
+            gradient histogram descriptor. <strong>Lowe&apos;s ratio test</strong> (d₁/d₂ &lt; 0.75) rejects the 2 door-corner matches because both door corners produce similar descriptors — only the 8 geometrically distinct window corners survive.
           </p>
         )}
         {mode === "orb" && (

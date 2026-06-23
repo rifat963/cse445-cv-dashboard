@@ -93,7 +93,7 @@ export default function HarrisFastAnimation() {
   const [animKey, setAnimKey] = useState(0);
   const [log, setLog] = useState<LogEntry[]>([]);
   const logRef = useRef<HTMLDivElement>(null);
-  let idRef = useRef(0);
+  const idRef = useRef(0);
 
   const handleMode = useCallback((m: Mode) => {
     setMode(m);
@@ -104,16 +104,19 @@ export default function HarrisFastAnimation() {
 
   // Schedule log entries to appear in sync with the animation
   useEffect(() => {
-    setLog([]);
     idRef.current = 0;
     const steps = mode === "harris" ? HARRIS_STEPS : mode === "fast" ? FAST_STEPS : COMPARE_STEPS;
+    const resetTimer = setTimeout(() => setLog([]), 0);
     const timers = steps.map(({ time, text, type }) =>
       setTimeout(() => {
         const entry: LogEntry = { id: idRef.current++, text, type };
         setLog((prev) => [...prev, entry]);
-      }, time)
+      }, time + 1)
     );
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      clearTimeout(resetTimer);
+      timers.forEach(clearTimeout);
+    };
   }, [animKey, mode]);
 
   // Auto-scroll log to bottom on new entries

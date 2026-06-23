@@ -1,5 +1,5 @@
 import { tutorialSeries } from "@/data/tutorials";
-import { getDriveDownloadUrl, getDriveFileId, getDriveHtmlViewerPath, getTutorialLinks, getTutorialInfographic } from "@/lib/notebookLinks";
+import { getDriveDownloadUrl, getDriveFileId, getTutorialLinks, getTutorialInfographic } from "@/lib/notebookLinks";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -9,7 +9,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
-import HtmlNotebookViewer from "@/components/ui/HtmlNotebookViewer";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return tutorialSeries.flatMap((series) =>
@@ -36,7 +37,6 @@ const colorConfig = {
     dot:      "bg-co2",
     kaggle:   "bg-co4/10 text-co4 border-co4/20 hover:opacity-80",
     ipynb:    "bg-co2/10 text-co2 border-co2/20 hover:opacity-80",
-    html:     "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)]",
   },
   co3: {
     accent:   "text-co3",
@@ -47,7 +47,6 @@ const colorConfig = {
     dot:      "bg-co3",
     kaggle:   "bg-co4/10 text-co4 border-co4/20 hover:opacity-80",
     ipynb:    "bg-co3/10 text-co3 border-co3/20 hover:opacity-80",
-    html:     "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)]",
   },
   co4: {
     accent:   "text-co4",
@@ -58,7 +57,6 @@ const colorConfig = {
     dot:      "bg-co4",
     kaggle:   "bg-co4/10 text-co4 border-co4/20 hover:opacity-80",
     ipynb:    "bg-co4/10 text-co4 border-co4/20 hover:opacity-80",
-    html:     "bg-[var(--surface-2)] text-[var(--muted)] border-[var(--border)] hover:text-[var(--ink)]",
   },
 } as const;
 
@@ -99,13 +97,10 @@ export default async function TutorialDetailPage({ params }: PageProps) {
   const {
     kaggle: kaggleUrl,
     ipynb: ipynbUrl,
-    html: htmlUrl,
-    htmlFallback: htmlFallbackUrl,
   } = getTutorialLinks(tutorial.id);
   const ipynbFileId = ipynbUrl ? getDriveFileId(ipynbUrl) : null;
   const colabUrl = ipynbFileId ? `https://colab.research.google.com/drive/${ipynbFileId}` : null;
   const ipynbDownloadUrl = ipynbUrl ? getDriveDownloadUrl(ipynbUrl) : null;
-  const htmlPreviewUrl = htmlUrl ? getDriveHtmlViewerPath(htmlUrl, htmlFallbackUrl) : null;
   const infographicUrl = getTutorialInfographic(tutorial.id);
 
   return (
@@ -275,24 +270,32 @@ export default async function TutorialDetailPage({ params }: PageProps) {
         )}
 
         {/* Notebook widget */}
-        {(kaggleUrl || ipynbUrl || htmlUrl) && (
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-            <div className="flex items-center gap-2 mb-2">
-              <FileCode size={16} className="text-co4" />
-              <h2 className="font-semibold text-[var(--ink)] text-sm">Jupyter Notebook</h2>
+        {(kaggleUrl || ipynbUrl) && (
+          <div className="rounded-lg border-2 border-co4/30 border-l-4 bg-co4/5 p-5 shadow-sm">
+            <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-co4">
+                  <FileCode size={14} />
+                  Notebook Resources
+                </p>
+                <h2 className="mt-1 text-base font-bold text-[var(--ink)]">Jupyter Notebook</h2>
+              </div>
+              <span className="rounded-full border border-co4/20 bg-[var(--surface)] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-co4">
+                Student action area
+              </span>
             </div>
-            <p className="text-xs text-[var(--muted)] mb-4 leading-relaxed">
-              Open the companion notebook in Kaggle, download the .ipynb for local use, or preview the rendered HTML version.
+            <p className="mb-4 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              Use this section to practice the tutorial code. Kaggle opens the prepared notebook, Colab lets you experiment in your own runtime, and the .ipynb download is best for local editing or submission.
             </p>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               {kaggleUrl && (
                 <a
                   href={kaggleUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity",
-                    colors.kaggle
+                    "inline-flex items-center gap-1.5 rounded-lg border px-4 py-2.5 text-sm font-bold shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md",
+                    "border-co4/30 bg-co4 text-white"
                   )}
                 >
                   <ExternalLink size={13} /> Open in Kaggle
@@ -304,8 +307,8 @@ export default async function TutorialDetailPage({ params }: PageProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity",
-                    colors.ipynb
+                    "inline-flex items-center gap-1.5 rounded-lg border px-4 py-2.5 text-sm font-bold shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md",
+                    "border-co3/30 bg-co3 text-white"
                   )}
                 >
                   <ExternalLink size={13} /> Open in Colab
@@ -315,37 +318,30 @@ export default async function TutorialDetailPage({ params }: PageProps) {
                 <a
                   href={ipynbDownloadUrl}
                   className={cn(
-                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-opacity",
-                    colors.ipynb
+                    "inline-flex items-center gap-1.5 rounded-lg border px-4 py-2.5 text-sm font-bold shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md",
+                    "border-co2/30 bg-co2 text-white"
                   )}
                 >
                   <Download size={13} /> Download .ipynb
                 </a>
               )}
-              {htmlPreviewUrl && (
-                <a
-                  href={htmlPreviewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-colors",
-                    colors.html
-                  )}
-                >
-                  <ExternalLink size={13} /> View HTML
-                </a>
-              )}
             </div>
-            {htmlPreviewUrl && (
-              <div className="mt-4">
-                <HtmlNotebookViewer title={tutorial.title} previewUrl={htmlPreviewUrl} sourceUrl={htmlUrl} />
+            <div className="mt-4 grid gap-2 text-xs text-[var(--muted)] sm:grid-cols-3">
+              <div className="rounded-md border border-co4/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">Kaggle:</span> follow the official tutorial notebook.
               </div>
-            )}
+              <div className="rounded-md border border-co3/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">Colab:</span> modify and rerun quickly.
+              </div>
+              <div className="rounded-md border border-co2/20 bg-[var(--surface)] px-3 py-2">
+                <span className="font-semibold text-[var(--ink)]">IPYNB:</span> keep a local copy.
+              </div>
+            </div>
           </div>
         )}
 
         {/* No notebook yet placeholder */}
-        {!kaggleUrl && !ipynbUrl && !htmlUrl && (
+        {!kaggleUrl && !ipynbUrl && (
           <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-5">
             <div className="flex items-center gap-2 mb-1">
               <FileCode size={16} className="text-[var(--muted)]" />
@@ -356,7 +352,7 @@ export default async function TutorialDetailPage({ params }: PageProps) {
               <code className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[var(--surface-2)]">
                 data/tutorial-notebooks.txt
               </code>{" "}
-              to enable Kaggle, .ipynb, and HTML download buttons here.
+              to enable Kaggle and .ipynb buttons here.
             </p>
           </div>
         )}

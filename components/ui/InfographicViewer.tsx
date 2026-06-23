@@ -1,8 +1,7 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
 import { useState, useRef, useCallback, useEffect } from "react";
+import Image from "next/image";
 import {
   ChevronLeft,
   ChevronRight,
@@ -177,10 +176,15 @@ export default function InfographicViewer({
         onClick={openLightbox}
         className="relative group w-full cursor-zoom-in rounded-lg border border-[var(--border)] overflow-hidden bg-[var(--surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-co1"
       >
-        <img
+        <Image
           src={src}
           alt={alt}
-          className="w-full object-contain"
+          width={1200}
+          height={675}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="h-auto w-full object-contain"
+          loading="lazy"
+          decoding="async"
           onError={() => setImageOk(false)}
         />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
@@ -278,10 +282,13 @@ export default function InfographicViewer({
                 />
               </>
             )}
+            {/* eslint-disable-next-line @next/next/no-img-element -- Lightbox loads the original only after an explicit user click. */}
             <img
               src={currentImage.src}
               alt={currentImage.alt}
               draggable={false}
+              loading="lazy"
+              decoding="async"
               style={{
                 transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
                 transition: dragging ? "none" : "transform 0.12s ease",

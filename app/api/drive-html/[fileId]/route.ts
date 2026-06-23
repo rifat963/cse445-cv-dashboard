@@ -4,10 +4,11 @@ import { request as httpsRequest } from "https";
 import type { IncomingHttpHeaders } from "http";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 const DRIVE_DOWNLOAD_URL = "https://drive.google.com/uc?export=download&id=";
 const MAX_REDIRECTS = 5;
+const DRIVE_HTML_CACHE = "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400";
+const DRIVE_HTML_ERROR_CACHE = "public, max-age=60, s-maxage=300, stale-while-revalidate=3600";
 
 interface FetchTextResult {
   body: string;
@@ -106,7 +107,12 @@ function safeDriveUrl(value: string | null): string | null {
 function fallbackResponse(request: NextRequest, fileId: string, message: string) {
   const fallback = request.nextUrl.searchParams.get("fallback");
   if (fallback?.startsWith("/")) {
-    return NextResponse.redirect(new URL(fallback, request.url));
+    const response = NextResponse.redirect(new URL(fallback, request.url));
+    response.headers.set("Cache-Control", DRIVE_HTML_ERROR_CACHE);
+    response.headers.set("CDN-Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+    response.headers.set("Vercel-CDN-Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+    response.headers.set("X-Robots-Tag", "noindex, noarchive");
+    return response;
   }
 
   const sourceUrl =
@@ -165,7 +171,13 @@ function fallbackResponse(request: NextRequest, fileId: string, message: string)
   </body>
 </html>`, {
     status: 200,
-    headers: { "Content-Type": "text/html; charset=utf-8" },
+    headers: {
+      "Cache-Control": DRIVE_HTML_ERROR_CACHE,
+      "CDN-Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
+      "Content-Type": "text/html; charset=utf-8",
+      "Vercel-CDN-Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
+      "X-Robots-Tag": "noindex, noarchive",
+    },
   });
 }
 
@@ -272,8 +284,11 @@ export async function GET(
 
     return new NextResponse(body, {
       headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400",
+        "Cache-Control": DRIVE_HTML_CACHE,
+        "CDN-Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
         "Content-Type": "text/html; charset=utf-8",
+        "Vercel-CDN-Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        "X-Robots-Tag": "noindex, noarchive",
       },
     });
   } catch {

@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return tutorialSeries.map((s) => ({ seriesSlug: s.slug }));
 }

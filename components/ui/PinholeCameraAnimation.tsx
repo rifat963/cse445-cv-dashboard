@@ -212,7 +212,6 @@ function ImagePlaneSVG({ t }: { t: number }) {
 }
 
 function PixelSVG({ t }: { t: number }) {
-  const cx = 150, cy = 100;
   const fx = 120, fy = 110, pcx = 145, pcy = 100;
   const nx = 0.25 + 0.15 * Math.sin(t * 0.7);
   const ny = 0.18 + 0.12 * Math.cos(t * 0.5);
