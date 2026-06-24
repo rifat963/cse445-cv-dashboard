@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown, GraduationCap, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
-import { labModules } from "@/data/labs";
 import { modules } from "@/data/modules";
 import { tutorialSeries } from "@/data/tutorials";
 import { cn } from "@/lib/utils";
@@ -13,7 +12,6 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "/", label: "Dashboard" },
   { href: "/lectures", label: "Lectures" },
-  { href: "/lab-manual", label: "Lab Manual" },
   { href: "/tutorials", label: "Tutorials" },
   { href: "/assessment", label: "Assessment" },
   { href: "/resources", label: "Resources" },
@@ -31,11 +29,6 @@ const dropdownNavItems: Record<string, Array<{ href: string; label: string; desc
     href: `/lectures/${mod.slug}`,
     label: `Module ${mod.moduleNo}: ${mod.shortTitle}`,
     description: `${mod.lectureNos.length} lectures - ${mod.title}`,
-  })),
-  "/lab-manual": labModules.map((mod) => ({
-    href: `/lab-manual/${mod.slug}`,
-    label: `Module ${mod.moduleNo}: ${mod.title}`,
-    description: `${mod.labIds.length} labs - ${mod.level}`,
   })),
   "/tutorials": tutorialNavItems,
 };

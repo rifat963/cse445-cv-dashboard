@@ -1,6 +1,5 @@
 import { modules } from "@/data/modules";
 import { lectures } from "@/data/lectures";
-import { labs } from "@/data/labs";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -8,7 +7,6 @@ import {
   ChevronRight,
   BookOpen,
   CheckCircle,
-  FlaskConical,
   Hash,
   FileText,
   ImageIcon,
@@ -54,9 +52,6 @@ export default async function Page({ params }: PageProps) {
     const scheme = colorScheme[lecture.color] ?? colorScheme.co2;
     const prevLecture = lectureIdx > 0 ? lectures[lectureIdx - 1] : null;
     const nextLecture = lectureIdx < lectures.length - 1 ? lectures[lectureIdx + 1] : null;
-    const relatedLabs = labs.filter((lab) =>
-      lab.linkedLectures.includes(lecture.lectureNo)
-    );
 
     const { slides: slidesUrl, pdfs: pdfUrls } = getLectureLinks(lecture.id);
     const lecturePdfUrls = pdfUrls.length > 0 ? pdfUrls : slidesUrl ? [slidesUrl] : [];
@@ -259,27 +254,6 @@ export default async function Page({ params }: PageProps) {
           </div>
         )}
 
-        {/* Related Labs */}
-        {relatedLabs.length > 0 && (
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
-            <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
-              <FlaskConical size={16} className="text-co4" /> Related Lab Experiments
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {relatedLabs.map((lab) => (
-                <Link key={lab.id} href={`/lab-manual/${lab.slug}`}
-                  className="flex items-center justify-between p-3 rounded-lg bg-[var(--surface-2)] hover:bg-co4/10 transition-colors">
-                  <div className="min-w-0">
-                    <p className="text-sm text-[var(--ink)] truncate">{lab.title}</p>
-                    <p className="text-xs text-[var(--muted)]">Week {lab.week}</p>
-                  </div>
-                  <span className="text-xs text-[var(--muted)] font-mono shrink-0 ml-2">{lab.id}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Bottom Prev/Next */}
         <div className="flex justify-between gap-4">
           {prevLecture ? (
@@ -310,10 +284,6 @@ export default async function Page({ params }: PageProps) {
   const moduleLectures = lectures.filter((l) => l.moduleId === mod.id);
   const prevMod = modIdx > 0 ? modules[modIdx - 1] : null;
   const nextMod = modIdx < modules.length - 1 ? modules[modIdx + 1] : null;
-
-  const relatedLabs = labs.filter((lab) =>
-    lab.linkedLectures.some((ln) => mod.lectureNos.includes(ln))
-  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -378,27 +348,6 @@ export default async function Page({ params }: PageProps) {
           </Link>
         ))}
       </div>
-
-      {/* Related Labs */}
-      {relatedLabs.length > 0 && (
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 mb-8">
-          <h2 className="font-semibold text-[var(--ink)] mb-3 flex items-center gap-2">
-            <FlaskConical size={16} className="text-co4" /> Related Lab Experiments
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {relatedLabs.map((lab) => (
-              <Link key={lab.id} href={`/lab-manual/${lab.slug}`}
-                className="flex items-center justify-between p-3 rounded-lg bg-[var(--surface-2)] hover:bg-co4/10 transition-colors">
-                <div className="min-w-0">
-                  <p className="text-sm text-[var(--ink)] truncate">{lab.title}</p>
-                  <p className="text-xs text-[var(--muted)]">Week {lab.week}</p>
-                </div>
-                <span className="text-xs text-[var(--muted)] font-mono shrink-0 ml-2">{lab.id}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Prev / Next module */}
       <div className="flex justify-between gap-4">
