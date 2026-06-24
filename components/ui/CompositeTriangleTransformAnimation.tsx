@@ -15,6 +15,7 @@ interface FrameState {
   stageProgress: number;
   angleDeg: number;
   scale: Vec3;
+  description: string;
 }
 
 const W = 360;
@@ -23,14 +24,35 @@ const VIEW_SCALE = 44;
 const CENTER_X = 168;
 const CENTER_Y = 148;
 
-const PIVOT: Vec3 = [1.6, -0.7, 0.8];
+const PIVOT: Vec3 = [1.2, 0.8, 0.5];
 const TRIANGLE: Point3D[] = [
-  { id: "A", value: [0.55, -0.15, 0.25] },
-  { id: "B", value: [2.5, 0.15, 1.0] },
-  { id: "C", value: [1.35, 1.35, 0.55] },
+  { id: "A", value: [0.35, 0.2, 0.25] },
+  { id: "B", value: [2.15, 0.25, 0.6] },
+  { id: "C", value: [1.05, 1.9, 0.45] },
 ];
 
 const BASE_SCALE: Vec3 = [1.35, 0.78, 1.2];
+
+const PROCESS_STEPS = [
+  {
+    label: "1",
+    title: "Move pivot to origin",
+    math: "q = v - P",
+    detail: "Subtract P from each vertex so rotation and scale happen around the pivot, not the world origin.",
+  },
+  {
+    label: "2",
+    title: "Apply local transform",
+    math: "r = S R q",
+    detail: "Rotate in the local frame, then scale the rotated coordinates. The pivot remains fixed in local space.",
+  },
+  {
+    label: "3",
+    title: "Move back to world frame",
+    math: "v' = r + P",
+    detail: "Add the pivot back so the transformed triangle returns to the original coordinate frame.",
+  },
+];
 
 function clamp01(value: number) {
   return Math.min(Math.max(value, 0), 1);
@@ -84,6 +106,10 @@ function format(value: number) {
   return value.toFixed(2);
 }
 
+function vecLabel(v: Vec3) {
+  return `(${v.map(format).join(", ")})`;
+}
+
 function computeFrame(time: number): FrameState {
   const cycle = (time % 8.4) / 8.4;
 
@@ -92,23 +118,27 @@ function computeFrame(time: number): FrameState {
   let backToPivot = 0;
   let stage = "1. Translate pivot P to origin";
   let stageProgress = 0;
+  let description = PROCESS_STEPS[0].detail;
 
   if (cycle < 0.28) {
     stageProgress = ease(cycle / 0.28);
     toOrigin = stageProgress;
   } else if (cycle < 0.62) {
     stage = "2. Rotate and scale about origin";
+    description = PROCESS_STEPS[1].detail;
     toOrigin = 1;
     stageProgress = ease((cycle - 0.28) / 0.34);
     shapeTransform = stageProgress;
   } else if (cycle < 0.86) {
     stage = "3. Translate result back to pivot P";
+    description = PROCESS_STEPS[2].detail;
     toOrigin = 1;
     shapeTransform = 1;
     stageProgress = ease((cycle - 0.62) / 0.24);
     backToPivot = stageProgress;
   } else {
     stage = "4. Composite transform complete";
+    description = "The single homogeneous matrix T(P) S R T(-P) now maps each original vertex directly to its final world coordinate.";
     toOrigin = 1;
     shapeTransform = 1;
     backToPivot = 1;
@@ -136,6 +166,7 @@ function computeFrame(time: number): FrameState {
     stageProgress,
     angleDeg: angle * (180 / Math.PI),
     scale: currentScale,
+    description,
   };
 }
 
@@ -234,8 +265,19 @@ export default function CompositeTriangleTransformAnimation() {
 
             {frame.points.map((point) => {
               const [x, y] = project(point.value);
+              const [ox, oy] = project(TRIANGLE.find((p) => p.id === point.id)!.value);
               return (
                 <g key={point.id}>
+                  <line
+                    x1={ox}
+                    y1={oy}
+                    x2={x}
+                    y2={y}
+                    stroke="#0ea5e9"
+                    strokeWidth={1}
+                    strokeDasharray="3 3"
+                    opacity={0.45}
+                  />
                   <circle cx={x} cy={y} r={4.5} fill="#0ea5e9" />
                   <text x={x + 7} y={y + 4} fontSize={11} fontWeight={700} fill="#0ea5e9">
                     {point.id}
@@ -250,6 +292,7 @@ export default function CompositeTriangleTransformAnimation() {
           <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
             <p className="text-[10px] font-bold uppercase tracking-wide text-[var(--muted)]">Current stage</p>
             <p className="mt-1 text-sm font-semibold text-[var(--ink)]">{frame.stage}</p>
+            <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">{frame.description}</p>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--border)]">
               <div className="h-full rounded-full bg-co2" style={{ width: `${Math.round(frame.stageProgress * 100)}%` }} />
             </div>
@@ -260,7 +303,7 @@ export default function CompositeTriangleTransformAnimation() {
             <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
               <div className="rounded bg-[var(--surface-2)] px-2 py-1.5">
                 <span className="text-[var(--muted)]">Pivot P</span>
-                <p className="font-mono text-[var(--ink)]">({PIVOT.map(format).join(", ")})</p>
+                <p className="font-mono text-[var(--ink)]">{vecLabel(PIVOT)}</p>
               </div>
               <div className="rounded bg-[var(--surface-2)] px-2 py-1.5">
                 <span className="text-[var(--muted)]">Angle</span>
@@ -268,8 +311,25 @@ export default function CompositeTriangleTransformAnimation() {
               </div>
               <div className="col-span-2 rounded bg-[var(--surface-2)] px-2 py-1.5">
                 <span className="text-[var(--muted)]">Scale</span>
-                <p className="font-mono text-[var(--ink)]">({frame.scale.map(format).join(", ")})</p>
+                <p className="font-mono text-[var(--ink)]">{vecLabel(frame.scale)}</p>
               </div>
+            </div>
+          </div>
+
+          <div className="rounded-md border border-[var(--border)] bg-[var(--surface)] p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-[var(--muted)]">Process</p>
+            <div className="mt-2 space-y-2">
+              {PROCESS_STEPS.map((step) => (
+                <div key={step.label} className="grid grid-cols-[1.75rem_1fr] gap-2 text-xs">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-co2/10 font-bold text-co2">
+                    {step.label}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-[var(--ink)]">{step.title}</p>
+                    <p className="font-mono text-[11px] text-co2">{step.math}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -278,27 +338,33 @@ export default function CompositeTriangleTransformAnimation() {
               <thead className="bg-[var(--surface-2)]">
                 <tr>
                   <th className="px-2 py-2 text-left font-semibold text-[var(--muted)]">Point</th>
+                  <th className="px-2 py-2 text-right font-semibold text-[var(--muted)]">v - P</th>
                   <th className="px-2 py-2 text-right font-semibold text-[var(--muted)]">x&apos;</th>
                   <th className="px-2 py-2 text-right font-semibold text-[var(--muted)]">y&apos;</th>
                   <th className="px-2 py-2 text-right font-semibold text-[var(--muted)]">z&apos;</th>
                 </tr>
               </thead>
               <tbody>
-                {frame.points.map((point, index) => (
-                  <tr key={point.id} className={index % 2 === 0 ? "bg-[var(--surface)]" : "bg-[var(--surface-2)]"}>
-                    <td className="px-2 py-2 font-bold text-co2">{point.id}</td>
-                    <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[0])}</td>
-                    <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[1])}</td>
-                    <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[2])}</td>
-                  </tr>
-                ))}
+                {frame.points.map((point, index) => {
+                  const original = TRIANGLE.find((p) => p.id === point.id)!;
+                  const local = sub(original.value, PIVOT);
+                  return (
+                    <tr key={point.id} className={index % 2 === 0 ? "bg-[var(--surface)]" : "bg-[var(--surface-2)]"}>
+                      <td className="px-2 py-2 font-bold text-co2">{point.id}</td>
+                      <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--muted)]">{vecLabel(local)}</td>
+                      <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[0])}</td>
+                      <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[1])}</td>
+                      <td className="px-2 py-2 text-right font-mono tabular-nums text-[var(--ink)]">{format(point.value[2])}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
           <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
             <p className="font-mono text-[11px] leading-relaxed text-[var(--muted)]">
-              v&apos; = T(P) S R T(-P) v, where T(-P) moves the arbitrary pivot to the origin before rotation and scale.
+              v&apos; = T(P) S R T(-P) v, where v = (x, y, z, 1). Homogeneous coordinates let translation, rotation, and scale live inside one 4 x 4 matrix chain.
             </p>
           </div>
         </div>
