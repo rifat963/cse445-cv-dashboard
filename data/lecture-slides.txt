@@ -25,14 +25,17 @@ L04     https://drive.google.com/file/d/1rsmf9QfZ9sTGpTCDBYqme3lqClr5uPRq/view?u
 L04_PDF https://drive.google.com/file/d/1rsmf9QfZ9sTGpTCDBYqme3lqClr5uPRq/view?usp=sharing.
 
 # Module 3 - Geometry Foundations and Camera Calibration
-L05     https://drive.google.com/file/d/1vEueswtSc-Exi2k2o8wL0DZjElGkomj2/view?usp=sharing
-L05_PDF https://drive.google.com/file/d/1vEueswtSc-Exi2k2o8wL0DZjElGkomj2/view?usp=sharing
+L05     https://drive.google.com/file/d/1gV9SLom6SftvPNLbgKKUqW9BjFQisiE8/view?usp=sharing
+L05_PDF https://drive.google.com/file/d/1gV9SLom6SftvPNLbgKKUqW9BjFQisiE8/view?usp=sharing
 
-L06     https://drive.google.com/file/d/1761YRneue0lH9LaKtD2u0a1J15K7jTaX/view?usp=sharing
-L06_PDF hhttps://drive.google.com/file/d/1761YRneue0lH9LaKtD2u0a1J15K7jTaX/view?usp=sharing
+L06     https://drive.google.com/file/d/1Z0VuMj8zNDYb074f5TvtNZ2aTaPx1Zby/view?usp=sharing
+L06_PDF https://drive.google.com/file/d/1Z0VuMj8zNDYb074f5TvtNZ2aTaPx1Zby/view?usp=sharing
 
-L07     https://drive.google.com/file/d/1d4pPkAVOE0nxrd_eMm-ef1GJ7xyc0NkF/view?usp=sharing
-L07_PDF https://drive.google.com/file/d/1d4pPkAVOE0nxrd_eMm-ef1GJ7xyc0NkF/view?usp=sharing
+L06 https://drive.google.com/file/d/1KuGmcd0axs_j57oym-cQ_1XJZw1dCc0c/view?usp=sharing
+L06_PDF https://drive.google.com/file/d/1KuGmcd0axs_j57oym-cQ_1XJZw1dCc0c/view?usp=sharing
+
+L07     https://drive.google.com/file/d/1amhS5xVrIHCbz2u-JfjJWhvfPcx0spIv/view?usp=sharing
+L07_PDF https://drive.google.com/file/d/1amhS5xVrIHCbz2u-JfjJWhvfPcx0spIv/view?usp=sharing
 
 L08     https://drive.google.com/file/d/1ERSuMGJEme1d6mSD4ZR81v-C-LrkrBPm/view?usp=sharing
 L08_PDF https://drive.google.com/file/d/1ERSuMGJEme1d6mSD4ZR81v-C-LrkrBPm/view?usp=sharing
