@@ -3,19 +3,30 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, GraduationCap, Menu, X } from "lucide-react";
+import {
+  BookOpen,
+  ChevronDown,
+  ClipboardList,
+  Database,
+  GraduationCap,
+  Home,
+  Menu,
+  PenTool,
+  UserRound,
+  X,
+} from "lucide-react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { modules } from "@/data/modules";
 import { tutorialSeries } from "@/data/tutorials";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Dashboard" },
-  { href: "/lectures", label: "Lectures" },
-  { href: "/tutorials", label: "Tutorials" },
-  { href: "/assessment", label: "Assessment" },
-  { href: "/resources", label: "Resources" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Dashboard", icon: Home },
+  { href: "/lectures", label: "Lectures", icon: BookOpen },
+  { href: "/tutorials", label: "Tutorials", icon: PenTool },
+  { href: "/assessment", label: "Assessment", icon: ClipboardList },
+  { href: "/resources", label: "Resources", icon: Database },
+  { href: "/about", label: "About", icon: UserRound },
 ];
 
 const tutorialNavItems = tutorialSeries.map((series) => ({
@@ -57,6 +68,7 @@ export default function SiteHeader() {
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
             const dropdownItems = dropdownNavItems[link.href];
+            const Icon = link.icon;
 
             if (dropdownItems) {
               return (
@@ -64,12 +76,13 @@ export default function SiteHeader() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "flex items-center gap-1 px-3 py-2 text-sm transition-colors border-b-2",
+                      "flex items-center gap-1.5 rounded-md px-3 py-2 text-sm transition-all",
                       active
-                        ? "border-[var(--accent)] text-[var(--ink)] font-semibold"
-                        : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"
+                        ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold shadow-sm"
+                        : "text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"
                     )}
                   >
+                    <Icon size={15} aria-hidden="true" />
                     {link.label}
                     <ChevronDown
                       size={14}
@@ -105,12 +118,13 @@ export default function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-2 text-sm transition-colors border-b-2",
+                  "flex items-center gap-1.5 rounded-md px-3 py-2 text-sm transition-all",
                   active
-                    ? "border-[var(--accent)] text-[var(--ink)] font-semibold"
-                    : "border-transparent text-[var(--muted)] hover:text-[var(--ink)]"
+                    ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold shadow-sm"
+                    : "text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"
                 )}
               >
+                <Icon size={15} aria-hidden="true" />
                 {link.label}
               </Link>
             );
@@ -120,7 +134,7 @@ export default function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <button
-            className="lg:hidden p-2 rounded-md text-[var(--muted)] hover:text-[var(--ink)]"
+            className="lg:hidden rounded-md border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)] transition-colors hover:bg-[var(--surface-2)] hover:text-[var(--ink)]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -137,6 +151,7 @@ export default function SiteHeader() {
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
             const dropdownItems = dropdownNavItems[link.href];
+            const Icon = link.icon;
 
             if (dropdownItems) {
               return (
@@ -145,13 +160,16 @@ export default function SiteHeader() {
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      "flex items-center justify-between px-3 py-2 rounded-md text-sm transition-colors",
+                      "flex items-center justify-between gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                       active
                         ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold"
                         : "text-[var(--muted)] hover:text-[var(--ink)]"
                     )}
                   >
-                    {link.label}
+                    <span className="flex items-center gap-2">
+                      <Icon size={15} aria-hidden="true" />
+                      {link.label}
+                    </span>
                     <ChevronDown size={14} aria-hidden="true" />
                   </Link>
                   <div className="mt-1 ml-3 flex flex-col gap-1 border-l border-[var(--border)] pl-3">
@@ -181,12 +199,13 @@ export default function SiteHeader() {
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "px-3 py-2 rounded-md text-sm transition-colors",
+                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors",
                   active
                     ? "bg-[var(--surface-2)] text-[var(--ink)] font-semibold"
                     : "text-[var(--muted)] hover:text-[var(--ink)]"
                 )}
               >
+                <Icon size={15} aria-hidden="true" />
                 {link.label}
               </Link>
             );

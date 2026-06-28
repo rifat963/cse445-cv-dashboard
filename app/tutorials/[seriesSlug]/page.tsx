@@ -2,10 +2,11 @@ import { tutorialSeries } from "@/data/tutorials";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  Target, Brain, Activity, Clock, ChevronLeft, ChevronRight,
+  Target, Brain, Activity, Clock, ChevronRight,
   CheckCircle2, BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import InternalNavButton from "@/components/ui/InternalNavButton";
 
 export const dynamicParams = false;
 
@@ -203,32 +204,30 @@ export default async function SeriesPage({ params }: PageProps) {
       </div>
 
       {/* Series navigation */}
-      <div className="mt-10 flex justify-between gap-4">
+      <div className="mt-10 grid gap-3 sm:grid-cols-2">
         {prevSer ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${prevSer.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} />
-            <span className="hidden sm:block">{prevSer.title}</span>
-          </Link>
+            direction="previous"
+            label="Previous series"
+            title={prevSer.title}
+          />
         ) : (
-          <Link
+          <InternalNavButton
             href="/tutorials"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} /> All Series
-          </Link>
+            direction="back"
+            label="Back"
+            title="All tutorial series"
+          />
         )}
         {nextSer ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${nextSer.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <span className="hidden sm:block">{nextSer.title}</span>
-            <ChevronRight size={16} />
-          </Link>
-        ) : <div />}
+            direction="next"
+            label="Next series"
+            title={nextSer.title}
+          />
+        ) : <div className="hidden sm:block" />}
       </div>
     </div>
   );

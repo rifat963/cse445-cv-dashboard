@@ -1,6 +1,9 @@
 "use client";
+import type { CSSProperties, ReactNode } from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
+
+const ANIMATION_SPEED = 2.35;
 
 // ── Isometric helpers ────────────────────────────────────────────────────
 function isoProject(
@@ -345,6 +348,145 @@ function PinholeDiagram({ t }: { t: number }) {
   );
 }
 
+function EquationPanel({
+  stageId,
+  color,
+}: {
+  stageId: typeof STAGES[number]["id"];
+  color: string;
+}) {
+  const content: Record<typeof STAGES[number]["id"], ReactNode> = {
+    world: (
+      <>
+        <EquationRow color={color}>
+          <Symbol>P_w</Symbol>
+          <span>=</span>
+          <Vector values={["X_w", "Y_w", "Z_w", "1"]} />
+        </EquationRow>
+        <EquationNote>Homogeneous 3D point in the fixed world frame.</EquationNote>
+      </>
+    ),
+    camera: (
+      <>
+        <EquationRow color={color}>
+          <Symbol>P_c</Symbol>
+          <span>=</span>
+          <Symbol>R</Symbol>
+          <Symbol>P_w</Symbol>
+          <span>+</span>
+          <Symbol>t</Symbol>
+        </EquationRow>
+        <EquationRow color={color} compact>
+          <Symbol>[R | t]</Symbol>
+          <span>maps world coordinates into the camera frame</span>
+        </EquationRow>
+      </>
+    ),
+    image: (
+      <>
+        <EquationRow color={color}>
+          <Symbol>x</Symbol>
+          <span>=</span>
+          <Fraction top="X_c" bottom="Z_c" color={color} />
+          <span className="mx-1 text-[var(--muted)]">and</span>
+          <Symbol>y</Symbol>
+          <span>=</span>
+          <Fraction top="Y_c" bottom="Z_c" color={color} />
+        </EquationRow>
+        <EquationNote>Depth divides the camera point, creating perspective shrinkage.</EquationNote>
+      </>
+    ),
+    pixel: (
+      <>
+        <EquationRow color={color}>
+          <Symbol>u</Symbol>
+          <span>=</span>
+          <Symbol>f_x x</Symbol>
+          <span>+</span>
+          <Symbol>c_x</Symbol>
+        </EquationRow>
+        <EquationRow color={color}>
+          <Symbol>v</Symbol>
+          <span>=</span>
+          <Symbol>f_y y</Symbol>
+          <span>+</span>
+          <Symbol>c_y</Symbol>
+        </EquationRow>
+      </>
+    ),
+  };
+
+  return (
+    <div className="rounded-md border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm">
+      {content[stageId]}
+    </div>
+  );
+}
+
+function EquationRow({
+  children,
+  color,
+  compact = false,
+}: {
+  children: ReactNode;
+  color: string;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      className={[
+        "flex flex-wrap items-center gap-2 font-mono",
+        compact ? "mt-2 text-[10px] text-[var(--muted)]" : "text-[13px] text-[var(--ink)]",
+      ].join(" ")}
+      style={{ "--eq-color": color } as CSSProperties}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Symbol({ children }: { children: ReactNode }) {
+  return (
+    <span className="rounded bg-[color-mix(in_srgb,var(--eq-color)_12%,transparent)] px-1.5 py-0.5 font-bold text-[var(--eq-color)]">
+      {children}
+    </span>
+  );
+}
+
+function Vector({ values }: { values: string[] }) {
+  return (
+    <span className="inline-flex items-stretch overflow-hidden rounded border border-[var(--border)] bg-[var(--surface-2)]">
+      <span className="px-1.5 text-lg leading-7 text-[var(--muted)]">[</span>
+      <span className="grid grid-cols-4 divide-x divide-[var(--border)]">
+        {values.map((value) => (
+          <span key={value} className="px-1.5 py-1 text-center text-[10px] font-bold text-[var(--eq-color)]">
+            {value}
+          </span>
+        ))}
+      </span>
+      <span className="px-1.5 text-lg leading-7 text-[var(--muted)]">]</span>
+      <span className="border-l border-[var(--border)] px-1 py-1 text-[10px] font-bold text-[var(--muted)]">T</span>
+    </span>
+  );
+}
+
+function Fraction({ top, bottom, color }: { top: string; bottom: string; color: string }) {
+  return (
+    <span className="inline-flex min-w-10 flex-col items-center rounded bg-[var(--surface-2)] px-2 py-1 leading-none">
+      <span className="border-b border-[var(--border)] px-1 pb-1 font-bold" style={{ color }}>
+        {top}
+      </span>
+      <span className="px-1 pt-1 font-bold" style={{ color }}>
+        {bottom}
+      </span>
+    </span>
+  );
+}
+
+function EquationNote({ children }: { children: ReactNode }) {
+  return <p className="mt-2 text-[10px] leading-relaxed text-[var(--muted)]">{children}</p>;
+}
+
 function MatrixBlock({
   title,
   rows,
@@ -399,7 +541,7 @@ export default function PinholeCameraAnimation() {
   useEffect(() => {
     if (!playing) { cancelAnimationFrame(rafRef.current); lastRef.current = null; return; }
     const loop = (now: number) => {
-      if (lastRef.current !== null) setT(prev => prev + (now - lastRef.current!) / 1000);
+      if (lastRef.current !== null) setT(prev => prev + ((now - lastRef.current!) / 1000) * ANIMATION_SPEED);
       lastRef.current = now;
       rafRef.current = requestAnimationFrame(loop);
     };
@@ -492,17 +634,7 @@ export default function PinholeCameraAnimation() {
             <div className="space-y-3 p-3">
               <div>
                 <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">Formula</p>
-                <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-2 font-mono">
-                  {stage.formulaLines.map((line, lineIndex) => (
-                    <div
-                      key={lineIndex}
-                      className="text-[11px] leading-relaxed"
-                      style={{ color: lineIndex === 0 ? stage.color : "var(--muted)" }}
-                    >
-                      {line}
-                    </div>
-                  ))}
-                </div>
+                <EquationPanel stageId={stage.id} color={stage.color} />
               </div>
 
               {index < STAGES.length - 1 && (

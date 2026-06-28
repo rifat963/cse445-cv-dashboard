@@ -3,7 +3,6 @@ import { lectures } from "@/data/lectures";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  ChevronLeft,
   ChevronRight,
   BookOpen,
   CheckCircle,
@@ -16,6 +15,7 @@ import { getLectureInfographics } from "@/lib/infographicImages";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
 import PdfViewer from "@/components/ui/PdfViewer";
+import InternalNavButton from "@/components/ui/InternalNavButton";
 import TransformationsAnimation from "@/components/ui/TransformationsAnimation";
 import TransformObjectAnimation from "@/components/ui/TransformObjectAnimation";
 import PinholeCameraAnimation from "@/components/ui/PinholeCameraAnimation";
@@ -69,27 +69,23 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         {/* Prev / Next */}
-        <div className="flex justify-between gap-4 mb-6">
+        <div className="grid gap-3 sm:grid-cols-2 mb-6">
           {prevLecture ? (
-            <Link href={`/lectures/${prevLecture.slug}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%]">
-              <ChevronLeft size={16} className="shrink-0" />
-              <div className="min-w-0">
-                <p className="text-xs text-[var(--muted)]">Previous</p>
-                <p className="truncate">{prevLecture.shortTitle}</p>
-              </div>
-            </Link>
-          ) : <div />}
+            <InternalNavButton
+              href={`/lectures/${prevLecture.slug}`}
+              direction="previous"
+              label="Previous lecture"
+              title={prevLecture.shortTitle}
+            />
+          ) : <div className="hidden sm:block" />}
           {nextLecture ? (
-            <Link href={`/lectures/${nextLecture.slug}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%] ml-auto text-right">
-              <div className="min-w-0">
-                <p className="text-xs text-[var(--muted)]">Next</p>
-                <p className="truncate">{nextLecture.shortTitle}</p>
-              </div>
-              <ChevronRight size={16} className="shrink-0" />
-            </Link>
-          ) : <div />}
+            <InternalNavButton
+              href={`/lectures/${nextLecture.slug}`}
+              direction="next"
+              label="Next lecture"
+              title={nextLecture.shortTitle}
+            />
+          ) : <div className="hidden sm:block" />}
         </div>
 
         {/* Header */}
@@ -255,21 +251,23 @@ export default async function Page({ params }: PageProps) {
         )}
 
         {/* Bottom Prev/Next */}
-        <div className="flex justify-between gap-4">
+        <div className="grid gap-3 sm:grid-cols-2">
           {prevLecture ? (
-            <Link href={`/lectures/${prevLecture.slug}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%]">
-              <ChevronLeft size={16} className="shrink-0" />
-              <span className="truncate">{prevLecture.shortTitle}</span>
-            </Link>
-          ) : <div />}
+            <InternalNavButton
+              href={`/lectures/${prevLecture.slug}`}
+              direction="previous"
+              label="Previous lecture"
+              title={prevLecture.shortTitle}
+            />
+          ) : <div className="hidden sm:block" />}
           {nextLecture ? (
-            <Link href={`/lectures/${nextLecture.slug}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%] ml-auto">
-              <span className="truncate">{nextLecture.shortTitle}</span>
-              <ChevronRight size={16} className="shrink-0" />
-            </Link>
-          ) : <div />}
+            <InternalNavButton
+              href={`/lectures/${nextLecture.slug}`}
+              direction="next"
+              label="Next lecture"
+              title={nextLecture.shortTitle}
+            />
+          ) : <div className="hidden sm:block" />}
         </div>
       </div>
     );
@@ -287,10 +285,13 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href="/lectures"
-        className="inline-flex items-center gap-1 text-sm text-[var(--muted)] hover:text-[var(--ink)] mb-6 transition-colors">
-        <ChevronLeft size={16} /> Back to Modules
-      </Link>
+      <InternalNavButton
+        href="/lectures"
+        direction="back"
+        label="Back"
+        title="All lecture modules"
+        className="mb-6 max-w-sm"
+      />
 
       {/* Module header */}
       <div className={cn("rounded-lg border border-[var(--border)] p-6 mb-8", scheme.bg)}>
@@ -350,21 +351,23 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {/* Prev / Next module */}
-      <div className="flex justify-between gap-4">
+      <div className="grid gap-3 sm:grid-cols-2">
         {prevMod ? (
-          <Link href={`/lectures/${prevMod.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%]">
-            <ChevronLeft size={16} className="shrink-0" />
-            <span className="truncate">{prevMod.shortTitle}</span>
-          </Link>
-        ) : <div />}
+          <InternalNavButton
+            href={`/lectures/${prevMod.slug}`}
+            direction="previous"
+            label="Previous module"
+            title={prevMod.shortTitle}
+          />
+        ) : <div className="hidden sm:block" />}
         {nextMod ? (
-          <Link href={`/lectures/${nextMod.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm max-w-[48%] ml-auto">
-            <span className="truncate">{nextMod.shortTitle}</span>
-            <ChevronRight size={16} className="shrink-0" />
-          </Link>
-        ) : <div />}
+          <InternalNavButton
+            href={`/lectures/${nextMod.slug}`}
+            direction="next"
+            label="Next module"
+            title={nextMod.shortTitle}
+          />
+        ) : <div className="hidden sm:block" />}
       </div>
     </div>
   );

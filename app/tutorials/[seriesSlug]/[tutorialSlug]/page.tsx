@@ -3,12 +3,13 @@ import { getDriveDownloadUrl, getDriveFileId, getTutorialLinks, getTutorialInfog
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  ChevronLeft, ChevronRight, Clock, Target, Brain, Activity,
+  Clock, Target, Brain, Activity,
   BookOpen, CheckCircle, Lightbulb, FlaskConical, Wrench, FileCode,
   ExternalLink, Download, ImageIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InfographicViewer from "@/components/ui/InfographicViewer";
+import InternalNavButton from "@/components/ui/InternalNavButton";
 
 export const dynamicParams = false;
 
@@ -117,33 +118,30 @@ export default async function TutorialDetailPage({ params }: PageProps) {
       </div>
 
       {/* Prev / Next top */}
-      <div className="flex justify-between gap-4 mb-6">
+      <div className="grid gap-3 sm:grid-cols-2 mb-6">
         {prev ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}/${prev.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} />
-            <span className="hidden sm:block truncate max-w-[200px]">{prev.title}</span>
-          </Link>
+            direction="previous"
+            label="Previous tutorial"
+            title={prev.title}
+          />
         ) : (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} />
-            <span className="hidden sm:block">Back to {series.title}</span>
-          </Link>
+            direction="back"
+            label="Back to series"
+            title={series.title}
+          />
         )}
         {next ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}/${next.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <span className="hidden sm:block truncate max-w-[200px]">{next.title}</span>
-            <ChevronRight size={16} />
-          </Link>
-        ) : <div />}
+            direction="next"
+            label="Next tutorial"
+            title={next.title}
+          />
+        ) : <div className="hidden sm:block" />}
       </div>
 
       {/* Header */}
@@ -393,33 +391,30 @@ export default async function TutorialDetailPage({ params }: PageProps) {
       </div>
 
       {/* Prev / Next bottom */}
-      <div className="mt-10 flex justify-between gap-4">
+      <div className="mt-10 grid gap-3 sm:grid-cols-2">
         {prev ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}/${prev.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} />
-            <span className="hidden sm:block truncate max-w-[200px]">{prev.title}</span>
-          </Link>
+            direction="previous"
+            label="Previous tutorial"
+            title={prev.title}
+          />
         ) : (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <ChevronLeft size={16} />
-            <span className="hidden sm:block">Back to {series.title}</span>
-          </Link>
+            direction="back"
+            label="Back to series"
+            title={series.title}
+          />
         )}
         {next ? (
-          <Link
+          <InternalNavButton
             href={`/tutorials/${series.slug}/${next.slug}`}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)] transition-colors text-sm text-[var(--muted)] hover:text-[var(--ink)]"
-          >
-            <span className="hidden sm:block truncate max-w-[200px]">{next.title}</span>
-            <ChevronRight size={16} />
-          </Link>
-        ) : <div />}
+            direction="next"
+            label="Next tutorial"
+            title={next.title}
+          />
+        ) : <div className="hidden sm:block" />}
       </div>
     </div>
   );
